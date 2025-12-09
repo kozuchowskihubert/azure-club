@@ -66,3 +66,7 @@ secrets/
 # Build artifacts
 *.tgz
 .cache/
+
+# Documentation (private notes)
+*.md
+!README.md
