@@ -10,7 +10,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
         :root {
-            /* PUMPINGLAND Theme - Yellow & Black from Event Poster */
+            /* Core Theme Colors - Clean Yellow & Black */
             --primary: #FFB800;
             --primary-dark: #E6A500;
             --secondary: #1a1a1a;
@@ -36,8 +36,8 @@
         
         body {
             font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-            background: #1a1a1a;
-            color: #1a202c;
+            background: #000000;
+            color: #ffffff;
             line-height: 1.6;
             -webkit-font-smoothing: antialiased;
             -moz-osx-font-smoothing: grayscale;
@@ -45,7 +45,7 @@
             min-height: 100vh;
         }
         
-        /* Background Image System */
+        /* Subtle Background Pattern */
         body::before {
             content: '';
             position: fixed;
@@ -53,24 +53,9 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background-image: url('https://scontent-waw2-1.xx.fbcdn.net/v/t39.30808-6/571323095_1410757540410512_1683941634399340414_n.jpg?_nc_cat=108&ccb=1-7&_nc_sid=833d8c&_nc_ohc=eg71UhzE1lQQ7kNvwEPNFQK&_nc_oc=AdnhCqHyJ0Vlvmw-fMiANYlhzffpOFKsnxWVILerMYnOpyR6NJd_P_rvd9qFvW3tENQ&_nc_zt=23&_nc_ht=scontent-waw2-1.xx&_nc_gid=Tr3U0rQi6KjDA6G_46uBjw&oh=00_AfmKiqUcopjlU77ahvb5ZJZtnv0idTfaxyyj3nay1-dKEA&oe=693E2BF0');
-            background-size: cover;
-            background-position: center;
-            background-repeat: no-repeat;
-            background-attachment: fixed;
-            z-index: -2;
-            opacity: 0.15;
-        }
-        
-        /* Dark overlay for better readability */
-        body::after {
-            content: '';
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(135deg, rgba(0,0,0,0.85) 0%, rgba(26,26,26,0.9) 100%);
+            background: 
+                radial-gradient(circle at 20% 50%, rgba(255, 184, 0, 0.03) 0%, transparent 50%),
+                radial-gradient(circle at 80% 80%, rgba(255, 140, 0, 0.03) 0%, transparent 50%);
             z-index: -1;
         }
         
@@ -920,55 +905,48 @@
         <div class="container mx-auto px-6 relative z-10">
             <div class="max-w-5xl mx-auto text-center fade-in">
                 <!-- Brand Logos Hero -->
-                <div class="mb-8 flex flex-col items-center space-y-8">
-                    <div class="flex items-center justify-center gap-12">
-                        <img src="images/image.png" alt="CLUBBASSE" class="h-32 object-contain drop-shadow-2xl hover:scale-105 transition-transform">
-                        <img src="images/image copy.png" alt="Lady Scarpio" class="h-32 object-contain drop-shadow-2xl hover:scale-105 transition-transform">
-                    </div>
+                <div class="mb-12 flex items-center justify-center gap-16">
+                    <img src="images/image.png" alt="CLUBBASSE" class="h-24 md:h-32 object-contain hover:scale-105 transition-transform duration-300">
+                    <img src="images/image copy.png" alt="Lady Scarpio" class="h-24 md:h-32 object-contain hover:scale-105 transition-transform duration-300">
                 </div>
                 
-                <div class="mb-6">
-                    <span class="inline-block px-4 py-2 bg-primary bg-opacity-20 border border-primary rounded-full text-primary text-sm orbitron uppercase tracking-widest pulse">
-                        ⚡ Premium Streetwear & Electronics
-                    </span>
-                </div>
-                <h1 class="text-6xl md:text-7xl font-black mb-6 orbitron leading-tight">
-                    CLUBBASSE<br/>
-                    <span class="neon-text">FASHION</span><br/>
-                    × TECH
+                <h1 class="text-5xl md:text-7xl lg:text-8xl font-black mb-6 space-grotesk leading-tight">
+                    STREETWEAR<br/>
+                    <span class="neon-text">×</span> TECH
                 </h1>
-                <div class="cyber-divider my-8 w-64 mx-auto"></div>
-                <p class="text-xl md:text-2xl mb-4 text-gray-400 font-semibold">
-                    Exclusive streetwear collection & electronic components
+                
+                <p class="text-xl md:text-2xl mb-4 text-gray-300 max-w-3xl mx-auto">
+                    Premium streetwear meets cutting-edge electronics
                 </p>
-                <p class="text-lg mb-12 text-gray-400">
-                    Limited Edition T-Shirts • Premium Quality • Electronic Components • Fast Shipping
+                <p class="text-lg mb-12 text-gray-500">
+                    Limited editions • Quality crafted • Fast worldwide shipping
                 </p>
-                <div class="flex flex-col sm:flex-row justify-center space-y-4 sm:space-y-0 sm:space-x-6">
+                
+                <div class="flex flex-col sm:flex-row justify-center gap-4 mb-16">
                     <a href="#shop" class="btn-primary px-10 py-4 rounded-lg text-lg inline-block">
-                        � SHOP COLLECTION
+                        SHOP NOW
                     </a>
                     <a href="#components" class="btn-secondary px-10 py-4 rounded-lg text-lg inline-block">
-                        🔧 BROWSE COMPONENTS
+                        BROWSE ELECTRONICS
                     </a>
                 </div>
                 
-                <div class="mt-16 grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-8 max-w-4xl mx-auto">
                     <div class="fade-in" style="animation-delay: 0.2s">
-                        <div class="stat-number orbitron">50+</div>
-                        <div class="text-gray-400 uppercase text-xs tracking-wider font-semibold">T-Shirt Designs</div>
+                        <div class="text-4xl font-bold text-primary mb-2 space-grotesk">50+</div>
+                        <div class="text-gray-500 text-sm uppercase tracking-wide">Designs</div>
+                    </div>
+                    <div class="fade-in" style="animation-delay: 0.3s">
+                        <div class="text-4xl font-bold text-primary mb-2 space-grotesk">1K+</div>
+                        <div class="text-gray-500 text-sm uppercase tracking-wide">Components</div>
                     </div>
                     <div class="fade-in" style="animation-delay: 0.4s">
-                        <div class="stat-number orbitron">1000+</div>
-                        <div class="text-gray-400 uppercase text-xs tracking-wider font-semibold">Components</div>
+                        <div class="text-4xl font-bold text-primary mb-2 space-grotesk">24/7</div>
+                        <div class="text-gray-500 text-sm uppercase tracking-wide">Support</div>
                     </div>
-                    <div class="fade-in" style="animation-delay: 0.6s">
-                        <div class="stat-number orbitron">24/7</div>
-                        <div class="text-gray-400 uppercase text-xs tracking-wider font-semibold">Online Store</div>
-                    </div>
-                    <div class="fade-in" style="animation-delay: 0.8s">
-                        <div class="stat-number orbitron">★★★★★</div>
-                        <div class="text-gray-400 uppercase text-xs tracking-wider font-semibold">Customer Rated</div>
+                    <div class="fade-in" style="animation-delay: 0.5s">
+                        <div class="text-4xl font-bold text-primary mb-2 space-grotesk">★5.0</div>
+                        <div class="text-gray-500 text-sm uppercase tracking-wide">Rated</div>
                     </div>
                 </div>
             </div>
@@ -976,13 +954,12 @@
     </section>
 
     <!-- Product Shop Section -->
-    <section id="shop" class="py-24 relative bg-black">
+    <section id="shop" class="py-24 relative">
         <div class="container mx-auto px-6">
             <!-- Section Title -->
-            <div class="text-center mb-12">
-                <h2 class="text-5xl font-black mb-4 orbitron neon-text">T-SHIRT COLLECTION</h2>
-                <div class="cyber-divider w-32 mx-auto mb-6"></div>
-                <p class="text-gray-400 text-lg font-semibold">Premium streetwear from CLUBBASSE × Lady Scarpio</p>
+            <div class="text-center mb-16">
+                <h2 class="text-4xl md:text-5xl font-bold mb-4 space-grotesk">Shop Collection</h2>
+                <p class="text-gray-400 text-lg max-w-2xl mx-auto">Premium streetwear designed for the modern creator</p>
             </div>
             
             <!-- Search and Filters -->
@@ -1253,23 +1230,11 @@
     </section>
 
     <!-- Component Categories Section -->
-    <section id="components" class="py-24 relative">
+    <section id="components" class="py-24 relative bg-gradient-to-b from-black to-gray-900">
         <div class="container mx-auto px-6">
             <div class="text-center mb-16 fade-in">
-                <h2 class="text-5xl font-black mb-4 orbitron neon-text">COMPONENT CATALOG</h2>
-                <div class="cyber-divider w-32 mx-auto mb-6"></div>
-                <p class="text-gray-400 text-lg">Professional-grade electronic components for your projects</p>
-                
-                <!-- Lady Scarpio Featured Banner -->
-                <div class="mt-8 inline-block">
-                    <div class="px-8 py-4 rounded-xl border-2 border-primary relative overflow-hidden" style="background: linear-gradient(to right, #000000, #0a0a0a);">
-                        <div class="absolute inset-0 opacity-20" style="background: linear-gradient(45deg, transparent 30%, var(--primary) 50%, transparent 70%); background-size: 200% 200%; animation: shimmer 3s infinite;"></div>
-                        <div class="relative z-10">
-                            <div class="text-3xl font-bold mb-1" style="font-family: 'Brush Script MT', cursive; color: var(--primary);">Lady Scarpio</div>
-                            <div class="text-xs text-gray-400 uppercase tracking-widest">Curated Selection</div>
-                        </div>
-                    </div>
-                </div>
+                <h2 class="text-4xl md:text-5xl font-bold mb-4 space-grotesk">Electronic Components</h2>
+                <p class="text-gray-400 text-lg max-w-2xl mx-auto">Professional-grade hardware for creators and makers</p>
             </div>
             
             <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -1363,13 +1328,12 @@
         </div>
     </section>
 
-    <!-- Synthesis Studios Section (HAOS.FM Style) -->
-    <section id="synthesis" class="py-24 relative" style="background: #0a0a0a;">
+    <!-- Synthesis Studios Section -->
+    <section id="synthesis" class="py-24 relative">
         <div class="container mx-auto px-6">
             <div class="text-center mb-16 fade-in">
-                <h2 class="text-5xl font-black mb-4 orbitron neon-text">SYNTHESIS STUDIOS</h2>
-                <div class="cyber-divider w-32 mx-auto mb-6"></div>
-                <p class="text-gray-400 text-lg">Hardware-inspired music creation with complete track integration</p>
+                <h2 class="text-4xl md:text-5xl font-bold mb-4 space-grotesk">Synthesis Studios</h2>
+                <p class="text-gray-400 text-lg max-w-2xl mx-auto">Hardware-inspired music creation tools</p>
             </div>
             
             <div class="grid md:grid-cols-2 gap-8">
@@ -1459,12 +1423,11 @@
     </section>
 
     <!-- Platform Features Section -->
-    <section id="platform" class="py-24 relative">
+    <section id="platform" class="py-24 relative bg-gradient-to-b from-gray-900 to-black">
         <div class="container mx-auto px-6">
             <div class="text-center mb-16 fade-in">
-                <h2 class="text-5xl font-black mb-4 orbitron neon-text">PLATFORM FEATURES</h2>
-                <div class="cyber-divider w-32 mx-auto mb-6"></div>
-                <p class="text-gray-400 text-lg">Enterprise-grade infrastructure for modern e-commerce</p>
+                <h2 class="text-4xl md:text-5xl font-bold mb-4 space-grotesk">Platform Features</h2>
+                <p class="text-gray-400 text-lg max-w-2xl mx-auto">Built on enterprise-grade cloud infrastructure</p>
             </div>
             
             <div class="grid md:grid-cols-3 gap-8">
