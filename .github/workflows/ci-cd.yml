@@ -1,0 +1,203 @@
+name: CI/CD Pipeline
+
+on:
+  push:
+    branches: [main, develop]
+  pull_request:
+    branches: [main, develop]
+  workflow_dispatch:
+
+env:
+  NODE_VERSION: '20.x'
+  AZURE_WEBAPP_PACKAGE_PATH: '.'
+
+jobs:
+  test:
+    name: Run Tests
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Run linter
+        run: npm run lint
+
+      - name: Run unit tests
+        run: npm run test:ci
+
+      - name: Run integration tests
+        run: npm run test:integration
+
+      - name: Upload coverage reports
+        uses: codecov/codecov-action@v3
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
+          files: ./coverage/coverage-final.json
+          fail_ci_if_error: false
+
+  build-frontend:
+    name: Build Frontend
+    needs: test
+    runs-on: ubuntu-latest
+    if: github.event_name == 'push'
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: 'npm'
+
+      - name: Install dependencies
+        working-directory: ./src/frontend
+        run: npm ci
+
+      - name: Build frontend
+        working-directory: ./src/frontend
+        run: npm run build
+        env:
+          NEXT_PUBLIC_API_URL: ${{ secrets.API_URL }}
+
+      - name: Upload frontend artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: frontend-build
+          path: ./src/frontend/.next
+          retention-days: 1
+
+  build-backend:
+    name: Build Backend
+    needs: test
+    runs-on: ubuntu-latest
+    if: github.event_name == 'push'
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: 'npm'
+
+      - name: Install dependencies
+        working-directory: ./src/backend
+        run: npm ci
+
+      - name: Build backend
+        working-directory: ./src/backend
+        run: npm run build
+
+      - name: Upload backend artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: backend-build
+          path: ./src/backend/dist
+          retention-days: 1
+
+  docker-build-push:
+    name: Build and Push Docker Images
+    needs: [build-frontend, build-backend]
+    runs-on: ubuntu-latest
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Log in to Azure Container Registry
+        uses: azure/docker-login@v1
+        with:
+          login-server: raveunitedclubbaseladyacr.azurecr.io
+          username: ${{ secrets.ACR_USERNAME }}
+          password: ${{ secrets.ACR_PASSWORD }}
+
+      - name: Build and push frontend image
+        run: |
+          docker build -t raveunitedclubbaseladyacr.azurecr.io/clubbase-frontend:${{ github.sha }} -f docker/Dockerfile.frontend .
+          docker push raveunitedclubbaseladyacr.azurecr.io/clubbase-frontend:${{ github.sha }}
+          docker tag raveunitedclubbaseladyacr.azurecr.io/clubbase-frontend:${{ github.sha }} raveunitedclubbaseladyacr.azurecr.io/clubbase-frontend:latest
+          docker push raveunitedclubbaseladyacr.azurecr.io/clubbase-frontend:latest
+
+      - name: Build and push backend image
+        run: |
+          docker build -t raveunitedclubbaseladyacr.azurecr.io/clubbase-backend:${{ github.sha }} -f docker/Dockerfile.backend .
+          docker push raveunitedclubbaseladyacr.azurecr.io/clubbase-backend:${{ github.sha }}
+          docker tag raveunitedclubbaseladyacr.azurecr.io/clubbase-backend:${{ github.sha }} raveunitedclubbaseladyacr.azurecr.io/clubbase-backend:latest
+          docker push ${{ secrets.ACR_LOGIN_SERVER }}/clubbasse-backend:latest
+
+  deploy-staging:
+    name: Deploy to Staging
+    needs: docker-build-push
+    runs-on: ubuntu-latest
+    if: github.event_name == 'push' && github.ref == 'refs/heads/develop'
+    environment:
+      name: staging
+      url: https://clubbasse-staging.azurewebsites.net
+    
+    steps:
+      - name: Azure Login
+        uses: azure/login@v1
+        with:
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
+
+      - name: Deploy Frontend to Azure App Service
+        uses: azure/webapps-deploy@v2
+        with:
+          app-name: clubbasse-staging-frontend
+          images: ${{ secrets.ACR_LOGIN_SERVER }}/clubbasse-frontend:${{ github.sha }}
+
+      - name: Deploy Backend to Azure App Service
+        uses: azure/webapps-deploy@v2
+        with:
+          app-name: clubbasse-staging-backend
+          images: ${{ secrets.ACR_LOGIN_SERVER }}/clubbasse-backend:${{ github.sha }}
+
+  deploy-production:
+    name: Deploy to Production
+    needs: docker-build-push
+    runs-on: ubuntu-latest
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    environment:
+      name: production
+      url: https://clubbasse.pl
+    
+    steps:
+      - name: Azure Login
+        uses: azure/login@v1
+        with:
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
+
+      - name: Deploy Frontend to Azure App Service
+        uses: azure/webapps-deploy@v2
+        with:
+          app-name: clubbasse-prod-frontend
+          images: ${{ secrets.ACR_LOGIN_SERVER }}/clubbasse-frontend:${{ github.sha }}
+
+      - name: Deploy Backend to Azure App Service
+        uses: azure/webapps-deploy@v2
+        with:
+          app-name: clubbasse-prod-backend
+          images: ${{ secrets.ACR_LOGIN_SERVER }}/clubbasse-backend:${{ github.sha }}
+
+      - name: Clear CDN Cache
+        run: |
+          az cdn endpoint purge \
+            --resource-group clubbasse-prod-rg \
+            --profile-name clubbasse-prod-cdn-profile \
+            --name clubbasse-prod-cdn-storage \
+            --content-paths '/*'
