@@ -20,14 +20,29 @@
                 <span></span>
                 <span></span>
             </button>
-            <ul class="nav-menu">
-                <li><a href="#stats" class="nav-link">Metryki</a></li>
-                <li><a href="#about" class="nav-link">Historia</a></li>
-                <li><a href="#portfolio" class="nav-link">Galeria</a></li>
-                <li><a href="#services" class="nav-link">Oferta</a></li>
-                <li><a href="#booking" class="nav-link">Rozkład Jazdy</a></li>
-                <li><a href="#contact" class="nav-link">Kontakt</a></li>
-            </ul>
+            <nav class="nav-menu">
+                <div class="nav-section">
+                    <span class="nav-section-title">O MNIE</span>
+                    <ul class="nav-section-links">
+                        <li><a href="#about" class="nav-link">🎭 Historia</a></li>
+                        <li><a href="#stats" class="nav-link">📊 Statystyki</a></li>
+                    </ul>
+                </div>
+                <div class="nav-section">
+                    <span class="nav-section-title">PORTFOLIO</span>
+                    <ul class="nav-section-links">
+                        <li><a href="#portfolio" class="nav-link">📸 Galeria</a></li>
+                        <li><a href="#services" class="nav-link">🎵 Oferta</a></li>
+                    </ul>
+                </div>
+                <div class="nav-section">
+                    <span class="nav-section-title">BOOKING</span>
+                    <ul class="nav-section-links">
+                        <li><a href="#calendar" class="nav-link">📅 Kalendarz</a></li>
+                        <li><a href="#contact" class="nav-link">📧 Kontakt</a></li>
+                    </ul>
+                </div>
+            </nav>
             <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">
                 <span class="theme-icon light-icon">☀</span>
                 <span class="theme-icon dark-icon">🌙</span>
@@ -36,12 +51,32 @@
     </nav>
 
     <section id="hero" class="hero">
-        <div class="hero-bg-image"></div>
+        <!-- Hero Image Slider -->
+        <div class="hero-slider">
+            <div class="hero-slide active">
+                <img src="images/40A58B76-032B-40D0-AFB4-CDAE17F0C6D0.png" alt="ARCH1TECT Performance 1">
+            </div>
+            <div class="hero-slide">
+                <img src="images/916BB6A3-CDAD-4C91-B470-55EE58388FB2.png" alt="ARCH1TECT Performance 2">
+            </div>
+            <div class="hero-slide">
+                <img src="images/9CEA418F-F26C-4DD4-BD51-6485388D80A7.png" alt="ARCH1TECT Performance 3">
+            </div>
+            
+            <!-- Slider Navigation -->
+            <button class="slider-nav prev" id="sliderPrev">‹</button>
+            <button class="slider-nav next" id="sliderNext">›</button>
+            
+            <!-- Slider Dots -->
+            <div class="slider-dots">
+                <span class="dot active" data-slide="0"></span>
+                <span class="dot" data-slide="1"></span>
+                <span class="dot" data-slide="2"></span>
+            </div>
+        </div>
+        
         <div class="hero-overlay"></div>
         <div class="hero-content">
-            <div class="hero-logo logoEntrance">
-                <img src="images/arch1tect-hero.jpg" alt="ARCH1TECT" class="hero-main-img">
-            </div>
             <h1 class="hero-title">ARCH1TECT</h1>
             <p class="hero-subtitle">DARKNESS • POWER • TECHNO</p>
             <div class="hero-cta">

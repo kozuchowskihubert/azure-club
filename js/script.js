@@ -1,10 +1,93 @@
 /* ===========================================
-   CLUBBASSE - JavaScript Functions
+   ARCH1TECT - JavaScript Functions
    =========================================== */
+
+/* ===========================================
+   Hero Image Slider
+   =========================================== */
+function initHeroSlider() {
+    const slides = document.querySelectorAll('.hero-slide');
+    const dots = document.querySelectorAll('.slider-dots .dot');
+    const prevBtn = document.getElementById('sliderPrev');
+    const nextBtn = document.getElementById('sliderNext');
+    
+    if (!slides.length) return;
+    
+    let currentSlide = 0;
+    const slideCount = slides.length;
+    let autoPlayInterval;
+    
+    function showSlide(index) {
+        // Remove active class from all
+        slides.forEach(slide => slide.classList.remove('active'));
+        dots.forEach(dot => dot.classList.remove('active'));
+        
+        // Add active class to current
+        slides[index].classList.add('active');
+        dots[index].classList.add('active');
+        
+        currentSlide = index;
+    }
+    
+    function nextSlide() {
+        const next = (currentSlide + 1) % slideCount;
+        showSlide(next);
+    }
+    
+    function prevSlide() {
+        const prev = (currentSlide - 1 + slideCount) % slideCount;
+        showSlide(prev);
+    }
+    
+    function startAutoPlay() {
+        autoPlayInterval = setInterval(nextSlide, 5000); // Change slide every 5 seconds
+    }
+    
+    function stopAutoPlay() {
+        clearInterval(autoPlayInterval);
+    }
+    
+    // Navigation button handlers
+    if (prevBtn) {
+        prevBtn.addEventListener('click', () => {
+            prevSlide();
+            stopAutoPlay();
+            startAutoPlay(); // Restart auto-play
+        });
+    }
+    
+    if (nextBtn) {
+        nextBtn.addEventListener('click', () => {
+            nextSlide();
+            stopAutoPlay();
+            startAutoPlay();
+        });
+    }
+    
+    // Dot navigation
+    dots.forEach((dot, index) => {
+        dot.addEventListener('click', () => {
+            showSlide(index);
+            stopAutoPlay();
+            startAutoPlay();
+        });
+    });
+    
+    // Pause on hover
+    const heroSlider = document.querySelector('.hero-slider');
+    if (heroSlider) {
+        heroSlider.addEventListener('mouseenter', stopAutoPlay);
+        heroSlider.addEventListener('mouseleave', startAutoPlay);
+    }
+    
+    // Start auto-play
+    startAutoPlay();
+}
 
 document.addEventListener('DOMContentLoaded', function() {
     
     // Initialize all functions
+    initHeroSlider();
     initThemeToggle();
     initNavigation();
     initParticles();
@@ -146,25 +229,35 @@ function initScrollAnimations() {
    Mobile Menu
    =========================================== */
 function initMobileMenu() {
-    const menuBtn = document.querySelector('.mobile-menu-btn');
-    const mobileMenu = document.querySelector('.mobile-menu');
-    const menuLinks = document.querySelectorAll('.mobile-menu a');
+    const menuToggle = document.querySelector('.nav-toggle');
+    const navMenu = document.querySelector('.nav-menu');
+    const navLinks = document.querySelectorAll('.nav-link');
     
-    if (!menuBtn || !mobileMenu) return;
+    if (!menuToggle || !navMenu) return;
     
-    menuBtn.addEventListener('click', () => {
-        mobileMenu.classList.toggle('active');
-        menuBtn.classList.toggle('active');
-        document.body.style.overflow = mobileMenu.classList.contains('active') ? 'hidden' : '';
+    // Toggle menu
+    menuToggle.addEventListener('click', () => {
+        navMenu.classList.toggle('active');
+        menuToggle.classList.toggle('active');
+        document.body.style.overflow = navMenu.classList.contains('active') ? 'hidden' : '';
     });
     
     // Close menu on link click
-    menuLinks.forEach(link => {
+    navLinks.forEach(link => {
         link.addEventListener('click', () => {
-            mobileMenu.classList.remove('active');
-            menuBtn.classList.remove('active');
+            navMenu.classList.remove('active');
+            menuToggle.classList.remove('active');
             document.body.style.overflow = '';
         });
+    });
+    
+    // Close on outside click
+    document.addEventListener('click', (e) => {
+        if (!navMenu.contains(e.target) && !menuToggle.contains(e.target)) {
+            navMenu.classList.remove('active');
+            menuToggle.classList.remove('active');
+            document.body.style.overflow = '';
+        }
     });
 }
 
