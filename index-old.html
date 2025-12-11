@@ -1,0 +1,2074 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CLUBBASSE × Lady Scarpio - Premium Streetwear & Electronic Components</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            /* Core Theme Colors - Clean Yellow & Black */
+            --primary: #FFB800;
+            --primary-dark: #E6A500;
+            --secondary: #1a1a1a;
+            --accent-yellow: #FFD700;
+            --accent-orange: #FF8C00;
+            --success: #10b981;
+            --warning: #f59e0b;
+            --danger: #ef4444;
+            --dark: #000000;
+            --dark-gray: #1a1a1a;
+            --mid-gray: #2d2d2d;
+            --border: rgba(255, 184, 0, 0.2);
+            --text-primary: #ffffff;
+            --text-secondary: #cccccc;
+            --text-muted: #999999;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: #000000;
+            color: #ffffff;
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            position: relative;
+            min-height: 100vh;
+        }
+        
+        /* Subtle Background Pattern */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                radial-gradient(circle at 20% 50%, rgba(255, 184, 0, 0.03) 0%, transparent 50%),
+                radial-gradient(circle at 80% 80%, rgba(255, 140, 0, 0.03) 0%, transparent 50%);
+            z-index: -1;
+        }
+        
+        .dark body {
+            background: #000000;
+            color: #ffffff;
+        }
+        
+        .space-grotesk {
+            font-family: 'Space Grotesk', sans-serif;
+        }
+        
+        /* Gradient Background */
+        .gradient-bg {
+            background: linear-gradient(135deg, #FFB800 0%, #FF8C00 100%);
+        }
+        
+        /* Buttons */
+        .btn-primary {
+            background: linear-gradient(135deg, #FFB800 0%, #FF8C00 100%);
+            color: #000;
+            font-weight: 700;
+            padding: 12px 32px;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            font-size: 13px;
+            box-shadow: 0 4px 15px rgba(255, 184, 0, 0.3);
+        }
+        
+        .btn-primary:hover {
+            background: linear-gradient(135deg, #FF8C00 0%, #FFB800 100%);
+            transform: scale(1.02);
+            box-shadow: 0 6px 20px rgba(255, 184, 0, 0.5);
+        }
+        
+        .btn-secondary {
+            background: transparent;
+            color: var(--primary);
+            font-weight: 600;
+            padding: 12px 32px;
+            border: 2px solid var(--primary);
+            border-radius: 8px;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            font-size: 13px;
+        }
+        
+        .btn-secondary:hover {
+            background: var(--primary);
+            color: #000;
+        }
+        
+        /* Cards */
+        .card {
+            background: rgba(0, 0, 0, 0.8);
+            border: 1px solid rgba(255, 184, 0, 0.3);
+            border-radius: 12px;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(10px);
+        }
+        
+        .card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 12px 30px rgba(255, 184, 0, 0.3);
+            border-color: var(--primary);
+        }
+        
+        .dark .card {
+            background: rgba(0, 0, 0, 0.85);
+            border-color: rgba(255, 184, 0, 0.4);
+        }
+        
+        /* Header */
+        header {
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+        
+        /* Product Cards */
+        .product-card {
+            background: rgba(0, 0, 0, 0.85);
+            border: 1px solid rgba(255, 184, 0, 0.3);
+            border-radius: 12px;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+        }
+        
+        .product-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 12px 30px rgba(255, 184, 0, 0.4);
+            border-color: var(--primary);
+        }
+        
+        .dark .product-card {
+            background: rgba(0, 0, 0, 0.9);
+            border-color: rgba(255, 184, 0, 0.4);
+        }
+        
+        .product-image {
+            background: linear-gradient(135deg, rgba(26, 26, 26, 0.9) 0%, rgba(0, 0, 0, 0.95) 100%);
+            height: 240px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-bottom: 1px solid rgba(255, 184, 0, 0.2);
+        }
+        
+        .dark .product-image {
+            background: linear-gradient(135deg, rgba(0, 0, 0, 0.95) 0%, rgba(26, 26, 26, 0.9) 100%);
+            border-color: rgba(255, 184, 0, 0.3);
+        }
+        
+        .price-tag {
+            background: linear-gradient(135deg, #FFB800 0%, #FF8C00 100%);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            font-weight: 800;
+        }
+        
+        .btn-add-cart {
+            background: linear-gradient(135deg, #FFB800 0%, #FF8C00 100%);
+            color: #000;
+            font-weight: 700;
+            padding: 10px 24px;
+            border-radius: 8px;
+            transition: all 0.2s ease;
+            border: none;
+            cursor: pointer;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            font-size: 12px;
+            box-shadow: 0 2px 10px rgba(255, 184, 0, 0.3);
+        }
+        
+        .btn-add-cart:hover {
+            background: linear-gradient(135deg, #FF8C00 0%, #FFB800 100%);
+            transform: translateY(-1px);
+            box-shadow: 0 4px 15px rgba(255, 184, 0, 0.5);
+        }
+        
+        /* Category Pills */
+        .category-pill {
+            background: rgba(0, 0, 0, 0.6);
+            border: 1px solid rgba(255, 184, 0, 0.3);
+            padding: 8px 20px;
+            border-radius: 24px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            color: #ffffff;
+            font-size: 13px;
+            font-weight: 500;
+            backdrop-filter: blur(5px);
+        }
+        
+        .category-pill:hover {
+            border-color: var(--primary);
+            color: var(--primary);
+            background: rgba(255, 184, 0, 0.1);
+        }
+        
+        .category-pill.active {
+            background: linear-gradient(135deg, #FFB800 0%, #FF8C00 100%);
+            color: #000;
+            border-color: transparent;
+            font-weight: 700;
+        }
+        
+        .search-box {
+            background: rgba(0, 0, 0, 0.7);
+            border: 1px solid rgba(255, 184, 0, 0.3);
+            border-radius: 8px;
+            padding: 12px 20px;
+            color: #ffffff;
+            width: 100%;
+            backdrop-filter: blur(10px);
+        }
+        
+        .search-box:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(255, 184, 0, 0.2);
+        }
+        
+        .search-box::placeholder {
+            color: rgba(255, 255, 255, 0.5);
+        }
+        
+        .dark .search-box {
+            background: rgba(0, 0, 0, 0.8);
+            border-color: rgba(255, 184, 0, 0.4);
+            color: white;
+        }
+        
+        .cart-badge {
+            position: absolute;
+            top: -8px;
+            right: -8px;
+            background: #ef4444;
+            color: white;
+            border-radius: 50%;
+            width: 20px;
+            height: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 11px;
+            font-weight: bold;
+        }
+        
+        /* ========================================
+           FLOATING & ANIMATION EFFECTS
+        ======================================== */
+        
+        /* Float Animation */
+        @keyframes float {
+            0%, 100% {
+                transform: translateY(0px);
+            }
+            50% {
+                transform: translateY(-20px);
+            }
+        }
+        
+        @keyframes floatSlow {
+            0%, 100% {
+                transform: translateY(0px) rotate(0deg);
+            }
+            50% {
+                transform: translateY(-30px) rotate(5deg);
+            }
+        }
+        
+        @keyframes floatX {
+            0%, 100% {
+                transform: translateX(0px);
+            }
+            50% {
+                transform: translateX(20px);
+            }
+        }
+        
+        /* Text Glitch Effect */
+        @keyframes glitch {
+            0% {
+                text-shadow: 2px 2px var(--secondary), -2px -2px var(--primary);
+            }
+            25% {
+                text-shadow: -2px 2px var(--primary), 2px -2px var(--secondary);
+            }
+            50% {
+                text-shadow: 2px -2px var(--secondary), -2px 2px var(--primary);
+            }
+            75% {
+                text-shadow: -2px -2px var(--primary), 2px 2px var(--secondary);
+            }
+            100% {
+                text-shadow: 2px 2px var(--secondary), -2px -2px var(--primary);
+            }
+        }
+        
+        /* Pulse Animation */
+        @keyframes pulse {
+            0%, 100% {
+                opacity: 1;
+                transform: scale(1);
+            }
+            50% {
+                opacity: 0.8;
+                transform: scale(1.05);
+            }
+        }
+        
+        /* Fade In Up */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        /* Fade In Down */
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        /* Fade In Left */
+        @keyframes fadeInLeft {
+            from {
+                opacity: 0;
+                transform: translateX(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+        
+        /* Fade In Right */
+        @keyframes fadeInRight {
+            from {
+                opacity: 0;
+                transform: translateX(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+        
+        /* Neon Pulse */
+        @keyframes neonPulse {
+            0%, 100% {
+                text-shadow: 
+                    0 0 5px var(--primary),
+                    0 0 10px var(--primary),
+                    0 0 20px var(--primary);
+            }
+            50% {
+                text-shadow: 
+                    0 0 10px var(--primary),
+                    0 0 20px var(--primary),
+                    0 0 30px var(--primary),
+                    0 0 40px var(--neon-lime);
+            }
+        }
+        
+        /* Typing Effect */
+        @keyframes typing {
+            from {
+                width: 0;
+            }
+            to {
+                width: 100%;
+            }
+        }
+        
+        @keyframes blink {
+            50% {
+                border-color: transparent;
+            }
+        }
+        
+        /* Rotate 3D */
+        @keyframes rotate3D {
+            0% {
+                transform: rotateY(0deg);
+            }
+            100% {
+                transform: rotateY(360deg);
+            }
+        }
+        
+        /* Shake */
+        @keyframes shake {
+            0%, 100% {
+                transform: translateX(0);
+            }
+            10%, 30%, 50%, 70%, 90% {
+                transform: translateX(-5px);
+            }
+            20%, 40%, 60%, 80% {
+                transform: translateX(5px);
+            }
+        }
+        
+        /* Bounce */
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% {
+                transform: translateY(0);
+            }
+            40% {
+                transform: translateY(-20px);
+            }
+            60% {
+                transform: translateY(-10px);
+            }
+        }
+        
+        /* Gradient Animation */
+        @keyframes gradientShift {
+            0% {
+                background-position: 0% 50%;
+            }
+            50% {
+                background-position: 100% 50%;
+            }
+            100% {
+                background-position: 0% 50%;
+            }
+        }
+        
+        /* ========================================
+           UTILITY ANIMATION CLASSES
+        ======================================== */
+        
+        .float {
+            animation: float 3s ease-in-out infinite;
+        }
+        
+        .float-slow {
+            animation: floatSlow 5s ease-in-out infinite;
+        }
+        
+        .float-x {
+            animation: floatX 4s ease-in-out infinite;
+        }
+        
+        .glitch-text {
+            animation: glitch 0.3s infinite;
+        }
+        
+        .pulse {
+            animation: pulse 2s ease-in-out infinite;
+        }
+        
+        .fade-in-up {
+            animation: fadeInUp 0.8s ease-out forwards;
+        }
+        
+        .fade-in-down {
+            animation: fadeInDown 0.8s ease-out forwards;
+        }
+        
+        .fade-in-left {
+            animation: fadeInLeft 0.8s ease-out forwards;
+        }
+        
+        .fade-in-right {
+            animation: fadeInRight 0.8s ease-out forwards;
+        }
+        
+        .neon-pulse {
+            animation: neonPulse 2s ease-in-out infinite;
+        }
+        
+        .shake {
+            animation: shake 0.5s ease-in-out;
+        }
+        
+        .bounce {
+            animation: bounce 1s ease-in-out infinite;
+        }
+        
+        .rotate-3d {
+            animation: rotate3D 10s linear infinite;
+        }
+        
+        .gradient-animate {
+            background-size: 200% 200%;
+            animation: gradientShift 3s ease infinite;
+        }
+        
+        .space-grotesk {
+            font-family: 'Space Grotesk', sans-serif;
+        }
+        
+        /* Clean Professional Styles */
+        .btn-primary {
+            background: var(--primary);
+            color: #000;
+            font-weight: 700;
+            padding: 14px 28px;
+            border-radius: 2px;
+            transition: all 0.2s ease;
+            border: none;
+            cursor: pointer;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            font-size: 13px;
+        }
+        
+        .btn-primary:hover {
+            background: #b8e600;
+            transform: translateY(-1px);
+        }
+        
+        .btn-secondary {
+            background: transparent;
+            color: var(--secondary);
+            font-weight: 700;
+            padding: 14px 28px;
+            border: 2px solid var(--secondary);
+            border-radius: 2px;
+            transition: all 0.2s ease;
+            cursor: pointer;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            font-size: 13px;
+        }
+        
+        .btn-secondary:hover {
+            background: var(--secondary);
+            color: #000;
+        }
+        
+        /* Modern Card Styles */
+        .card {
+            background: #0a0a0a;
+            border: 1px solid var(--border-gray);
+            border-radius: 4px;
+            transition: all 0.2s ease;
+        }
+        
+        .card:hover {
+            border-color: var(--primary);
+        }
+        
+        /* Header Styles */
+        header {
+            background: rgba(0, 0, 0, 0.98);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid var(--border-gray);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        
+        nav a {
+            position: relative;
+            font-size: 14px;
+            font-weight: 500;
+            letter-spacing: 0.3px;
+            color: var(--text-primary);
+            transition: color 0.2s ease;
+        }
+        
+        nav a:hover {
+            color: var(--primary);
+        }
+        
+        nav a::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--primary);
+            transition: width 0.2s ease;
+        }
+        
+        nav a:hover::after {
+            width: 100%;
+        }
+        
+        .btn-primary {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--cyan) 100%);
+            color: var(--dark);
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: all 0.3s ease;
+        }
+        
+        .btn-primary:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 20px var(--primary);
+        }
+        
+        .btn-secondary {
+            background: transparent;
+            border: 2px solid var(--primary);
+            color: var(--primary);
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: all 0.3s ease;
+        }
+        
+        .btn-secondary:hover {
+            background: var(--primary);
+            color: var(--dark);
+            box-shadow: 0 0 20px var(--primary);
+        }
+        
+        .grid-pattern {
+            background-image: 
+                linear-gradient(rgba(204, 255, 0, 0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255, 0, 51, 0.03) 1px, transparent 1px);
+            background-size: 50px 50px;
+            background-color: #000000;
+        }
+        
+        .cyber-divider {
+            height: 2px;
+            background: linear-gradient(90deg, transparent, var(--primary), var(--secondary), transparent);
+        }
+        
+        .product-category {
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .product-category::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(204, 255, 0, 0.2), transparent);
+            transition: left 0.5s ease;
+        }
+        
+        .product-category:hover::before {
+            left: 100%;
+        }
+        
+        .stat-number {
+            font-size: 3rem;
+            font-weight: 900;
+            background: linear-gradient(135deg, var(--primary), var(--neon-lime));
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+        }
+        
+        .float {
+            animation: float 3s ease-in-out infinite;
+        }
+        
+        @keyframes shimmer {
+            0% { background-position: -200% 0; }
+            100% { background-position: 200% 0; }
+        }
+        
+        .gold-gradient {
+            background: linear-gradient(135deg, #CCFF00 0%, #FF0033 50%, #CCFF00 100%);
+        }
+        
+        .scarpio-text {
+            font-family: 'Brush Script MT', cursive;
+            text-shadow: 0 0 20px rgba(255, 0, 51, 0.8);
+            color: var(--secondary);
+        }
+        
+        /* Shopping Cart Styles */
+        .cart-badge {
+            position: absolute;
+            top: -8px;
+            right: -8px;
+            background: var(--secondary);
+            color: white;
+            border-radius: 50%;
+            width: 20px;
+            height: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 11px;
+            font-weight: bold;
+        }
+        
+        .product-card {
+            background: #0a0a0a;
+            border: 1px solid var(--border-gray);
+            border-radius: 4px;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+        
+        .product-card:hover {
+            border-color: var(--primary);
+            transform: translateY(-2px);
+        }
+        
+        .product-image {
+            background: #000;
+            height: 200px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-bottom: 1px solid var(--border-gray);
+        }
+        
+        .price-tag {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--neon-lime) 100%);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            font-weight: 800;
+        }
+        
+        .btn-add-cart {
+            background: var(--primary);
+            color: #000;
+            font-weight: 700;
+            padding: 10px 20px;
+            border-radius: 2px;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        
+        .btn-add-cart:hover {
+            background: #b8e600;
+            transform: translateY(-1px);
+        }
+        
+        .category-pill {
+            background: transparent;
+            border: 1px solid var(--border-gray);
+            padding: 8px 16px;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            color: var(--text-primary);
+        }
+        
+        .category-pill:hover {
+            border-color: var(--primary);
+            color: var(--primary);
+        }
+        
+        .category-pill.active {
+            background: var(--primary);
+            color: #000;
+            border-color: var(--primary);
+        }
+        
+        .search-box {
+            background: #0a0a0a;
+            border: 1px solid var(--border-gray);
+            border-radius: 4px;
+            padding: 12px 20px;
+            color: white;
+            width: 100%;
+        }
+        
+        .search-box:focus {
+            outline: none;
+            border-color: var(--primary);
+        }
+        
+        /* Neon Text Effect */
+        .neon-text {
+            color: var(--primary);
+            text-shadow: 
+                0 0 5px var(--primary),
+                0 0 10px var(--primary);
+        }
+        
+        .red-neon {
+            color: var(--secondary);
+            text-shadow: 
+                0 0 5px var(--secondary),
+                0 0 10px var(--secondary);
+        }
+    </style>
+</head>
+<body class="bg-gray-50">
+    <!-- Animated Background -->
+    <div class="fixed inset-0 grid-pattern opacity-20 pointer-events-none"></div>
+    
+    <!-- Header -->
+    <header class="relative z-50 pure-black backdrop-filter backdrop-blur-lg border-b border-gray-900" style="background: rgba(0, 0, 0, 0.95);">
+        <nav class="container mx-auto px-6 py-4">
+            <div class="flex justify-between items-center">
+                <div class="flex items-center space-x-6">
+                    <!-- Brand Logos -->
+                    <img src="images/image.png" alt="CLUBBASSE" class="h-12 object-contain">
+                    <img src="images/image copy.png" alt="Lady Scarpio" class="h-12 object-contain">
+                </div>
+                <div class="hidden md:flex space-x-8 items-center">
+                    <a href="#shop" class="text-gray-400 hover:text-primary transition space-grotesk font-semibold">Shop</a>
+                    <a href="#components" class="text-gray-400 hover:text-primary transition space-grotesk font-semibold">Electronics</a>
+                    <a href="#platform" class="text-gray-400 hover:text-primary transition space-grotesk font-semibold">About</a>
+                    <a href="#contact" class="text-gray-400 hover:text-primary transition space-grotesk font-semibold">Contact</a>
+                    
+                    <!-- Search -->
+                    <button class="text-gray-400 hover:text-primary transition">
+                        <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2">
+                            <circle cx="10" cy="10" r="7"/>
+                            <path d="M15 15 L20 20"/>
+                        </svg>
+                    </button>
+                    
+                    <!-- Shopping Cart -->
+                    <button class="text-gray-400 hover:text-primary transition relative">
+                        <svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="2">
+                            <circle cx="9" cy="19" r="2"/>
+                            <circle cx="18" cy="19" r="2"/>
+                            <path d="M1 1h4l2.68 13.39a2 2 0 002 1.61h9.72a2 2 0 002-1.61L23 6H6"/>
+                        </svg>
+                        <span style="position: absolute; top: -6px; right: -6px; background: var(--danger); color: white; border-radius: 10px; width: 18px; height: 18px; display: flex; align-items: center; justify-content: center; font-size: 10px; font-weight: 600;">3</span>
+                    </button>
+                    
+                    <!-- Account -->
+                    <button class="text-gray-400 hover:text-primary transition">
+                        <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2">
+                            <circle cx="10" cy="7" r="4"/>
+                            <path d="M3 20a7 7 0 0 1 14 0"/>
+                        </svg>
+                    </button>
+                    
+                    <button class="btn-primary space-grotesk">
+                        CHECKOUT
+                    </button>
+                </div>
+                <div class="md:hidden">
+                    <button class="text-primary">
+                        <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M3 12h18M3 6h18M3 18h18"/>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="relative gradient-bg text-white py-32 overflow-hidden">
+        <div class="absolute inset-0 opacity-10">
+            <div class="absolute top-0 left-1/4 w-96 h-96 bg-primary rounded-full filter blur-3xl float"></div>
+            <div class="absolute bottom-0 right-1/4 w-96 h-96 bg-cyan rounded-full filter blur-3xl float" style="animation-delay: 1.5s"></div>
+        </div>
+        
+        <div class="container mx-auto px-6 relative z-10">
+            <div class="max-w-5xl mx-auto text-center fade-in">
+                <!-- Brand Logos Hero -->
+                <div class="mb-12 flex items-center justify-center gap-16">
+                    <img src="images/image.png" alt="CLUBBASSE" class="h-24 md:h-32 object-contain hover:scale-105 transition-transform duration-300">
+                    <img src="images/image copy.png" alt="Lady Scarpio" class="h-24 md:h-32 object-contain hover:scale-105 transition-transform duration-300">
+                </div>
+                
+                <h1 class="text-5xl md:text-7xl lg:text-8xl font-black mb-6 space-grotesk leading-tight">
+                    STREETWEAR<br/>
+                    <span class="neon-text">×</span> TECH
+                </h1>
+                
+                <p class="text-xl md:text-2xl mb-4 text-gray-300 max-w-3xl mx-auto">
+                    Premium streetwear meets cutting-edge electronics
+                </p>
+                <p class="text-lg mb-12 text-gray-500">
+                    Limited editions • Quality crafted • Fast worldwide shipping
+                </p>
+                
+                <div class="flex flex-col sm:flex-row justify-center gap-4 mb-16">
+                    <a href="#shop" class="btn-primary px-10 py-4 rounded-lg text-lg inline-block">
+                        SHOP NOW
+                    </a>
+                    <a href="#components" class="btn-secondary px-10 py-4 rounded-lg text-lg inline-block">
+                        BROWSE ELECTRONICS
+                    </a>
+                </div>
+                
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-8 max-w-4xl mx-auto">
+                    <div class="fade-in" style="animation-delay: 0.2s">
+                        <div class="text-4xl font-bold text-primary mb-2 space-grotesk">50+</div>
+                        <div class="text-gray-500 text-sm uppercase tracking-wide">Designs</div>
+                    </div>
+                    <div class="fade-in" style="animation-delay: 0.3s">
+                        <div class="text-4xl font-bold text-primary mb-2 space-grotesk">1K+</div>
+                        <div class="text-gray-500 text-sm uppercase tracking-wide">Components</div>
+                    </div>
+                    <div class="fade-in" style="animation-delay: 0.4s">
+                        <div class="text-4xl font-bold text-primary mb-2 space-grotesk">24/7</div>
+                        <div class="text-gray-500 text-sm uppercase tracking-wide">Support</div>
+                    </div>
+                    <div class="fade-in" style="animation-delay: 0.5s">
+                        <div class="text-4xl font-bold text-primary mb-2 space-grotesk">★5.0</div>
+                        <div class="text-gray-500 text-sm uppercase tracking-wide">Rated</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Product Shop Section -->
+    <section id="shop" class="py-24 relative">
+        <div class="container mx-auto px-6">
+            <!-- Section Title -->
+            <div class="text-center mb-16">
+                <h2 class="text-4xl md:text-5xl font-bold mb-4 space-grotesk">Shop Collection</h2>
+                <p class="text-gray-400 text-lg max-w-2xl mx-auto">Premium streetwear designed for the modern creator</p>
+            </div>
+            
+            <!-- Search and Filters -->
+            <div class="mb-12">
+                <div class="flex flex-col lg:flex-row gap-6 items-start lg:items-center justify-between">
+                    <div class="flex-1 max-w-2xl">
+                        <div class="relative">
+                            <input type="text" placeholder="Search t-shirts, hoodies, accessories..." class="search-box pl-12">
+                            <span class="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400 text-xl">🔍</span>
+                        </div>
+                    </div>
+                    <div class="flex gap-3 items-center">
+                        <span class="text-gray-400 text-sm orbitron font-semibold">Category:</span>
+                        <button class="category-pill active orbitron text-sm">All</button>
+                        <button class="category-pill orbitron text-sm">T-Shirts</button>
+                        <button class="category-pill orbitron text-sm">Hoodies</button>
+                        <button class="category-pill orbitron text-sm">Accessories</button>
+                    </div>
+                    <div class="flex gap-3 items-center">
+                        <span class="text-gray-400 text-sm orbitron font-semibold">Sort:</span>
+                        <select class="search-box py-2 px-4 text-sm">
+                            <option>Newest</option>
+                            <option>Price: Low to High</option>
+                            <option>Price: High to Low</option>
+                            <option>Most Popular</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Product Grid - T-Shirts -->
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                <!-- Product 1 - Black T-Shirt -->
+                <div class="product-card">
+                    <div class="product-image bg-gradient-to-br from-gray-800 to-black">
+                        <div class="text-8xl">👕</div>
+                    </div>
+                    <div class="p-5">
+                        <div class="flex items-start justify-between mb-2">
+                            <h3 class="font-bold text-white text-lg">CLUBBASSE Black Tee</h3>
+                            <span class="px-2 py-1 bg-success bg-opacity-20 text-success text-xs rounded-full orbitron">NEW</span>
+                        </div>
+                        <p class="text-gray-400 text-sm mb-3">Premium cotton • Gold print • Unisex fit</p>
+                        <div class="flex items-center gap-2 mb-3">
+                            <span class="px-2 py-1 bg-gray-800 text-gray-300 text-xs rounded">S</span>
+                            <span class="px-2 py-1 bg-gray-800 text-gray-300 text-xs rounded">M</span>
+                            <span class="px-2 py-1 bg-gray-800 text-gray-300 text-xs rounded">L</span>
+                            <span class="px-2 py-1 bg-gray-800 text-gray-300 text-xs rounded">XL</span>
+                            <span class="px-2 py-1 bg-gray-800 text-gray-300 text-xs rounded">XXL</span>
+                        </div>
+                        <div class="flex items-center justify-between mb-4">
+                            <div>
+                                <div class="price-tag text-2xl orbitron">79 PLN</div>
+                            </div>
+                            <div class="text-yellow-500 text-sm">⭐⭐⭐⭐⭐ (48)</div>
+                        </div>
+                        <button class="btn-add-cart w-full orbitron text-sm">
+                            ADD TO CART 🛒
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Product 2 - White Lady Scarpio -->
+                <div class="product-card">
+                    <div class="product-image bg-gradient-to-br from-gray-200 to-white">
+                        <div class="text-8xl">👕</div>
+                    </div>
+                    <div class="p-5">
+                        <div class="flex items-start justify-between mb-2">
+                            <h3 class="font-bold text-white text-lg">Lady Scarpio White</h3>
+                            <span class="px-2 py-1 bg-danger bg-opacity-20 text-danger text-xs rounded-full orbitron">SALE</span>
+                        </div>
+                        <p class="text-gray-400 text-sm mb-3">Elegant design • Green print • Premium quality</p>
+                        <div class="flex items-center gap-2 mb-3">
+                            <span class="px-2 py-1 bg-gray-800 text-gray-300 text-xs rounded">S</span>
+                            <span class="px-2 py-1 bg-gray-800 text-gray-300 text-xs rounded">M</span>
+                            <span class="px-2 py-1 bg-gray-800 text-gray-300 text-xs rounded">L</span>
+                            <span class="px-2 py-1 bg-gray-800 text-gray-300 text-xs rounded">XL</span>
+                        </div>
+                        <div class="flex items-center justify-between mb-4">
+                            <div>
+                                <div class="price-tag text-2xl orbitron">69 PLN</div>
+                                <div class="text-gray-400 text-xs line-through">89 PLN</div>
+                            </div>
+                            <div class="text-yellow-500 text-sm">⭐⭐⭐⭐⭐ (62)</div>
+                        </div>
+                        <button class="btn-add-cart w-full orbitron text-sm">
+                            ADD TO CART 🛒
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Product 3 - Cyberpunk Edition -->
+                <div class="product-card">
+                    <div class="product-image bg-gradient-to-br from-purple-900 to-black">
+                        <div class="text-8xl">👕</div>
+                    </div>
+                    <div class="p-5">
+                        <div class="flex items-start justify-between mb-2">
+                            <h3 class="font-bold text-white text-lg">Cyberpunk Edition</h3>
+                            <span class="px-2 py-1 bg-purple bg-opacity-20 text-purple text-xs rounded-full orbitron">LIMITED</span>
+                        </div>
+                        <p class="text-gray-400 text-sm mb-3">Neon graphics • Reflective print • Oversized</p>
+                        <div class="flex items-center gap-2 mb-3">
+                            <span class="px-2 py-1 bg-gray-800 text-gray-300 text-xs rounded">M</span>
+                            <span class="px-2 py-1 bg-gray-800 text-gray-300 text-xs rounded">L</span>
+                            <span class="px-2 py-1 bg-gray-800 text-gray-300 text-xs rounded">XL</span>
+                        </div>
+                        <div class="flex items-center justify-between mb-4">
+                            <div>
+                                <div class="price-tag text-2xl orbitron">99 PLN</div>
+                            </div>
+                            <div class="text-yellow-500 text-sm">⭐⭐⭐⭐⭐ (35)</div>
+                        </div>
+                        <button class="btn-add-cart w-full orbitron text-sm">
+                            ADD TO CART 🛒
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Product 4 - Classic Logo -->
+                <div class="product-card">
+                    <div class="product-image bg-gradient-to-br from-gray-700 to-gray-900">
+                        <div class="text-8xl">�</div>
+                    </div>
+                    <div class="p-5">
+                        <div class="flex items-start justify-between mb-2">
+                            <h3 class="font-bold text-white text-lg">Classic Logo Grey</h3>
+                        </div>
+                        <p class="text-gray-400 text-sm mb-3">Minimal design • Soft fabric • Regular fit</p>
+                        <div class="flex items-center gap-2 mb-3">
+                            <span class="px-2 py-1 bg-gray-800 text-gray-300 text-xs rounded">S</span>
+                            <span class="px-2 py-1 bg-gray-800 text-gray-300 text-xs rounded">M</span>
+                            <span class="px-2 py-1 bg-gray-800 text-gray-300 text-xs rounded">L</span>
+                            <span class="px-2 py-1 bg-gray-800 text-gray-300 text-xs rounded">XL</span>
+                            <span class="px-2 py-1 bg-gray-800 text-gray-300 text-xs rounded">XXL</span>
+                        </div>
+                        <div class="flex items-center justify-between mb-4">
+                            <div>
+                                <div class="price-tag text-2xl orbitron">75 PLN</div>
+                            </div>
+                            <div class="text-yellow-500 text-sm">⭐⭐⭐⭐☆ (28)</div>
+                        </div>
+                        <button class="btn-add-cart w-full orbitron text-sm">
+                            ADD TO CART 🛒
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Product 5 - Hoodie -->
+                <div class="product-card">
+                    <div class="product-image bg-gradient-to-br from-black to-gray-800">
+                        <div class="text-8xl">🧥</div>
+                    </div>
+                    <div class="p-5">
+                        <div class="flex items-start justify-between mb-2">
+                            <h3 class="font-bold text-white text-lg">CLUBBASSE Hoodie</h3>
+                            <span class="px-2 py-1 bg-success bg-opacity-20 text-success text-xs rounded-full orbitron">NEW</span>
+                        </div>
+                        <p class="text-gray-400 text-sm mb-3">Heavy cotton • Embroidered logo • Warm</p>
+                        <div class="flex items-center gap-2 mb-3">
+                            <span class="px-2 py-1 bg-gray-800 text-gray-300 text-xs rounded">M</span>
+                            <span class="px-2 py-1 bg-gray-800 text-gray-300 text-xs rounded">L</span>
+                            <span class="px-2 py-1 bg-gray-800 text-gray-300 text-xs rounded">XL</span>
+                            <span class="px-2 py-1 bg-gray-800 text-gray-300 text-xs rounded">XXL</span>
+                        </div>
+                        <div class="flex items-center justify-between mb-4">
+                            <div>
+                                <div class="price-tag text-2xl orbitron">159 PLN</div>
+                            </div>
+                            <div class="text-yellow-500 text-sm">⭐⭐⭐⭐⭐ (91)</div>
+                        </div>
+                        <button class="btn-add-cart w-full orbitron text-sm">
+                            ADD TO CART 🛒
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Product 6 - Neon Green -->
+                <div class="product-card">
+                    <div class="product-image bg-gradient-to-br from-green-500 to-green-700">
+                        <div class="text-8xl">👕</div>
+                    </div>
+                    <div class="p-5">
+                        <div class="flex items-start justify-between mb-2">
+                            <h3 class="font-bold text-white text-lg">Neon Green Special</h3>
+                            <span class="px-2 py-1 bg-cyan bg-opacity-20 text-cyan text-xs rounded-full orbitron">HOT</span>
+                        </div>
+                        <p class="text-gray-400 text-sm mb-3">Bold color • Black print • Statement piece</p>
+                        <div class="flex items-center gap-2 mb-3">
+                            <span class="px-2 py-1 bg-gray-800 text-gray-300 text-xs rounded">S</span>
+                            <span class="px-2 py-1 bg-gray-800 text-gray-300 text-xs rounded">M</span>
+                            <span class="px-2 py-1 bg-gray-800 text-gray-300 text-xs rounded">L</span>
+                        </div>
+                        <div class="flex items-center justify-between mb-4">
+                            <div>
+                                <div class="price-tag text-2xl orbitron">85 PLN</div>
+                            </div>
+                            <div class="text-yellow-500 text-sm">⭐⭐⭐⭐⭐ (44)</div>
+                        </div>
+                        <button class="btn-add-cart w-full orbitron text-sm">
+                            ADD TO CART 🛒
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Product 7 - Long Sleeve -->
+                <div class="product-card">
+                    <div class="product-image bg-gradient-to-br from-blue-900 to-black">
+                        <div class="text-8xl">👕</div>
+                    </div>
+                    <div class="p-5">
+                        <div class="flex items-start justify-between mb-2">
+                            <h3 class="font-bold text-white text-lg">Long Sleeve Navy</h3>
+                        </div>
+                        <p class="text-gray-400 text-sm mb-3">Premium longsleeve • Comfortable • Durable</p>
+                        <div class="flex items-center gap-2 mb-3">
+                            <span class="px-2 py-1 bg-gray-800 text-gray-300 text-xs rounded">M</span>
+                            <span class="px-2 py-1 bg-gray-800 text-gray-300 text-xs rounded">L</span>
+                            <span class="px-2 py-1 bg-gray-800 text-gray-300 text-xs rounded">XL</span>
+                        </div>
+                        <div class="flex items-center justify-between mb-4">
+                            <div>
+                                <div class="price-tag text-2xl orbitron">95 PLN</div>
+                            </div>
+                            <div class="text-yellow-500 text-sm">⭐⭐⭐⭐⭐ (37)</div>
+                        </div>
+                        <button class="btn-add-cart w-full orbitron text-sm">
+                            ADD TO CART 🛒
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Product 8 - Cap -->
+                <div class="product-card">
+                    <div class="product-image bg-gradient-to-br from-gray-900 to-black">
+                        <div class="text-8xl">🧢</div>
+                    </div>
+                    <div class="p-5">
+                        <div class="flex items-start justify-between mb-2">
+                            <h3 class="font-bold text-white text-lg">Branded Cap Black</h3>
+                            <span class="px-2 py-1 bg-warning bg-opacity-20 text-warning text-xs rounded-full orbitron">BESTSELLER</span>
+                        </div>
+                        <p class="text-gray-400 text-sm mb-3">Snapback • Embroidered logo • One size</p>
+                        <div class="flex items-center gap-2 mb-3">
+                            <span class="px-2 py-1 bg-gray-800 text-gray-300 text-xs rounded">One Size</span>
+                        </div>
+                        <div class="flex items-center justify-between mb-4">
+                            <div>
+                                <div class="price-tag text-2xl orbitron">59 PLN</div>
+                            </div>
+                            <div class="text-yellow-500 text-sm">⭐⭐⭐⭐⭐ (156)</div>
+                        </div>
+                        <button class="btn-add-cart w-full orbitron text-sm">
+                            ADD TO CART 🛒
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Load More Button -->
+            <div class="text-center mt-12">
+                <button class="btn-secondary px-12 py-4 rounded-lg orbitron">
+                    LOAD MORE PRODUCTS ↓
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Component Categories Section -->
+    <section id="components" class="py-24 relative bg-gradient-to-b from-black to-gray-900">
+        <div class="container mx-auto px-6">
+            <div class="text-center mb-16 fade-in">
+                <h2 class="text-4xl md:text-5xl font-bold mb-4 space-grotesk">Electronic Components</h2>
+                <p class="text-gray-400 text-lg max-w-2xl mx-auto">Professional-grade hardware for creators and makers</p>
+            </div>
+            
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <!-- Synthesis Components -->
+                <div class="card p-8 rounded-xl product-category cursor-pointer">
+                    <div class="text-4xl mb-4">🎛️</div>
+                    <h3 class="text-2xl font-bold mb-3 orbitron text-primary">SYNTHESIS MODULES</h3>
+                    <p class="text-gray-400 mb-4">TB-303, TR-909, modular oscillators, and analog synthesis components</p>
+                    <div class="flex flex-wrap gap-2 mb-4">
+                        <span class="px-3 py-1 bg-primary bg-opacity-10 border border-primary rounded-full text-xs text-primary">TB-303 ACID</span>
+                        <span class="px-3 py-1 bg-cyan bg-opacity-10 border border-cyan rounded-full text-xs text-cyan">TR-909 DRUMS</span>
+                        <span class="px-3 py-1 bg-purple bg-opacity-10 border border-purple rounded-full text-xs text-purple">MODULAR</span>
+                    </div>
+                    <button class="btn-secondary w-full py-3 rounded-lg mt-4">
+                        Browse →
+                    </button>
+                </div>
+                
+                <!-- Microcontrollers -->
+                <div class="card p-8 rounded-xl product-category cursor-pointer">
+                    <div class="text-4xl mb-4">�</div>
+                    <h3 class="text-2xl font-bold mb-3 orbitron text-cyan">MICROCONTROLLERS</h3>
+                    <p class="text-gray-400 mb-4">Arduino, ESP32, STM32, Raspberry Pi, and development boards</p>
+                    <div class="flex flex-wrap gap-2 mb-4">
+                        <span class="px-3 py-1 bg-cyan bg-opacity-10 border border-cyan rounded-full text-xs text-cyan">ARDUINO</span>
+                        <span class="px-3 py-1 bg-primary bg-opacity-10 border border-primary rounded-full text-xs text-primary">ESP32</span>
+                        <span class="px-3 py-1 bg-purple bg-opacity-10 border border-purple rounded-full text-xs text-purple">RPi</span>
+                    </div>
+                    <button class="btn-secondary w-full py-3 rounded-lg mt-4">
+                        Browse →
+                    </button>
+                </div>
+                
+                <!-- Sensors -->
+                <div class="card p-8 rounded-xl product-category cursor-pointer">
+                    <div class="text-4xl mb-4">📡</div>
+                    <h3 class="text-2xl font-bold mb-3 orbitron text-purple">SENSORS & I/O</h3>
+                    <p class="text-gray-400 mb-4">Temperature, motion, light sensors, displays, and interfaces</p>
+                    <div class="flex flex-wrap gap-2 mb-4">
+                        <span class="px-3 py-1 bg-purple bg-opacity-10 border border-purple rounded-full text-xs text-purple">SENSORS</span>
+                        <span class="px-3 py-1 bg-primary bg-opacity-10 border border-primary rounded-full text-xs text-primary">DISPLAYS</span>
+                        <span class="px-3 py-1 bg-cyan bg-opacity-10 border border-cyan rounded-full text-xs text-cyan">GPIO</span>
+                    </div>
+                    <button class="btn-secondary w-full py-3 rounded-lg mt-4">
+                        Browse →
+                    </button>
+                </div>
+                
+                <!-- Power Supplies -->
+                <div class="card p-8 rounded-xl product-category cursor-pointer">
+                    <div class="text-4xl mb-4">⚡</div>
+                    <h3 class="text-2xl font-bold mb-3 orbitron text-primary">POWER MODULES</h3>
+                    <p class="text-gray-400 mb-4">Voltage regulators, batteries, chargers, and power management</p>
+                    <div class="flex flex-wrap gap-2 mb-4">
+                        <span class="px-3 py-1 bg-primary bg-opacity-10 border border-primary rounded-full text-xs text-primary">REGULATORS</span>
+                        <span class="px-3 py-1 bg-cyan bg-opacity-10 border border-cyan rounded-full text-xs text-cyan">BATTERIES</span>
+                    </div>
+                    <button class="btn-secondary w-full py-3 rounded-lg mt-4">
+                        Browse →
+                    </button>
+                </div>
+                
+                <!-- Audio Components -->
+                <div class="card p-8 rounded-xl product-category cursor-pointer">
+                    <div class="text-4xl mb-4">🔊</div>
+                    <h3 class="text-2xl font-bold mb-3 orbitron text-cyan">AUDIO HARDWARE</h3>
+                    <p class="text-gray-400 mb-4">Amplifiers, DACs, ADCs, speakers, and audio processing chips</p>
+                    <div class="flex flex-wrap gap-2 mb-4">
+                        <span class="px-3 py-1 bg-cyan bg-opacity-10 border border-cyan rounded-full text-xs text-cyan">AMPLIFIERS</span>
+                        <span class="px-3 py-1 bg-purple bg-opacity-10 border border-purple rounded-full text-xs text-purple">DAC/ADC</span>
+                    </div>
+                    <button class="btn-secondary w-full py-3 rounded-lg mt-4">
+                        Browse →
+                    </button>
+                </div>
+                
+                <!-- Tools & Equipment -->
+                <div class="card p-8 rounded-xl product-category cursor-pointer">
+                    <div class="text-4xl mb-4">�️</div>
+                    <h3 class="text-2xl font-bold mb-3 orbitron text-purple">TOOLS & KITS</h3>
+                    <p class="text-gray-400 mb-4">Soldering stations, multimeters, oscilloscopes, and tool kits</p>
+                    <div class="flex flex-wrap gap-2 mb-4">
+                        <span class="px-3 py-1 bg-purple bg-opacity-10 border border-purple rounded-full text-xs text-purple">SOLDERING</span>
+                        <span class="px-3 py-1 bg-primary bg-opacity-10 border border-primary rounded-full text-xs text-primary">TESTING</span>
+                    </div>
+                    <button class="btn-secondary w-full py-3 rounded-lg mt-4">
+                        Browse →
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Synthesis Studios Section -->
+    <section id="synthesis" class="py-24 relative">
+        <div class="container mx-auto px-6">
+            <div class="text-center mb-16 fade-in">
+                <h2 class="text-4xl md:text-5xl font-bold mb-4 space-grotesk">Synthesis Studios</h2>
+                <p class="text-gray-400 text-lg max-w-2xl mx-auto">Hardware-inspired music creation tools</p>
+            </div>
+            
+            <div class="grid md:grid-cols-2 gap-8">
+                <!-- HAOS Platform -->
+                <div class="card p-8 rounded-xl glow relative overflow-hidden">
+                    <div class="absolute top-4 right-4">
+                        <span class="px-4 py-2 bg-secondary rounded-full text-white text-xs font-bold orbitron pulse">🔥 HOT</span>
+                    </div>
+                    <div class="text-5xl mb-4">🎛️</div>
+                    <h3 class="text-3xl font-black mb-4 orbitron text-primary">HAOS PLATFORM</h3>
+                    <p class="text-gray-300 mb-6 text-lg">
+                        Complete production suite with TB-303, TR-909, 16-Step Sequencer, and all Modular Workspace modules pre-loaded
+                    </p>
+                    <div class="grid grid-cols-2 gap-4 mb-6">
+                        <div class="bg-black p-4 rounded-lg border border-primary border-opacity-30">
+                            <div class="text-primary text-sm orbitron font-bold">TB-303 ACID</div>
+                        </div>
+                        <div class="bg-black p-4 rounded-lg border border-cyan border-opacity-30">
+                            <div class="text-cyan text-sm orbitron font-bold">TR-909 DRUMS</div>
+                        </div>
+                        <div class="bg-black p-4 rounded-lg border border-purple border-opacity-30">
+                            <div class="text-purple text-sm orbitron font-bold">SEQUENCER</div>
+                        </div>
+                        <div class="bg-black p-4 rounded-lg border border-primary border-opacity-30">
+                            <div class="text-primary text-sm orbitron font-bold">ALL MODULES</div>
+                        </div>
+                    </div>
+                    <button class="btn-primary w-full py-4 rounded-lg text-lg">
+                        ▶ LAUNCH STUDIO
+                    </button>
+                </div>
+                
+                <!-- Modular Workspace -->
+                <div class="card p-8 rounded-xl relative overflow-hidden">
+                    <div class="absolute top-4 right-4">
+                        <span class="px-4 py-2 bg-primary bg-opacity-20 border border-primary rounded-full text-primary text-xs font-bold orbitron">FEATURED</span>
+                    </div>
+                    <div class="text-5xl mb-4">�</div>
+                    <h3 class="text-3xl font-black mb-4 orbitron text-cyan">MODULAR WORKSPACE</h3>
+                    <p class="text-gray-300 mb-6 text-lg">
+                        Eurorack-inspired modular synthesis environment with Visual Patch Routing and CV Modulation Matrix
+                    </p>
+                    <div class="grid grid-cols-2 gap-4 mb-6">
+                        <div class="bg-black p-4 rounded-lg border border-cyan border-opacity-30">
+                            <div class="text-cyan text-sm orbitron font-bold">🔌 PATCH CABLES</div>
+                        </div>
+                        <div class="bg-black p-4 rounded-lg border border-purple border-opacity-30">
+                            <div class="text-purple text-sm orbitron font-bold">⚡ CV ROUTING</div>
+                        </div>
+                        <div class="bg-black p-4 rounded-lg border border-primary border-opacity-30">
+                            <div class="text-primary text-sm orbitron font-bold">🎛️ MODULAR SYNTH</div>
+                        </div>
+                        <div class="bg-black p-4 rounded-lg border border-cyan border-opacity-30">
+                            <div class="text-cyan text-sm orbitron font-bold">📊 VISUAL FLOW</div>
+                        </div>
+                    </div>
+                    <button class="btn-secondary w-full py-4 rounded-lg text-lg">
+                        ▶ LAUNCH MODULAR WORKSPACE
+                    </button>
+                </div>
+            </div>
+            
+            <!-- Additional Studios -->
+            <div class="grid md:grid-cols-3 gap-6 mt-8">
+                <div class="card p-6 rounded-xl">
+                    <div class="text-3xl mb-3">�</div>
+                    <h4 class="text-xl font-bold mb-2 orbitron text-purple">ARP 2600 STUDIO</h4>
+                    <p class="text-gray-400 text-sm mb-4">Legendary modular synthesizer with complete patch matrix</p>
+                    <div class="text-xs text-gray-400 orbitron uppercase">VINTAGE • ANALOG • MODULAR</div>
+                </div>
+                
+                <div class="card p-6 rounded-xl">
+                    <div class="text-3xl mb-3">🎚️</div>
+                    <h4 class="text-xl font-bold mb-2 orbitron text-primary">PATCH SEQUENCER</h4>
+                    <p class="text-gray-400 text-sm mb-4">Advanced 16-step sequencer with parameter automation</p>
+                    <div class="text-xs text-gray-400 orbitron uppercase">16-STEP • AUTOMATION • MODULATION</div>
+                </div>
+                
+                <div class="card p-6 rounded-xl">
+                    <div class="text-3xl mb-3">📻</div>
+                    <h4 class="text-xl font-bold mb-2 orbitron text-cyan">UNIFIED STUDIO</h4>
+                    <p class="text-gray-400 text-sm mb-4">All-in-one production suite with radio integration</p>
+                    <div class="text-xs text-gray-400 orbitron uppercase">ALL-IN-ONE • RADIO • COLLAB</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Platform Features Section -->
+    <section id="platform" class="py-24 relative bg-gradient-to-b from-gray-900 to-black">
+        <div class="container mx-auto px-6">
+            <div class="text-center mb-16 fade-in">
+                <h2 class="text-4xl md:text-5xl font-bold mb-4 space-grotesk">Platform Features</h2>
+                <p class="text-gray-400 text-lg max-w-2xl mx-auto">Built on enterprise-grade cloud infrastructure</p>
+            </div>
+            
+            <div class="grid md:grid-cols-3 gap-8">
+                <div class="card p-8 rounded-xl text-center">
+                    <div class="text-6xl mb-6">🚀</div>
+                    <h3 class="text-2xl font-bold mb-4 orbitron text-primary">HIGH PERFORMANCE</h3>
+                    <p class="text-gray-400">Next.js 14 with SSR/SSG for optimal speed and SEO</p>
+                </div>
+                
+                <div class="card p-8 rounded-xl text-center">
+                    <div class="text-6xl mb-6">🔒</div>
+                    <h3 class="text-2xl font-bold mb-4 orbitron text-cyan">ENTERPRISE SECURITY</h3>
+                    <p class="text-gray-400">Azure Key Vault, VNet integration, managed identities</p>
+                </div>
+                
+                <div class="card p-8 rounded-xl text-center">
+                    <div class="text-6xl mb-6">📊</div>
+                    <h3 class="text-2xl font-bold mb-4 orbitron text-purple">FULL OBSERVABILITY</h3>
+                    <p class="text-gray-400">Application Insights, Log Analytics, custom dashboards</p>
+                </div>
+                
+                <div class="card p-8 rounded-xl text-center">
+                    <div class="text-6xl mb-6">⚡</div>
+                    <h3 class="text-2xl font-bold mb-4 orbitron text-primary">AUTO-SCALING</h3>
+                    <p class="text-gray-400">Azure App Service with Redis Cache for peak performance</p>
+                </div>
+                
+                <div class="card p-8 rounded-xl text-center">
+                    <div class="text-6xl mb-6">🔄</div>
+                    <h3 class="text-2xl font-bold mb-4 orbitron text-cyan">CI/CD AUTOMATION</h3>
+                    <p class="text-gray-400">GitHub Actions with automated testing and deployment</p>
+                </div>
+                
+                <div class="card p-8 rounded-xl text-center">
+                    <div class="text-6xl mb-6">🌍</div>
+                    <h3 class="text-2xl font-bold mb-4 orbitron text-purple">GLOBAL CDN</h3>
+                    <p class="text-gray-400">Azure CDN for worldwide content delivery</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Tech Stack Section -->
+    <section id="tech" class="py-24 relative" style="background: #0a0a0a;">
+        <div class="container mx-auto px-6">
+            <div class="text-center mb-16 fade-in">
+                <h2 class="text-5xl font-black mb-4 orbitron neon-text">TECHNOLOGY STACK</h2>
+                <div class="cyber-divider w-32 mx-auto mb-6"></div>
+                <p class="text-gray-400 text-lg">Cutting-edge technologies powering Clubbasse.pl</p>
+            </div>
+            
+            <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+                <div class="card p-8 rounded-xl neon-border">
+                    <h4 class="font-bold text-xl mb-4 orbitron text-primary">FRONTEND</h4>
+                    <ul class="text-gray-300 space-y-3">
+                        <li class="flex items-center"><span class="text-cyan mr-2">▸</span> Next.js 14</li>
+                        <li class="flex items-center"><span class="text-cyan mr-2">▸</span> React 18</li>
+                        <li class="flex items-center"><span class="text-cyan mr-2">▸</span> TypeScript</li>
+                        <li class="flex items-center"><span class="text-cyan mr-2">▸</span> TailwindCSS</li>
+                        <li class="flex items-center"><span class="text-cyan mr-2">▸</span> Shadcn/ui</li>
+                    </ul>
+                </div>
+                
+                <div class="card p-8 rounded-xl neon-border">
+                    <h4 class="font-bold text-xl mb-4 orbitron text-cyan">BACKEND</h4>
+                    <ul class="text-gray-300 space-y-3">
+                        <li class="flex items-center"><span class="text-primary mr-2">▸</span> Node.js 20</li>
+                        <li class="flex items-center"><span class="text-primary mr-2">▸</span> Express</li>
+                        <li class="flex items-center"><span class="text-primary mr-2">▸</span> Prisma ORM</li>
+                        <li class="flex items-center"><span class="text-primary mr-2">▸</span> TypeScript</li>
+                        <li class="flex items-center"><span class="text-primary mr-2">▸</span> Azure Functions</li>
+                    </ul>
+                </div>
+                
+                <div class="card p-8 rounded-xl neon-border">
+                    <h4 class="font-bold text-xl mb-4 orbitron text-purple">AZURE</h4>
+                    <ul class="text-gray-300 space-y-3">
+                        <li class="flex items-center"><span class="text-cyan mr-2">▸</span> App Service</li>
+                        <li class="flex items-center"><span class="text-cyan mr-2">▸</span> SQL Database</li>
+                        <li class="flex items-center"><span class="text-cyan mr-2">▸</span> Redis Cache</li>
+                        <li class="flex items-center"><span class="text-cyan mr-2">▸</span> Blob Storage</li>
+                        <li class="flex items-center"><span class="text-cyan mr-2">▸</span> CDN</li>
+                    </ul>
+                </div>
+                
+                <div class="card p-8 rounded-xl neon-border">
+                    <h4 class="font-bold text-xl mb-4 orbitron text-primary">DEVOPS</h4>
+                    <ul class="text-gray-300 space-y-3">
+                        <li class="flex items-center"><span class="text-purple mr-2">▸</span> Terraform</li>
+                        <li class="flex items-center"><span class="text-purple mr-2">▸</span> GitHub Actions</li>
+                        <li class="flex items-center"><span class="text-purple mr-2">▸</span> Docker</li>
+                        <li class="flex items-center"><span class="text-purple mr-2">▸</span> Azure Monitor</li>
+                        <li class="flex items-center"><span class="text-purple mr-2">▸</span> Grafana</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+    <!-- Infrastructure Diagram Section -->
+    <section id="deployment" class="py-24 relative">
+        <div class="container mx-auto px-6">
+            <div class="text-center mb-16 fade-in">
+                <h2 class="text-5xl font-black mb-4 orbitron neon-text">INFRASTRUCTURE</h2>
+                <div class="cyber-divider w-32 mx-auto mb-6"></div>
+                <p class="text-gray-400 text-lg">Cloud-native architecture on Microsoft Azure</p>
+            </div>
+            
+            <div class="card p-10 rounded-xl neon-border">
+                <pre class="text-sm overflow-x-auto text-primary orbitron leading-relaxed">
+<span class="text-cyan">┌─────────────────────────────────────────────────────────┐</span>
+<span class="text-cyan">│</span>                   <span class="text-primary neon-text">USERS / CLIENTS</span>                     <span class="text-cyan">│</span>
+<span class="text-cyan">└────────────────────┬────────────────────────────────────┘</span>
+                     <span class="text-purple">│</span>
+                     <span class="text-purple">▼</span>
+<span class="text-primary">┌─────────────────────────────────────────────────────────┐</span>
+<span class="text-primary">│</span>             <span class="text-cyan neon-text">AZURE CDN + FRONT DOOR</span>                  <span class="text-primary">│</span>
+<span class="text-primary">│</span>          <span class="text-gray-400">(Global Content Delivery)</span>                    <span class="text-primary">│</span>
+<span class="text-primary">└────────────────────┬────────────────────────────────────┘</span>
+                     <span class="text-purple">│</span>
+        <span class="text-purple">┌────────────┴────────────┐</span>
+        <span class="text-purple">│</span>                         <span class="text-purple">│</span>
+        <span class="text-purple">▼</span>                         <span class="text-purple">▼</span>
+<span class="text-cyan">┌───────────────┐</span>         <span class="text-cyan">┌──────────────┐</span>
+<span class="text-cyan">│</span>   <span class="text-primary">FRONTEND</span>   <span class="text-cyan">│</span>         <span class="text-cyan">│</span>   <span class="text-primary">STORAGE</span>   <span class="text-cyan">│</span>
+<span class="text-cyan">│</span>  <span class="text-gray-400">App Service</span>  <span class="text-cyan">│</span>         <span class="text-cyan">│</span> <span class="text-gray-400">Blob + CDN</span>  <span class="text-cyan">│</span>
+<span class="text-cyan">│</span>   <span class="text-gray-400">(Next.js)</span>   <span class="text-cyan">│</span>         <span class="text-cyan">│</span>   <span class="text-gray-400">Images</span>    <span class="text-cyan">│</span>
+<span class="text-cyan">└───────┬───────┘</span>         <span class="text-cyan">└──────────────┘</span>
+        <span class="text-purple">│</span>
+        <span class="text-purple">▼</span>
+<span class="text-primary">┌───────────────────────────────────────────┐</span>
+<span class="text-primary">│</span>        <span class="text-cyan neon-text">BACKEND APP SERVICE</span>              <span class="text-primary">│</span>
+<span class="text-primary">│</span>        <span class="text-gray-400">(Node.js + Express)</span>              <span class="text-primary">│</span>
+<span class="text-primary">└───────┬───────────────────────────────────┘</span>
+        <span class="text-purple">│</span>
+   <span class="text-purple">┌────┴─────┬──────────┬────────────┐</span>
+   <span class="text-purple">│</span>          <span class="text-purple">│</span>          <span class="text-purple">│</span>            <span class="text-purple">│</span>
+   <span class="text-purple">▼</span>          <span class="text-purple">▼</span>          <span class="text-purple">▼</span>            <span class="text-purple">▼</span>
+<span class="text-cyan">┌──────┐</span>  <span class="text-cyan">┌──────┐</span>  <span class="text-cyan">┌────────┐</span>  <span class="text-cyan">┌─────────┐</span>
+<span class="text-cyan">│</span> <span class="text-primary">SQL</span>  <span class="text-cyan">│</span>  <span class="text-cyan">│</span><span class="text-primary">Redis</span><span class="text-cyan">│</span>  <span class="text-cyan">│</span> <span class="text-primary">Azure</span>  <span class="text-cyan">│</span>  <span class="text-cyan">│</span>   <span class="text-primary">Key</span>  <span class="text-cyan">│</span>
+<span class="text-cyan">│</span>  <span class="text-primary">DB</span>  <span class="text-cyan">│</span>  <span class="text-cyan">│</span><span class="text-primary">Cache</span><span class="text-cyan">│</span>  <span class="text-cyan">│</span><span class="text-primary">Storage</span><span class="text-cyan">│</span>  <span class="text-cyan">│</span>  <span class="text-primary">Vault</span>  <span class="text-cyan">│</span>
+<span class="text-cyan">└──────┘</span>  <span class="text-cyan">└──────┘</span>  <span class="text-cyan">└────────┘</span>  <span class="text-cyan">└─────────┘</span>
+                </pre>
+            </div>
+        </div>
+    </section>
+
+    <!-- Monitoring Section -->
+    <section id="monitoring" class="py-24 relative" style="background: #0a0a0a;">
+        <div class="container mx-auto px-6">
+            <div class="text-center mb-16 fade-in">
+                <h2 class="text-5xl font-black mb-4 orbitron neon-text">MONITORING & OBSERVABILITY</h2>
+                <div class="cyber-divider w-32 mx-auto mb-6"></div>
+                <p class="text-gray-400 text-lg">Real-time insights and automated alerting</p>
+            </div>
+            
+            <div class="grid md:grid-cols-2 gap-8">
+                <div class="card p-10 rounded-xl">
+                    <h3 class="text-3xl font-bold mb-6 orbitron text-primary flex items-center">
+                        <span class="text-4xl mr-4">📈</span> METRICS
+                    </h3>
+                    <ul class="space-y-4 text-gray-300">
+                        <li class="flex items-start">
+                            <span class="text-cyan mr-3 mt-1">✓</span>
+                            <span><strong class="text-white">Application Performance Monitoring</strong><br/>
+                            <span class="text-sm text-gray-400">Real-time APM with Application Insights</span></span>
+                        </li>
+                        <li class="flex items-start">
+                            <span class="text-cyan mr-3 mt-1">✓</span>
+                            <span><strong class="text-white">Error Tracking & Analytics</strong><br/>
+                            <span class="text-sm text-gray-400">Sentry integration for exception monitoring</span></span>
+                        </li>
+                        <li class="flex items-start">
+                            <span class="text-cyan mr-3 mt-1">✓</span>
+                            <span><strong class="text-white">Database Performance</strong><br/>
+                            <span class="text-sm text-gray-400">Query optimization and DTU monitoring</span></span>
+                        </li>
+                        <li class="flex items-start">
+                            <span class="text-cyan mr-3 mt-1">✓</span>
+                            <span><strong class="text-white">API Response Times</strong><br/>
+                            <span class="text-sm text-gray-400">p50, p95, p99 percentile tracking</span></span>
+                        </li>
+                        <li class="flex items-start">
+                            <span class="text-cyan mr-3 mt-1">✓</span>
+                            <span><strong class="text-white">User Activity Analytics</strong><br/>
+                            <span class="text-sm text-gray-400">Custom events and business metrics</span></span>
+                        </li>
+                    </ul>
+                </div>
+                
+                <div class="card p-10 rounded-xl">
+                    <h3 class="text-3xl font-bold mb-6 orbitron text-cyan flex items-center">
+                        <span class="text-4xl mr-4">🔔</span> ALERTS
+                    </h3>
+                    <ul class="space-y-4 text-gray-300">
+                        <li class="flex items-start">
+                            <span class="text-primary mr-3 mt-1">✓</span>
+                            <span><strong class="text-white">CPU/Memory Threshold Alerts</strong><br/>
+                            <span class="text-sm text-gray-400">Triggered at 80% utilization</span></span>
+                        </li>
+                        <li class="flex items-start">
+                            <span class="text-primary mr-3 mt-1">✓</span>
+                            <span><strong class="text-white">Slow Response Time Warnings</strong><br/>
+                            <span class="text-sm text-gray-400">Alert when avg exceeds 3 seconds</span></span>
+                        </li>
+                        <li class="flex items-start">
+                            <span class="text-primary mr-3 mt-1">✓</span>
+                            <span><strong class="text-white">Database DTU Monitoring</strong><br/>
+                            <span class="text-sm text-gray-400">Performance degradation detection</span></span>
+                        </li>
+                        <li class="flex items-start">
+                            <span class="text-primary mr-3 mt-1">✓</span>
+                            <span><strong class="text-white">Storage Availability Checks</strong><br/>
+                            <span class="text-sm text-gray-400">99% uptime SLA monitoring</span></span>
+                        </li>
+                        <li class="flex items-start">
+                            <span class="text-primary mr-3 mt-1">✓</span>
+                            <span><strong class="text-white">Custom Business Metrics</strong><br/>
+                            <span class="text-sm text-gray-400">Order completion, revenue, conversions</span></span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Local Development Section -->
+    <section class="py-24 relative">
+        <div class="container mx-auto px-6">
+            <div class="text-center mb-16 fade-in">
+                <h2 class="text-5xl font-black mb-4 orbitron neon-text">LOCAL DEVELOPMENT</h2>
+                <div class="cyber-divider w-32 mx-auto mb-6"></div>
+                <p class="text-gray-400 text-lg">Get started with Docker and local services</p>
+            </div>
+            
+            <div class="card p-10 rounded-xl neon-border" style="background: #000000;">
+                <div class="font-mono text-sm">
+                    <div class="mb-6">
+                        <span class="text-gray-400 orbitron"># Start local services</span><br>
+                        <span class="text-cyan">$</span> <span class="text-primary">docker-compose</span> <span class="text-gray-300">-f docker/docker-compose.yml up -d</span>
+                    </div>
+                    <div class="mb-6">
+                        <span class="text-gray-400 orbitron"># Install dependencies</span><br>
+                        <span class="text-cyan">$</span> <span class="text-primary">npm</span> <span class="text-gray-300">install</span>
+                    </div>
+                    <div class="mb-8">
+                        <span class="text-gray-400 orbitron"># Start development servers</span><br>
+                        <span class="text-cyan">$</span> <span class="text-primary">npm</span> <span class="text-gray-300">run dev</span>
+                    </div>
+                    <div class="p-6 rounded-lg border border-primary border-opacity-30" style="background: #0a0a0a;">
+                        <p class="text-primary orbitron font-bold mb-4">🚀 SERVICES RUNNING:</p>
+                        <div class="grid md:grid-cols-2 gap-4 text-gray-300">
+                            <p><span class="text-cyan">PostgreSQL:</span> localhost:5432</p>
+                            <p><span class="text-cyan">Redis:</span> localhost:6379</p>
+                            <p><span class="text-cyan">MailHog UI:</span> http://localhost:8025</p>
+                            <p><span class="text-cyan">pgAdmin:</span> http://localhost:5050</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="py-24 relative" style="background: #0a0a0a;">
+        <div class="container mx-auto px-6 text-center">
+            <div class="max-w-3xl mx-auto fade-in">
+                <h2 class="text-5xl font-black mb-6 orbitron neon-text">READY TO BUILD?</h2>
+                <p class="text-xl text-gray-300 mb-10">
+                    Join the electronic components revolution. Build, synthesize, and create with professional-grade tools.
+                </p>
+                <div class="flex flex-col sm:flex-row justify-center space-y-4 sm:space-y-0 sm:space-x-6">
+                    <a href="#components" class="btn-primary px-12 py-5 rounded-lg text-lg inline-block glow">
+                        🛒 SHOP COMPONENTS
+                    </a>
+                    <a href="#synthesis" class="btn-secondary px-12 py-5 rounded-lg text-lg inline-block">
+                        🎛️ TRY SYNTHESIS
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="pure-black border-t border-gray-900 py-12">
+        <div class="container mx-auto px-6">
+            <div class="grid md:grid-cols-4 gap-8 mb-8">
+                <div>
+                    <!-- Footer Logos -->
+                    <div class="mb-6 flex flex-col gap-3">
+                        <img src="images/image.png" alt="CLUBBASSE" class="h-10 object-contain object-left">
+                        <img src="images/image copy.png" alt="Lady Scarpio" class="h-10 object-contain object-left">
+                    </div>
+                    <p class="text-gray-400 text-sm">
+                        Professional electronic components and synthesis hardware platform.
+                    </p>
+                </div>
+                <div>
+                    <h4 class="orbitron text-primary font-bold mb-4">PRODUCTS</h4>
+                    <ul class="space-y-2 text-gray-400 text-sm">
+                        <li><a href="#" class="hover:text-primary transition">Components</a></li>
+                        <li><a href="#" class="hover:text-primary transition">Synthesis Modules</a></li>
+                        <li><a href="#" class="hover:text-primary transition">Development Kits</a></li>
+                        <li><a href="#" class="hover:text-primary transition">Tools & Equipment</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="orbitron text-cyan font-bold mb-4">PLATFORM</h4>
+                    <ul class="space-y-2 text-gray-400 text-sm">
+                        <li><a href="#" class="hover:text-cyan transition">HAOS Platform</a></li>
+                        <li><a href="#" class="hover:text-cyan transition">Modular Workspace</a></li>
+                        <li><a href="#" class="hover:text-cyan transition">Documentation</a></li>
+                        <li><a href="#" class="hover:text-cyan transition">API Reference</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="orbitron text-purple font-bold mb-4">COMPANY</h4>
+                    <ul class="space-y-2 text-gray-400 text-sm">
+                        <li><a href="#" class="hover:text-purple transition">About Us</a></li>
+                        <li><a href="#" class="hover:text-purple transition">Contact</a></li>
+                        <li><a href="https://github.com" class="hover:text-purple transition">GitHub</a></li>
+                        <li><a href="#" class="hover:text-purple transition">Terms & Privacy</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="cyber-divider mb-8"></div>
+            
+            <div class="text-center text-gray-400 text-sm">
+                <div class="mb-4 flex justify-center items-center space-x-4">
+                    <span class="text-xl font-bold" style="color: #d4af37;">CLUBBASSE</span>
+                    <span class="text-gray-700">×</span>
+                    <span class="text-xl font-bold" style="font-family: 'Brush Script MT', cursive; color: var(--primary);">Lady Scarpio</span>
+                </div>
+                <p class="mb-2">&copy; 2025 CLUBBASSE.PL × LADY SCARPIO - Electronic Components & Synthesis Hardware</p>
+                <p class="text-xs">Built with ❤️ using Azure • Next.js • Terraform • Hardware Analog Oscillator Synthesis</p>
+                <div class="mt-4 flex justify-center space-x-6">
+                    <a href="mailto:admin@clubbasse.pl" class="text-primary hover:text-cyan transition">admin@clubbasse.pl</a>
+                    <span class="text-gray-700">|</span>
+                    <a href="https://haos.fm" class="text-cyan hover:text-primary transition">HAOS.FM</a>
+                    <span class="text-gray-700">|</span>
+                    <a href="http://clubbasse.pl" class="text-purple hover:text-primary transition">CLUBBASSE.PL</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // ========================================
+        // FLOATING TEXT EFFECTS SYSTEM
+        // ========================================
+        
+        class FloatingTextEngine {
+            constructor() {
+                this.activeFloats = [];
+                this.init();
+            }
+            
+            init() {
+                this.setupScrollAnimations();
+                this.setupParallax();
+                this.setupFloatingLetters();
+                this.setupGlitchEffect();
+                this.setupCursorTrail();
+                this.setupTypingEffect();
+                this.setupHoverEffects();
+            }
+            
+            // Smooth Scroll Animation
+            setupScrollAnimations() {
+                document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                    anchor.addEventListener('click', (e) => {
+                        e.preventDefault();
+                        const target = document.querySelector(anchor.getAttribute('href'));
+                        if (target) {
+                            target.scrollIntoView({ 
+                                behavior: 'smooth', 
+                                block: 'start' 
+                            });
+                        }
+                    });
+                });
+                
+                // Intersection Observer for fade-in animations
+                const observer = new IntersectionObserver((entries) => {
+                    entries.forEach(entry => {
+                        if (entry.isIntersecting) {
+                            entry.target.classList.add('fade-in-up');
+                        }
+                    });
+                }, { threshold: 0.1 });
+                
+                document.querySelectorAll('section').forEach(section => {
+                    observer.observe(section);
+                });
+            }
+            
+            // Parallax Floating Effect
+            setupParallax() {
+                let ticking = false;
+                
+                window.addEventListener('scroll', () => {
+                    if (!ticking) {
+                        window.requestAnimationFrame(() => {
+                            const scrolled = window.pageYOffset;
+                            
+                            // Parallax for floating elements
+                            document.querySelectorAll('.float').forEach(el => {
+                                const speed = el.dataset.speed || 0.3;
+                                el.style.transform = `translateY(${scrolled * speed}px)`;
+                            });
+                            
+                            // Parallax for slow floating elements
+                            document.querySelectorAll('.float-slow').forEach(el => {
+                                const speed = el.dataset.speed || 0.15;
+                                const rotate = scrolled * 0.05;
+                                el.style.transform = `translateY(${scrolled * speed}px) rotate(${rotate}deg)`;
+                            });
+                            
+                            ticking = false;
+                        });
+                        ticking = true;
+                    }
+                });
+            }
+            
+            // Floating Letters Effect
+            setupFloatingLetters() {
+                const floatingTextElements = document.querySelectorAll('.floating-letters');
+                
+                floatingTextElements.forEach(element => {
+                    const text = element.textContent;
+                    element.innerHTML = '';
+                    
+                    text.split('').forEach((char, index) => {
+                        const span = document.createElement('span');
+                        span.textContent = char === ' ' ? '\u00A0' : char;
+                        span.style.display = 'inline-block';
+                        span.style.animation = `float ${2 + Math.random() * 2}s ease-in-out infinite`;
+                        span.style.animationDelay = `${index * 0.1}s`;
+                        element.appendChild(span);
+                    });
+                });
+            }
+            
+            // Glitch Text Effect
+            setupGlitchEffect() {
+                const glitchElements = document.querySelectorAll('.glitch-trigger');
+                
+                glitchElements.forEach(element => {
+                    element.addEventListener('mouseenter', () => {
+                        element.classList.add('glitch-text');
+                        setTimeout(() => {
+                            element.classList.remove('glitch-text');
+                        }, 300);
+                    });
+                });
+                
+                // Random glitch on cards
+                setInterval(() => {
+                    const cards = document.querySelectorAll('.card, .product-card');
+                    if (cards.length > 0) {
+                        const randomCard = cards[Math.floor(Math.random() * cards.length)];
+                        randomCard.style.transform = 'translateX(2px)';
+                        setTimeout(() => {
+                            randomCard.style.transform = '';
+                        }, 50);
+                    }
+                }, 5000);
+            }
+            
+            // Enhanced Cursor Trail
+            setupCursorTrail() {
+                let trails = [];
+                const maxTrails = 10;
+                
+                document.addEventListener('mousemove', (e) => {
+                    if (Math.random() > 0.7) { // Only create trail 30% of the time
+                        const trail = document.createElement('div');
+                        trail.className = 'cursor-trail';
+                        trail.style.cssText = `
+                            position: fixed;
+                            width: 4px;
+                            height: 4px;
+                            background: ${Math.random() > 0.5 ? 'var(--primary)' : 'var(--secondary)'};
+                            border-radius: 50%;
+                            pointer-events: none;
+                            left: ${e.clientX}px;
+                            top: ${e.clientY}px;
+                            opacity: 0.6;
+                            z-index: 9999;
+                            transition: all 0.5s ease-out;
+                        `;
+                        document.body.appendChild(trail);
+                        
+                        trails.push(trail);
+                        if (trails.length > maxTrails) {
+                            const oldTrail = trails.shift();
+                            oldTrail.remove();
+                        }
+                        
+                        setTimeout(() => {
+                            trail.style.opacity = '0';
+                            trail.style.transform = 'scale(2)';
+                        }, 10);
+                        
+                        setTimeout(() => trail.remove(), 500);
+                    }
+                });
+            }
+            
+            // Typing Effect
+            setupTypingEffect() {
+                const typingElements = document.querySelectorAll('.typing-effect');
+                
+                typingElements.forEach(element => {
+                    const text = element.textContent;
+                    element.textContent = '';
+                    element.style.borderRight = '2px solid var(--primary)';
+                    
+                    let i = 0;
+                    const typing = setInterval(() => {
+                        if (i < text.length) {
+                            element.textContent += text.charAt(i);
+                            i++;
+                        } else {
+                            clearInterval(typing);
+                            setTimeout(() => {
+                                element.style.borderRight = 'none';
+                            }, 500);
+                        }
+                    }, 100);
+                });
+            }
+            
+            // Interactive Hover Effects
+            setupHoverEffects() {
+                // Button ripple effect
+                document.querySelectorAll('.btn-primary, .btn-secondary, .btn-add-cart').forEach(button => {
+                    button.addEventListener('click', function(e) {
+                        const ripple = document.createElement('span');
+                        const rect = this.getBoundingClientRect();
+                        const size = Math.max(rect.width, rect.height);
+                        const x = e.clientX - rect.left - size / 2;
+                        const y = e.clientY - rect.top - size / 2;
+                        
+                        ripple.style.cssText = `
+                            position: absolute;
+                            width: ${size}px;
+                            height: ${size}px;
+                            left: ${x}px;
+                            top: ${y}px;
+                            background: rgba(255, 255, 255, 0.5);
+                            border-radius: 50%;
+                            transform: scale(0);
+                            animation: ripple 0.6s ease-out;
+                            pointer-events: none;
+                        `;
+                        
+                        this.style.position = 'relative';
+                        this.style.overflow = 'hidden';
+                        this.appendChild(ripple);
+                        
+                        setTimeout(() => ripple.remove(), 600);
+                    });
+                });
+                
+                // Card tilt effect
+                document.querySelectorAll('.product-card').forEach(card => {
+                    card.addEventListener('mousemove', function(e) {
+                        const rect = this.getBoundingClientRect();
+                        const x = e.clientX - rect.left;
+                        const y = e.clientY - rect.top;
+                        
+                        const centerX = rect.width / 2;
+                        const centerY = rect.height / 2;
+                        
+                        const rotateX = (y - centerY) / 10;
+                        const rotateY = (centerX - x) / 10;
+                        
+                        this.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateY(-2px)`;
+                    });
+                    
+                    card.addEventListener('mouseleave', function() {
+                        this.style.transform = '';
+                    });
+                });
+            }
+            
+            // Create floating text bubble
+            createFloatingText(text, x, y) {
+                const bubble = document.createElement('div');
+                bubble.textContent = text;
+                bubble.style.cssText = `
+                    position: fixed;
+                    left: ${x}px;
+                    top: ${y}px;
+                    color: var(--primary);
+                    font-size: 14px;
+                    font-weight: bold;
+                    pointer-events: none;
+                    z-index: 10000;
+                    animation: floatUp 2s ease-out forwards;
+                `;
+                document.body.appendChild(bubble);
+                
+                setTimeout(() => bubble.remove(), 2000);
+            }
+        }
+        
+        // CSS for ripple animation
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes ripple {
+                to {
+                    transform: scale(4);
+                    opacity: 0;
+                }
+            }
+            
+            @keyframes floatUp {
+                to {
+                    transform: translateY(-100px);
+                    opacity: 0;
+                }
+            }
+        `;
+        document.head.appendChild(style);
+        
+        // Initialize the floating text engine
+        const floatingEngine = new FloatingTextEngine();
+        
+        // Add click feedback with floating text
+        document.querySelectorAll('.btn-add-cart').forEach(button => {
+            button.addEventListener('click', function(e) {
+                floatingEngine.createFloatingText('Added! 🛒', e.clientX, e.clientY);
+            });
+        });
+        
+        console.log('🎨 Floating Text Engine Initialized');
+    </script>
+</body>
+</html>
