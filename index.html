@@ -23,6 +23,7 @@
             <ul class="nav-menu">
                 <li><a href="#stats" class="nav-link">Metryki</a></li>
                 <li><a href="#about" class="nav-link">Historia</a></li>
+                <li><a href="#haos-radio" class="nav-link haos-nav">HAOS.fm</a></li>
                 <li><a href="#portfolio" class="nav-link">Galeria</a></li>
                 <li><a href="#services" class="nav-link">Oferta</a></li>
                 <li><a href="#booking" class="nav-link">Rozkład Jazdy</a></li>
@@ -56,7 +57,7 @@
             <p class="section-subtitle">Odkryj dźwięki CLUBBASSE i Arch1tect</p>
             <div class="tracks-grid">
                 <div class="track-card animate-on-scroll">
-                    <div class="track-cover" style="background-image: url('images/464443225_10220494714557734_6815949099677842880_n.jpg');"></div>
+                    <div class="track-cover" style="background-image: url('images/464443225_10220494714557734_8482962689256333843_n.jpg');"></div>
                     <div class="track-info">
                         <h3 class="track-title">Pumping Energy</h3>
                         <p class="track-artist">CLUBBASSE</p>
@@ -64,7 +65,7 @@
                     </div>
                 </div>
                 <div class="track-card animate-on-scroll">
-                    <div class="track-cover" style="background-image: url('images/464621273_10220514012560172_3906518949318475503_n.jpg');"></div>
+                    <div class="track-cover" style="background-image: url('images/464621273_10220514012560172_6345855206631388049_n.jpg');"></div>
                     <div class="track-info">
                         <h3 class="track-title">Deep Vibes</h3>
                         <p class="track-artist">Arch1tect</p>
@@ -72,7 +73,7 @@
                     </div>
                 </div>
                 <div class="track-card animate-on-scroll">
-                    <div class="track-cover" style="background-image: url('images/464839101_10220540564463953_6244854662685093876_n.jpg');"></div>
+                    <div class="track-cover" style="background-image: url('images/464839101_10220540564463953_6671588997021038565_n.jpg');"></div>
                     <div class="track-info">
                         <h3 class="track-title">Night Drive</h3>
                         <p class="track-artist">CLUBBASSE</p>
@@ -80,7 +81,7 @@
                     </div>
                 </div>
                 <div class="track-card animate-on-scroll">
-                    <div class="track-cover" style="background-image: url('images/465397893_10220640823610369_8835311990926095766_n.jpg');"></div>
+                    <div class="track-cover" style="background-image: url('images/465397893_10220640823610369_2634950720329519865_n.jpg');"></div>
                     <div class="track-info">
                         <h3 class="track-title">Techno Flow</h3>
                         <p class="track-artist">Arch1tect</p>
@@ -88,7 +89,7 @@
                     </div>
                 </div>
                 <div class="track-card animate-on-scroll">
-                    <div class="track-cover" style="background-image: url('images/465441632_10220639728582994_3617761843163698889_n.jpg');"></div>
+                    <div class="track-cover" style="background-image: url('images/465441632_10220639728582994_3459818439755776654_n.jpg');"></div>
                     <div class="track-info">
                         <h3 class="track-title">Sunrise Sessions</h3>
                         <p class="track-artist">CLUBBASSE</p>
@@ -96,13 +97,86 @@
                     </div>
                 </div>
                 <div class="track-card animate-on-scroll">
-                    <div class="track-cover" style="background-image: url('images/466152903_10220764641585741_3479851195068881655_n.jpg');"></div>
+                    <div class="track-cover" style="background-image: url('images/466152903_10220764641585741_5235279180243239869_n.jpg');"></div>
                     <div class="track-info">
                         <h3 class="track-title">Dark Matter</h3>
                         <p class="track-artist">Arch1tect</p>
                         <button class="track-play">▶</button>
                     </div>
                 </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="haos-radio" class="section section-haos">
+        <div class="container">
+            <h2 class="section-title haos-title">HAOS.fm Radio</h2>
+            <p class="section-subtitle">Słuchaj na żywo - Non-stop Electronic Vibes</p>
+            
+            <div class="haos-player-main">
+                <div class="haos-player-art">
+                    <div class="vinyl-animation">
+                        <div class="vinyl-disc"></div>
+                    </div>
+                    <div class="haos-now-playing">
+                        <div class="haos-status">● LIVE</div>
+                        <h3 id="haosTrackTitle">Electronic Beats</h3>
+                        <p id="haosArtist">HAOS.fm Stream</p>
+                    </div>
+                </div>
+                <div class="haos-player-controls">
+                    <button class="haos-play-btn" id="haosPlayBtn">
+                        <span class="play-icon">▶</span>
+                        <span class="pause-icon">❚❚</span>
+                    </button>
+                    <div class="haos-volume-control">
+                        <span class="volume-icon">🔊</span>
+                        <input type="range" class="haos-slider haos-volume-slider" id="haosVolume" min="0" max="100" value="70">
+                        <span class="volume-value" id="volumeValue">70%</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="haos-shows-grid">
+                <div class="haos-show-card animate-on-scroll">
+                    <div class="haos-show-time">Poniedziałek 20:00</div>
+                    <h3 class="haos-show-title">Pumping House Night</h3>
+                    <p class="haos-show-host">z CLUBBASSE</p>
+                    <div class="haos-show-genre">House • Tech House</div>
+                </div>
+                <div class="haos-show-card animate-on-scroll">
+                    <div class="haos-show-time">Środa 22:00</div>
+                    <h3 class="haos-show-title">Deep Techno Sessions</h3>
+                    <p class="haos-show-host">z Arch1tect</p>
+                    <div class="haos-show-genre">Techno • Progressive</div>
+                </div>
+                <div class="haos-show-card animate-on-scroll">
+                    <div class="haos-show-time">Piątek 21:00</div>
+                    <h3 class="haos-show-title">Weekend Warmup</h3>
+                    <p class="haos-show-host">Special Guests</p>
+                    <div class="haos-show-genre">Electronic Mix</div>
+                </div>
+                <div class="haos-show-card animate-on-scroll">
+                    <div class="haos-show-time">Sobota 00:00</div>
+                    <h3 class="haos-show-title">After Hours</h3>
+                    <p class="haos-show-host">Resident DJs</p>
+                    <div class="haos-show-genre">Underground Vibes</div>
+                </div>
+            </div>
+
+            <div class="haos-equalizer">
+                <div class="eq-bar"></div>
+                <div class="eq-bar"></div>
+                <div class="eq-bar"></div>
+                <div class="eq-bar"></div>
+                <div class="eq-bar"></div>
+                <div class="eq-bar"></div>
+                <div class="eq-bar"></div>
+                <div class="eq-bar"></div>
+                <div class="eq-bar"></div>
+                <div class="eq-bar"></div>
+                <div class="eq-bar"></div>
+                <div class="eq-bar"></div>
             </div>
         </div>
     </section>
@@ -217,23 +291,23 @@
             </div>
             <div class="gallery-grid">
                 <div class="gallery-item animate-on-scroll" data-category="events">
-                    <div class="gallery-image" style="background-image: url('images/494048835_122116924232818967_8224950536925974823_n.jpg'); background-size: cover; background-position: center;"></div>
+                    <div class="gallery-image" style="background-image: url('images/494048835_122116924232818967_4857791186410835517_n.jpg'); background-size: cover; background-position: center;"></div>
                     <div class="gallery-overlay"><h3>Club Night</h3><p>CLUBBASSE Energy</p></div>
                 </div>
                 <div class="gallery-item animate-on-scroll" data-category="festivals">
-                    <div class="gallery-image" style="background-image: url('images/525343018_122134127126818967_2773883912779088734_n.png.jpeg'); background-size: cover; background-position: center;"></div>
+                    <div class="gallery-image" style="background-image: url('images/525343018_122134127126818967_1288604212562039113_n.png.jpeg'); background-size: cover; background-position: center;"></div>
                     <div class="gallery-overlay"><h3>Festival Stage</h3><p>Pumping Vibes 2024</p></div>
                 </div>
                 <div class="gallery-item animate-on-scroll" data-category="studio">
-                    <div class="gallery-image" style="background-image: url('images/585545879_122150181614818967_2881683346176879773_n.png'); background-size: cover; background-position: center;"></div>
+                    <div class="gallery-image" style="background-image: url('images/585545879_122150181614818967_3479193499990317665_n.png'); background-size: cover; background-position: center;"></div>
                     <div class="gallery-overlay"><h3>Za kulisami</h3><p>Studio Sessions</p></div>
                 </div>
                 <div class="gallery-item animate-on-scroll" data-category="events">
-                    <div class="gallery-image" style="background-image: url('images/595616301_10223886487189930_7803481802989533977_n.jpg'); background-size: cover; background-position: center;"></div>
+                    <div class="gallery-image" style="background-image: url('images/595616301_10223886487189930_286573762732649363_n.jpg'); background-size: cover; background-position: center;"></div>
                     <div class="gallery-overlay"><h3>Live Set</h3><p>Arch1tect Techno</p></div>
                 </div>
                 <div class="gallery-item animate-on-scroll" data-category="festivals">
-                    <div class="gallery-image" style="background-image: url('images/597105929_122152486832818967_7867913468473103913_n.jpg'); background-size: cover; background-position: center;"></div>
+                    <div class="gallery-image" style="background-image: url('images/597105929_122152486832818967_5328531191516479357_n.jpg'); background-size: cover; background-position: center;"></div>
                     <div class="gallery-overlay"><h3>Open Air</h3><p>Summer Vibes</p></div>
                 </div>
                 <div class="gallery-item animate-on-scroll" data-category="studio">

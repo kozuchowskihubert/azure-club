@@ -1,0 +1,458 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CLUBBASSE | Official Website</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800;900&family=Bebas+Neue&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <header class="nav-header" id="header">
+        <nav class="nav-container">
+            <a href="#home" class="nav-logo">
+                <img src="images/clubbasse.png" alt="CLUBBASSE" class="nav-logo-img">
+            </a>
+            <div class="nav-links">
+                <a href="#home" class="nav-link">Home</a>
+                <a href="#stats" class="nav-link">Metryki</a>
+                <a href="#timeline" class="nav-link">Historia</a>
+                <a href="#portfolio" class="nav-link">Galeria</a>
+                <a href="#services" class="nav-link">Oferta</a>
+                <a href="#schedule" class="nav-link">Rozkład Jazdy</a>
+                <a href="#contact" class="nav-link">Kontakt</a>
+            </div>
+            <button class="mobile-menu-btn" id="mobileMenuBtn" aria-label="Menu">
+                <span></span><span></span><span></span>
+            </button>
+        </nav>
+    </header>
+    <div class="mobile-menu" id="mobileMenu">
+        <button class="mobile-menu-close" id="mobileMenuClose">&times;</button>
+        <a href="#home">Home</a>
+        <a href="#stats">Metryki</a>
+        <a href="#timeline">Historia</a>
+        <a href="#portfolio">Galeria</a>
+        <a href="#services">Oferta</a>
+        <a href="#schedule">Rozkład Jazdy</a>
+        <a href="#contact">Kontakt</a>
+    </div>
+    <section id="home" class="hero">
+        <div class="hero-bg">
+            <div class="hero-gradient"></div>
+            <div class="hero-grid"></div>
+            <div class="particles" id="particles"></div>
+        </div>
+        <div class="hero-content">
+            <div class="hero-logo animate-on-scroll">
+                <img src="images/club.png" alt="CLUBBASSE" class="hero-logo-img">
+            </div>
+            <h1 class="hero-title animate-on-scroll">CLUBBASSE <span class="hero-separator">&</span> ARCH1TECT</h1>
+            <p class="hero-tagline animate-on-scroll">Dwa style, jedna pasja - od pumping house do deep techno</p>
+            <p class="hero-subtitle animate-on-scroll">25 lat na parkietach, producent, DJ, legenda klubowa</p>
+            <div class="hero-buttons animate-on-scroll">
+                <a href="#tracks" class="btn-primary">Posłuchaj Utworów</a>
+                <a href="#portfolio" class="btn-outline">Zobacz Galerię</a>
+            </div>
+        </div>
+    </section>
+    <section id="stats" class="section section-light">
+        <div class="container">
+            <h2 class="section-title animate-on-scroll">METRYKI</h2>
+            <p class="section-subtitle animate-on-scroll">Liczby mowia same za siebie</p>
+            <div class="stats-grid">
+                <div class="stat-card animate-on-scroll">
+                    <div class="stat-icon">🎧</div>
+                    <div class="stat-number"><span class="counter" data-target="25">0</span>+</div>
+                    <div class="stat-label">Lat Doswiadczenia</div>
+                    <div class="stat-bar"><div class="stat-bar-fill" data-percent="100"></div></div>
+                </div>
+                <div class="stat-card animate-on-scroll">
+                    <div class="stat-icon">🎪</div>
+                    <div class="stat-number"><span class="counter" data-target="1000">0</span>+</div>
+                    <div class="stat-label">Wydarzen</div>
+                    <div class="stat-bar"><div class="stat-bar-fill" data-percent="90"></div></div>
+                </div>
+                <div class="stat-card animate-on-scroll">
+                    <div class="stat-icon">👥</div>
+                    <div class="stat-number"><span class="counter" data-target="500">0</span>K+</div>
+                    <div class="stat-label">Zadowolonych Fanow</div>
+                    <div class="stat-bar"><div class="stat-bar-fill" data-percent="95"></div></div>
+                </div>
+                <div class="stat-card animate-on-scroll">
+                    <div class="stat-icon">🏆</div>
+                    <div class="stat-number"><span class="counter" data-target="50">0</span>+</div>
+                    <div class="stat-label">Nagrod i Wyroznie</div>
+                    <div class="stat-bar"><div class="stat-bar-fill" data-percent="80"></div></div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section id="timeline" class="section section-dark">
+        <div class="container">
+            <h2 class="section-title animate-on-scroll">OS CZASU</h2>
+            <p class="section-subtitle animate-on-scroll">Historia sukcesu CLUBBASSE</p>
+            <div class="timeline-container">
+                <div class="timeline-track"><div class="timeline-progress" id="timelineProgress"></div></div>
+                <div class="timeline-slider" id="timelineSlider">
+                    <div class="timeline-item active" data-year="1999">
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-content">
+                            <span class="timeline-year">1999</span>
+                            <h3>Poczatki</h3>
+                            <p>Start kariery DJ-skiej i pierwsze kroki w swiecie muzyki klubowej.</p>
+                        </div>
+                    </div>
+                    <div class="timeline-item" data-year="2005">
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-content">
+                            <span class="timeline-year">2005</span>
+                            <h3>Pierwsze Duze Eventy</h3>
+                            <p>Wystepy na najwiekszych festiwalach i klubach w Polsce.</p>
+                        </div>
+                    </div>
+                    <div class="timeline-item" data-year="2010">
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-content">
+                            <span class="timeline-year">2010</span>
+                            <h3>Era Pumping House</h3>
+                            <p>Definiowanie gatunku i budowanie marki CLUBBASSE.</p>
+                        </div>
+                    </div>
+                    <div class="timeline-item" data-year="2015">
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-content">
+                            <span class="timeline-year">2015</span>
+                            <h3>Zlota Dekada</h3>
+                            <p>Najwazniejsze produkcje i miedzynarodowa rozpoznawalnosc.</p>
+                        </div>
+                    </div>
+                    <div class="timeline-item" data-year="2020">
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-content">
+                            <span class="timeline-year">2020</span>
+                            <h3>Cyfrowa Transformacja</h3>
+                            <p>Streamy online i nowe formy dotarcia do fanow.</p>
+                        </div>
+                    </div>
+                    <div class="timeline-item" data-year="2024">
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-content">
+                            <span class="timeline-year">2024</span>
+                            <h3>25 Lat Legendy</h3>
+                            <p>Jubileusz i kontynuacja misji szerzenia pumpingu.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="timeline-nav">
+                    <button class="timeline-btn" id="timelinePrev">&#8592;</button>
+                    <button class="timeline-btn" id="timelineNext">&#8594;</button>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <section id="tracks" class="section section-dark">
+        <div class="container">
+            <h2 class="section-title animate-on-scroll">UTWORY</h2>
+            <p class="section-subtitle animate-on-scroll">Najnowsze produkcje CLUBBASSE i Arch1tect</p>
+            
+            <div class="tracks-grid">
+                <div class="track-card animate-on-scroll">
+                    <div class="track-cover" style="background: url('images/464443225_10220494714557734_8482962689256333843_n.jpg') center/cover;">
+                        <div class="track-play">▶</div>
+                    </div>
+                    <div class="track-info">
+                        <h3>Pumping Energy</h3>
+                        <p>CLUBBASSE</p>
+                        <span class="track-genre">Pumping House</span>
+                    </div>
+                </div>
+                
+                <div class="track-card animate-on-scroll">
+                    <div class="track-cover" style="background: url('images/464621273_10220514012560172_6345855206631388049_n.jpg') center/cover;">
+                        <div class="track-play">▶</div>
+                    </div>
+                    <div class="track-info">
+                        <h3>Deep Structure</h3>
+                        <p>Arch1tect</p>
+                        <span class="track-genre">Deep Techno</span>
+                    </div>
+                </div>
+                
+                <div class="track-card animate-on-scroll">
+                    <div class="track-cover" style="background: url('images/464839101_10220540564463953_6671588997021038565_n.jpg') center/cover;">
+                        <div class="track-play">▶</div>
+                    </div>
+                    <div class="track-info">
+                        <h3>Bass Religion</h3>
+                        <p>CLUBBASSE</p>
+                        <span class="track-genre">Vixa</span>
+                    </div>
+                </div>
+                
+                <div class="track-card animate-on-scroll">
+                    <div class="track-cover" style="background: url('images/465397893_10220640823610369_2634950720329519865_n.jpg') center/cover;">
+                        <div class="track-play">▶</div>
+                    </div>
+                    <div class="track-info">
+                        <h3>Minimal Architecture</h3>
+                        <p>Arch1tect</p>
+                        <span class="track-genre">Minimal Techno</span>
+                    </div>
+                </div>
+                
+                <div class="track-card animate-on-scroll">
+                    <div class="track-cover" style="background: url('images/465441632_10220639728582994_3459818439755776654_n.jpg') center/cover;">
+                        <div class="track-play">▶</div>
+                    </div>
+                    <div class="track-info">
+                        <h3>Night Rider</h3>
+                        <p>CLUBBASSE</p>
+                        <span class="track-genre">Hard House</span>
+                    </div>
+                </div>
+                
+                <div class="track-card animate-on-scroll">
+                    <div class="track-cover" style="background: url('images/466152903_10220764641585741_5235279180243239869_n.jpg') center/cover;">
+                        <div class="track-play">▶</div>
+                    </div>
+                    <div class="track-info">
+                        <h3>Techno Dreams</h3>
+                        <p>Arch1tect</p>
+                        <span class="track-genre">Progressive Techno</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="tracks-cta animate-on-scroll">
+                <a href="https://soundcloud.com/clubbasse" target="_blank" class="btn-outline">Więcej na SoundCloud</a>
+            </div>
+        </div>
+    </section>
+    
+    <section id="portfolio" class="section section-light">
+        <div class="container">
+            <h2 class="section-title animate-on-scroll">GALERIA</h2>
+            <p class="section-subtitle animate-on-scroll">Za kulisami, eventy i życie DJ-a</p>
+            <div class="gallery-filter animate-on-scroll">
+                <button class="filter-btn active" data-filter="all">Wszystkie</button>
+                <button class="filter-btn" data-filter="events">Kluby</button>
+                <button class="filter-btn" data-filter="festivals">Festiwale</button>
+                <button class="filter-btn" data-filter="studio">Za kulisami</button>
+            </div>
+            <div class="gallery-grid">
+            </div>
+        </div>
+    </section>
+    <section id="services" class="section section-navy">
+        <div class="container">
+            <h2 class="section-title animate-on-scroll">OFERTA</h2>
+            <p class="section-subtitle animate-on-scroll">Profesjonalne uslugi DJ i produkcja muzyczna</p>
+            <div class="services-grid">
+                <div class="service-card animate-on-scroll">
+                    <div class="service-icon">🎧</div>
+                    <h3>DJ Set</h3>
+                    <p>Profesjonalne sety DJ na eventy klubowe, firmowe i prywatne. Pumping house, vixa i najlepsza energia na parkiecie.</p>
+                    <ul class="service-features">
+                        <li>Pelna oprawa muzyczna</li>
+                        <li>Profesjonalny sprzet Pioneer CDJ</li>
+                        <li>Dostosowanie do publicznosci</li>
+                        <li>Playlist na zyczenie</li>
+                    </ul>
+                    <span class="service-price">Cena do uzgodnienia</span>
+                </div>
+                <div class="service-card animate-on-scroll">
+                    <div class="service-icon">🎤</div>
+                    <h3>Live Performance</h3>
+                    <p>Pelne show na zywo z animacja, wokalem i efektami swietlnymi. Pokazy laserowe i profesjonalna wizualizacja.</p>
+                    <ul class="service-features">
+                        <li>Live performance z MC</li>
+                        <li>Light show i lasery</li>
+                        <li>Meet and Greet z fanami</li>
+                        <li>Dedykowane tracki</li>
+                    </ul>
+                    <span class="service-price">Cena do uzgodnienia</span>
+                </div>
+                <div class="service-card animate-on-scroll">
+                    <div class="service-icon">🎹</div>
+                    <h3>Produkcja</h3>
+                    <p>Profesjonalna produkcja utworow, remixy i mastering w studio CLUBBASSE. Twoj track gotowy na kluby.</p>
+                    <ul class="service-features">
+                        <li>Oryginalne produkcje</li>
+                        <li>Remixy na zamowienie</li>
+                        <li>Mastering i mixing</li>
+                        <li>Ghost production</li>
+                    </ul>
+                    <span class="service-price">Cena do uzgodnienia</span>
+                </div>
+                <div class="service-card animate-on-scroll">
+                    <div class="service-icon">🎓</div>
+                    <h3>Szkolenia</h3>
+                    <p>Naucz sie miksowac od profesjonalisty z 25-letnim doswiadczeniem. Warsztaty indywidualne i grupowe.</p>
+                    <ul class="service-features">
+                        <li>Podstawy i techniki DJ</li>
+                        <li>Budowanie setow</li>
+                        <li>Produkcja w Ableton/FL</li>
+                        <li>Marketing DJ</li>
+                    </ul>
+                    <span class="service-price">Cena do uzgodnienia</span>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section id="schedule" class="section section-light">
+        <div class="container">
+            <h2 class="section-title animate-on-scroll">ROZKLAD JAZDY</h2>
+            <p class="section-subtitle animate-on-scroll">Nadchodzace wydarzenia i dostepne terminy</p>
+            <div class="booking-wrapper">
+                <div class="booking-calendar animate-on-scroll">
+                    <div class="calendar-header">
+                        <button class="calendar-nav" id="prevMonth">&#8592;</button>
+                        <h3 class="calendar-title" id="calendarTitle">Grudzien 2025</h3>
+                        <button class="calendar-nav" id="nextMonth">&#8594;</button>
+                    </div>
+                    <div class="calendar-weekdays">
+                        <span>Pon</span><span>Wt</span><span>Sr</span><span>Czw</span><span>Pt</span><span>Sob</span><span>Ndz</span>
+                    </div>
+                    <div class="calendar-days" id="calendarDays"></div>
+                    <div class="calendar-legend">
+                        <span class="legend-item"><span class="dot available"></span> Dostepny</span>
+                        <span class="legend-item"><span class="dot booked"></span> Zajety</span>
+                        <span class="legend-item"><span class="dot selected"></span> Wybrany</span>
+                    </div>
+                </div>
+                <div class="booking-form animate-on-scroll">
+                    <form id="bookingForm">
+                        <div class="form-group">
+                            <label for="eventType">Typ wydarzenia</label>
+                            <select id="eventType" name="eventType" required>
+                                <option value="">Wybierz typ...</option>
+                                <option value="club">Impreza klubowa</option>
+                                <option value="festival">Festiwal</option>
+                                <option value="corporate">Event firmowy</option>
+                                <option value="private">Impreza prywatna</option>
+                                <option value="wedding">Wesele</option>
+                            </select>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="eventDate">Data</label>
+                                <input type="text" id="eventDate" name="eventDate" placeholder="Wybierz z kalendarza" readonly required>
+                            </div>
+                            <div class="form-group">
+                                <label for="eventTime">Godzina</label>
+                                <input type="time" id="eventTime" name="eventTime" required>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="eventLocation">Lokalizacja</label>
+                            <input type="text" id="eventLocation" name="eventLocation" placeholder="Miasto, klub, adres..." required>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="clientName">Imie i nazwisko</label>
+                                <input type="text" id="clientName" name="clientName" placeholder="Jan Kowalski" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="clientEmail">Email</label>
+                                <input type="email" id="clientEmail" name="clientEmail" placeholder="email@example.com" required>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="clientPhone">Telefon</label>
+                            <input type="tel" id="clientPhone" name="clientPhone" placeholder="+48 123 456 789" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="eventDetails">Szczegoly wydarzenia</label>
+                            <textarea id="eventDetails" name="eventDetails" rows="4" placeholder="Opisz swoje wydarzenie..."></textarea>
+                        </div>
+                        <div class="form-group checkbox-group">
+                            <input type="checkbox" id="agreeTerms" name="agreeTerms" required>
+                            <label for="agreeTerms">Akceptuje regulamin i polityke prywatnosci</label>
+                        </div>
+                        <button type="submit" class="btn-primary btn-full">Wyslij Zapytanie</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section id="contact" class="section section-dark">
+        <div class="container">
+            <h2 class="section-title animate-on-scroll">KONTAKT</h2>
+            <p class="section-subtitle animate-on-scroll">Skontaktuj sie z nami</p>
+            <div class="contact-grid">
+                <div class="contact-info animate-on-scroll">
+                    <div class="contact-item">
+                        <div class="contact-icon">📧</div>
+                        <div><h4>Email</h4><a href="mailto:booking@clubbasse.pl">booking@clubbasse.pl</a></div>
+                    </div>
+                    <div class="contact-item">
+                        <div class="contact-icon">📱</div>
+                        <div><h4>Telefon</h4><a href="tel:+48123456789">+48 123 456 789</a></div>
+                    </div>
+                    <div class="contact-item">
+                        <div class="contact-icon">📍</div>
+                        <div><h4>Lokalizacja</h4><p>Polska</p></div>
+                    </div>
+                    <div class="social-links">
+                        <a href="https://facebook.com/clubbasse" class="social-link" target="_blank">Facebook</a>
+                        <a href="https://instagram.com/clubbasse" class="social-link" target="_blank">Instagram</a>
+                        <a href="https://youtube.com/clubbasse" class="social-link" target="_blank">YouTube</a>
+                        <a href="https://soundcloud.com/clubbasse" class="social-link" target="_blank">SoundCloud</a>
+                    </div>
+                </div>
+                <div class="contact-form animate-on-scroll">
+                    <form id="contactForm">
+                        <div class="form-group">
+                            <label for="name">Imie</label>
+                            <input type="text" id="name" name="name" placeholder="Twoje imie" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="email">Email</label>
+                            <input type="email" id="email" name="email" placeholder="twoj@email.com" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="message">Wiadomosc</label>
+                            <textarea id="message" name="message" rows="5" placeholder="Twoja wiadomosc..." required></textarea>
+                        </div>
+                        <button type="submit" class="btn-primary">Wyslij Wiadomosc</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-logo">
+                    <img src="images/clubbasse.png" alt="CLUBBASSE" class="footer-logo-img">
+                    <p>Bo pumping to cos wiecej... to styl bycia, styl zycia</p>
+                </div>
+                <div class="footer-links">
+                    <h4>Nawigacja</h4>
+                    <a href="#home">Home</a>
+                    <a href="#stats">Metryki</a>
+                    <a href="#timeline">Historia</a>
+                    <a href="#portfolio">Galeria</a>
+                    <a href="#services">Oferta</a>
+                    <a href="#schedule">Rozkład Jazdy</a>
+                    <a href="#contact">Kontakt</a>
+                </div>
+                <div class="footer-contact">
+                    <h4>Kontakt</h4>
+                    <p>📧 booking@clubbasse.pl</p>
+                    <p>📱 +48 123 456 789</p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>2024 CLUBBASSE. Wszelkie prawa zastrzezone.</p>
+            </div>
+        </div>
+    </footer>
+    <script src="js/script.js"></script>
+    <script src="js/booking.js"></script>
+</body>
+</html>

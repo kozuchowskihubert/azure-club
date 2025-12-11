@@ -370,7 +370,100 @@ function initCustomCursor() {
 }
 
 /* ===========================================
+   HAOS.fm Radio Player
+   =========================================== */
+function initHaosRadio() {
+    const playBtn = document.getElementById('haosPlayBtn');
+    const volumeSlider = document.getElementById('haosVolume');
+    const volumeValue = document.getElementById('volumeValue');
+    const vinylDisc = document.querySelector('.vinyl-disc');
+    const eqBars = document.querySelectorAll('.eq-bar');
+    
+    // Audio stream (placeholder - replace with actual HAOS.fm stream URL)
+    const audioStream = new Audio('https://stream.haos.fm/radio'); // Example URL
+    audioStream.volume = 0.7;
+    
+    let isPlaying = false;
+    
+    // Play/Pause toggle
+    if (playBtn) {
+        playBtn.addEventListener('click', () => {
+            if (isPlaying) {
+                audioStream.pause();
+                playBtn.classList.remove('playing');
+                if (vinylDisc) vinylDisc.classList.remove('playing');
+                eqBars.forEach(bar => bar.style.animationPlayState = 'paused');
+            } else {
+                audioStream.play().catch(err => {
+                    console.log('Audio play failed:', err);
+                    // Fallback: still show visual effects
+                });
+                playBtn.classList.add('playing');
+                if (vinylDisc) vinylDisc.classList.add('playing');
+                eqBars.forEach(bar => bar.style.animationPlayState = 'running');
+            }
+            isPlaying = !isPlaying;
+        });
+    }
+    
+    // Volume control
+    if (volumeSlider) {
+        volumeSlider.addEventListener('input', (e) => {
+            const volume = e.target.value / 100;
+            audioStream.volume = volume;
+            if (volumeValue) {
+                volumeValue.textContent = e.target.value + '%';
+            }
+        });
+    }
+    
+    // Animate equalizer bars randomly when playing
+    function animateEqualizer() {
+        if (isPlaying) {
+            eqBars.forEach(bar => {
+                const randomHeight = Math.random() * 60 + 20;
+                bar.style.height = randomHeight + 'px';
+            });
+        }
+        requestAnimationFrame(animateEqualizer);
+    }
+    
+    animateEqualizer();
+    
+    // Update now playing info (mock data - replace with actual API)
+    const tracks = [
+        { title: 'Pumping Energy', artist: 'CLUBBASSE' },
+        { title: 'Deep Techno Flow', artist: 'Arch1tect' },
+        { title: 'Electronic Dreams', artist: 'HAOS Resident' },
+        { title: 'Night Drive', artist: 'Various Artists' }
+    ];
+    
+    let trackIndex = 0;
+    
+    function updateNowPlaying() {
+        const trackTitle = document.getElementById('haosTrackTitle');
+        const trackArtist = document.getElementById('haosArtist');
+        
+        if (trackTitle && trackArtist && isPlaying) {
+            trackTitle.textContent = tracks[trackIndex].title;
+            trackArtist.textContent = tracks[trackIndex].artist;
+            
+            trackIndex = (trackIndex + 1) % tracks.length;
+        }
+    }
+    
+    // Update track every 3 minutes (mock)
+    setInterval(updateNowPlaying, 180000);
+}
+
+// Initialize HAOS Radio
+document.addEventListener('DOMContentLoaded', function() {
+    initHaosRadio();
+});
+
+/* ===========================================
    Console Easter Egg
    =========================================== */
 console.log('%c CLUBBASSE ', 'background: #1a237e; color: #C0C0C0; font-size: 24px; font-weight: bold; padding: 10px 20px;');
 console.log('%c Bo pumping to coś więcej... to styl bycia, styl życia ', 'color: #666; font-style: italic;');
+console.log('%c 🎧 HAOS.fm - Electronic Vibes 24/7 ', 'background: linear-gradient(135deg, #ff006e, #8338ec); color: white; font-size: 16px; padding: 5px 15px; border-radius: 5px;');
