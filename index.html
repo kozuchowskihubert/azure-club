@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>CLUBBASSE & ARCH1TECT - DJ & Producer</title>
     <link rel="stylesheet" href="css/styles.css">
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700;900&family=Bebas+Neue&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Teko:wght@300;400;500;600;700&family=Rajdhani:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 </head>
 <body>
     <canvas id="particles"></canvas>
@@ -23,30 +23,34 @@
             <ul class="nav-menu">
                 <li><a href="#stats" class="nav-link">Metryki</a></li>
                 <li><a href="#about" class="nav-link">Historia</a></li>
-                <li><a href="#haos-radio" class="nav-link haos-nav">HAOS.fm</a></li>
                 <li><a href="#portfolio" class="nav-link">Galeria</a></li>
                 <li><a href="#services" class="nav-link">Oferta</a></li>
                 <li><a href="#booking" class="nav-link">Rozkład Jazdy</a></li>
                 <li><a href="#contact" class="nav-link">Kontakt</a></li>
             </ul>
+            <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">
+                <span class="theme-icon light-icon">☀</span>
+                <span class="theme-icon dark-icon">🌙</span>
+            </button>
         </div>
     </nav>
 
     <section id="hero" class="hero">
+        <div class="hero-bg-image"></div>
+        <div class="hero-overlay"></div>
         <div class="hero-content">
             <div class="hero-logo logoEntrance">
-                <img src="images/clubbasse.png" alt="CLUBBASSE Logo" class="hero-logo-img">
-                <img src="images/club.png" alt="Arch1tect Logo" class="hero-logo-img" style="margin-left: 20px;">
+                <img src="images/arch1tect-hero.jpg" alt="ARCH1TECT" class="hero-main-img">
             </div>
-            <h1 class="hero-title">CLUBBASSE & ARCH1TECT</h1>
-            <p class="hero-subtitle">Dwa style, jedna pasja - od pumping house do deep techno</p>
+            <h1 class="hero-title">ARCH1TECT</h1>
+            <p class="hero-subtitle">DARKNESS • POWER • TECHNO</p>
             <div class="hero-cta">
-                <a href="#booking" class="btn btn-primary">Zarezerwuj termin</a>
-                <a href="#portfolio" class="btn btn-outline">Galeria</a>
+                <a href="#booking" class="btn btn-primary">BOOK NOW</a>
+                <a href="#portfolio" class="btn btn-outline">EXPLORE</a>
             </div>
         </div>
         <div class="hero-scroll">
-            <span>Przewiń w dół</span>
+            <span>Scroll Down</span>
             <div class="scroll-arrow"></div>
         </div>
     </section>
@@ -104,79 +108,6 @@
                         <button class="track-play">▶</button>
                     </div>
                 </div>
-            </div>
-        </div>
-    </section>
-
-    <section id="haos-radio" class="section section-haos">
-        <div class="container">
-            <h2 class="section-title haos-title">HAOS.fm Radio</h2>
-            <p class="section-subtitle">Słuchaj na żywo - Non-stop Electronic Vibes</p>
-            
-            <div class="haos-player-main">
-                <div class="haos-player-art">
-                    <div class="vinyl-animation">
-                        <div class="vinyl-disc"></div>
-                    </div>
-                    <div class="haos-now-playing">
-                        <div class="haos-status">● LIVE</div>
-                        <h3 id="haosTrackTitle">Electronic Beats</h3>
-                        <p id="haosArtist">HAOS.fm Stream</p>
-                    </div>
-                </div>
-                <div class="haos-player-controls">
-                    <button class="haos-play-btn" id="haosPlayBtn">
-                        <span class="play-icon">▶</span>
-                        <span class="pause-icon">❚❚</span>
-                    </button>
-                    <div class="haos-volume-control">
-                        <span class="volume-icon">🔊</span>
-                        <input type="range" class="haos-slider haos-volume-slider" id="haosVolume" min="0" max="100" value="70">
-                        <span class="volume-value" id="volumeValue">70%</span>
-                    </div>
-                </div>
-            </div>
-
-            <div class="haos-shows-grid">
-                <div class="haos-show-card animate-on-scroll">
-                    <div class="haos-show-time">Poniedziałek 20:00</div>
-                    <h3 class="haos-show-title">Pumping House Night</h3>
-                    <p class="haos-show-host">z CLUBBASSE</p>
-                    <div class="haos-show-genre">House • Tech House</div>
-                </div>
-                <div class="haos-show-card animate-on-scroll">
-                    <div class="haos-show-time">Środa 22:00</div>
-                    <h3 class="haos-show-title">Deep Techno Sessions</h3>
-                    <p class="haos-show-host">z Arch1tect</p>
-                    <div class="haos-show-genre">Techno • Progressive</div>
-                </div>
-                <div class="haos-show-card animate-on-scroll">
-                    <div class="haos-show-time">Piątek 21:00</div>
-                    <h3 class="haos-show-title">Weekend Warmup</h3>
-                    <p class="haos-show-host">Special Guests</p>
-                    <div class="haos-show-genre">Electronic Mix</div>
-                </div>
-                <div class="haos-show-card animate-on-scroll">
-                    <div class="haos-show-time">Sobota 00:00</div>
-                    <h3 class="haos-show-title">After Hours</h3>
-                    <p class="haos-show-host">Resident DJs</p>
-                    <div class="haos-show-genre">Underground Vibes</div>
-                </div>
-            </div>
-
-            <div class="haos-equalizer">
-                <div class="eq-bar"></div>
-                <div class="eq-bar"></div>
-                <div class="eq-bar"></div>
-                <div class="eq-bar"></div>
-                <div class="eq-bar"></div>
-                <div class="eq-bar"></div>
-                <div class="eq-bar"></div>
-                <div class="eq-bar"></div>
-                <div class="eq-bar"></div>
-                <div class="eq-bar"></div>
-                <div class="eq-bar"></div>
-                <div class="eq-bar"></div>
             </div>
         </div>
     </section>
@@ -490,6 +421,161 @@
             </div>
         </div>
     </section>
+
+    <section id="calendar" class="section section-dark calendar-section">
+        <div class="container">
+            <h2 class="section-title">Booking & Media</h2>
+            <p class="section-subtitle">Zarezerwuj date i posłuchaj moich setów</p>
+            
+            <div class="booking-media-grid">
+                <!-- Calendar Column -->
+                <div class="booking-calendar-column">
+                    <h3 class="column-title">Kalendarz Eventów</h3>
+            
+            <div class="calendar-controls">
+                <button class="calendar-nav-btn" id="prevMonth">
+                    <span>‹</span>
+                </button>
+                <h3 class="calendar-month-title" id="calendarMonthTitle">Grudzień 2025</h3>
+                <button class="calendar-nav-btn" id="nextMonth">
+                    <span>›</span>
+                </button>
+            </div>
+
+            <div class="calendar-wrapper">
+                <div class="calendar-weekdays">
+                    <div class="weekday">PON</div>
+                    <div class="weekday">WTO</div>
+                    <div class="weekday">ŚRO</div>
+                    <div class="weekday">CZW</div>
+                    <div class="weekday">PIĄ</div>
+                    <div class="weekday weekend">SOB</div>
+                    <div class="weekday weekend">NIE</div>
+                </div>
+                <div class="calendar-days" id="calendarDays">
+                    <!-- Generated by JavaScript -->
+                </div>
+            </div>
+
+            <div class="calendar-legend">
+                <div class="legend-item">
+                    <span class="legend-dot available"></span>
+                    <span>Dzień roboczy - dostępny</span>
+                </div>
+                <div class="legend-item">
+                    <span class="legend-dot weekend"></span>
+                    <span>Weekend - prime time</span>
+                </div>
+                <div class="legend-item">
+                    <span class="legend-dot booked"></span>
+                    <span>Zarezerwowany</span>
+                </div>
+            </div>
+                </div>
+
+                <!-- Media Column -->
+                <div class="booking-media-column">
+                    <h3 class="column-title">Posłuchaj Moich Setów</h3>
+                    
+                    <!-- Spotify Embed -->
+                    <div class="media-embed spotify-embed">
+                        <iframe style="border-radius:12px" 
+                                src="https://open.spotify.com/embed/artist/YOUR_SPOTIFY_ARTIST_ID?utm_source=generator&theme=0" 
+                                width="100%" 
+                                height="352" 
+                                frameBorder="0" 
+                                allowfullscreen="" 
+                                allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" 
+                                loading="lazy">
+                        </iframe>
+                    </div>
+
+                    <!-- YouTube Embed -->
+                    <div class="media-embed youtube-embed">
+                        <iframe width="100%" 
+                                height="315" 
+                                src="https://www.youtube.com/embed/YOUR_VIDEO_ID" 
+                                title="YouTube video player" 
+                                frameborder="0" 
+                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
+                                allowfullscreen>
+                        </iframe>
+                    </div>
+
+                    <div class="social-media-links">
+                        <a href="https://open.spotify.com/artist/YOUR_ID" target="_blank" class="social-link spotify">
+                            <span>🎵</span> Spotify
+                        </a>
+                        <a href="https://www.youtube.com/@YOUR_CHANNEL" target="_blank" class="social-link youtube">
+                            <span>📺</span> YouTube
+                        </a>
+                        <a href="https://www.beatport.com/artist/YOUR_ID" target="_blank" class="social-link beatport">
+                            <span>🎧</span> Beatport
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Booking Modal -->
+    <div id="bookingModal" class="booking-modal">
+        <div class="booking-modal-content">
+            <button class="booking-modal-close" id="closeBookingModal">&times;</button>
+            <h3 class="booking-modal-title">Zarezerwuj Date</h3>
+            <p class="booking-modal-date" id="bookingModalDate">Data: 15 Grudzień 2025</p>
+            
+            <form id="bookingForm" class="booking-form">
+                <div class="form-group">
+                    <label for="bookingName">Imię i Nazwisko *</label>
+                    <input type="text" id="bookingName" name="name" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="bookingEmail">Email *</label>
+                    <input type="email" id="bookingEmail" name="email" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="bookingPhone">Telefon</label>
+                    <input type="tel" id="bookingPhone" name="phone">
+                </div>
+                
+                <div class="form-group">
+                    <label for="bookingEventType">Typ Eventu *</label>
+                    <select id="bookingEventType" name="eventType" required>
+                        <option value="">Wybierz...</option>
+                        <option value="club">Klub / Event</option>
+                        <option value="festival">Festiwal</option>
+                        <option value="private">Impreza Prywatna</option>
+                        <option value="corporate">Event Firmowy</option>
+                        <option value="other">Inne</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label for="bookingVenue">Miejsce Eventu *</label>
+                    <input type="text" id="bookingVenue" name="venue" required placeholder="Nazwa klubu / miejsca">
+                </div>
+                
+                <div class="form-group">
+                    <label for="bookingMessage">Dodatkowe informacje</label>
+                    <textarea id="bookingMessage" name="message" rows="4" placeholder="Godziny, budżet, szczegóły..."></textarea>
+                </div>
+                
+                <div class="booking-form-actions">
+                    <button type="button" class="btn btn-outline" id="cancelBooking">Anuluj</button>
+                    <button type="submit" class="btn btn-primary">Wyślij Zapytanie</button>
+                </div>
+            </form>
+            
+            <div id="bookingSuccess" class="booking-success" style="display: none;">
+                <div class="success-icon">✓</div>
+                <h4>Zapytanie wysłane!</h4>
+                <p>Odezwę się do Ciebie w ciągu 24h.</p>
+            </div>
+        </div>
+    </div>
 
     <footer class="footer">
         <div class="container">
