@@ -5,44 +5,92 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>CLUBBASSE & ARCH1TECT - DJ & Producer</title>
     <link rel="stylesheet" href="css/styles.css">
-    <link href="https://fonts.googleapis.com/css2?family=Teko:wght@300;400;500;600;700&family=Rajdhani:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Professional Typography -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800;900&family=Space+Grotesk:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 </head>
 <body>
     <canvas id="particles"></canvas>
 
-    <nav class="nav-header">
-        <div class="nav-container">
-            <a href="#hero" class="nav-logo">
-                <img src="images/clubbasse.png" alt="CLUBBASSE Logo" class="nav-logo-img">
+    <!-- Fixed Sidebar Navigation -->
+    <aside class="sidebar-nav">
+        <div class="sidebar-header">
+            <a href="#hero" class="sidebar-logo">
+                <img src="images/clubbasse.png" alt="ARCH1TECT">
             </a>
-            <button class="nav-toggle" aria-label="Toggle navigation">
-                <span></span>
-                <span></span>
-                <span></span>
+            <div class="sidebar-title">
+                <span class="title-main">ARCH1TECT</span>
+                <span class="title-sub">DJ • PRODUCER</span>
+            </div>
+        </div>
+
+        <nav class="sidebar-menu">
+            <a href="#hero" class="sidebar-link active" data-section="a">
+                <span class="link-letter">A</span>
+                <span class="link-label">Home</span>
+                <span class="link-icon">🏠</span>
+            </a>
+            <a href="#about" class="sidebar-link" data-section="b">
+                <span class="link-letter">B</span>
+                <span class="link-label">About</span>
+                <span class="link-icon">👤</span>
+            </a>
+            <a href="#stats" class="sidebar-link" data-section="c">
+                <span class="link-letter">C</span>
+                <span class="link-label">Stats</span>
+                <span class="link-icon">📊</span>
+            </a>
+            <a href="#portfolio" class="sidebar-link" data-section="d">
+                <span class="link-letter">D</span>
+                <span class="link-label">Gallery</span>
+                <span class="link-icon">📸</span>
+            </a>
+            <a href="#services" class="sidebar-link" data-section="e">
+                <span class="link-letter">E</span>
+                <span class="link-label">Services</span>
+                <span class="link-icon">🎵</span>
+            </a>
+            <a href="#calendar" class="sidebar-link" data-section="f">
+                <span class="link-letter">F</span>
+                <span class="link-label">Calendar</span>
+                <span class="link-icon">📅</span>
+            </a>
+            <a href="#contact" class="sidebar-link" data-section="g">
+                <span class="link-letter">G</span>
+                <span class="link-label">Contact</span>
+                <span class="link-icon">📧</span>
+            </a>
+        </nav>
+
+        <div class="sidebar-footer">
+            <button class="theme-toggle-sidebar" id="themeToggleSidebar" aria-label="Toggle theme">
+                <span class="theme-icon light-icon">☀</span>
+                <span class="theme-icon dark-icon">🌙</span>
             </button>
-            <nav class="nav-menu">
-                <div class="nav-section">
-                    <span class="nav-section-title">O MNIE</span>
-                    <ul class="nav-section-links">
-                        <li><a href="#about" class="nav-link">🎭 Historia</a></li>
-                        <li><a href="#stats" class="nav-link">📊 Statystyki</a></li>
-                    </ul>
-                </div>
-                <div class="nav-section">
-                    <span class="nav-section-title">PORTFOLIO</span>
-                    <ul class="nav-section-links">
-                        <li><a href="#portfolio" class="nav-link">📸 Galeria</a></li>
-                        <li><a href="#services" class="nav-link">🎵 Oferta</a></li>
-                    </ul>
-                </div>
-                <div class="nav-section">
-                    <span class="nav-section-title">BOOKING</span>
-                    <ul class="nav-section-links">
-                        <li><a href="#calendar" class="nav-link">📅 Kalendarz</a></li>
-                        <li><a href="#contact" class="nav-link">📧 Kontakt</a></li>
-                    </ul>
-                </div>
-            </nav>
+            <div class="sidebar-social">
+                <a href="#" class="social-icon" aria-label="Spotify">🎵</a>
+                <a href="#" class="social-icon" aria-label="YouTube">📺</a>
+                <a href="#" class="social-icon" aria-label="Instagram">📷</a>
+            </div>
+        </div>
+    </aside>
+
+    <!-- Mobile Menu Toggle -->
+    <button class="mobile-menu-toggle" id="mobileMenuToggle" aria-label="Toggle menu">
+        <span></span>
+        <span></span>
+        <span></span>
+    </button>
+
+    <!-- Theme Toggle (top right for desktop) -->
+    <button class="theme-toggle-floating" id="themeToggle" aria-label="Toggle theme">
+        <span class="theme-icon light-icon">☀</span>
+        <span class="theme-icon dark-icon">🌙</span>
+    </button>
+
+    <!-- Main Content Wrapper -->
+    <div class="main-content">
             <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">
                 <span class="theme-icon light-icon">☀</span>
                 <span class="theme-icon dark-icon">🌙</span>
@@ -642,6 +690,8 @@
             </div>
         </div>
     </footer>
+
+    </div><!-- .main-content -->
 
     <script src="js/script.js"></script>
     <script src="js/booking.js"></script>

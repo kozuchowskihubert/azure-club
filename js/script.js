@@ -84,18 +84,139 @@ function initHeroSlider() {
     startAutoPlay();
 }
 
+/* ===========================================
+   Sidebar Navigation
+   =========================================== */
+function initSidebarNav() {
+    const sidebar = document.querySelector('.sidebar-nav');
+    const mobileToggle = document.getElementById('mobileMenuToggle');
+    const sidebarLinks = document.querySelectorAll('.sidebar-link');
+    const mainContent = document.querySelector('.main-content');
+    
+    if (!sidebar) return;
+    
+    // Mobile menu toggle
+    if (mobileToggle) {
+        mobileToggle.addEventListener('click', () => {
+            sidebar.classList.toggle('active');
+            mobileToggle.classList.toggle('active');
+            document.body.style.overflow = sidebar.classList.contains('active') ? 'hidden' : '';
+        });
+    }
+    
+    // Close sidebar on link click (mobile)
+    sidebarLinks.forEach(link => {
+        link.addEventListener('click', () => {
+            if (window.innerWidth <= 1024) {
+                sidebar.classList.remove('active');
+                if (mobileToggle) mobileToggle.classList.remove('active');
+                document.body.style.overflow = '';
+            }
+        });
+    });
+    
+    // Active link on scroll
+    const sections = Array.from(sidebarLinks).map(link => {
+        const href = link.getAttribute('href');
+        return document.querySelector(href);
+    }).filter(section => section !== null);
+    
+    function updateActiveLink() {
+        const scrollPos = window.pageYOffset + 100;
+        
+        sections.forEach((section, index) => {
+            const top = section.offsetTop;
+            const bottom = top + section.offsetHeight;
+            
+            if (scrollPos >= top && scrollPos < bottom) {
+                sidebarLinks.forEach(link => link.classList.remove('active'));
+                sidebarLinks[index]?.classList.add('active');
+            }
+        });
+    }
+    
+    window.addEventListener('scroll', updateActiveLink);
+    updateActiveLink();
+    
+    // Close sidebar on outside click (mobile)
+    if (mainContent) {
+        mainContent.addEventListener('click', () => {
+            if (window.innerWidth <= 1024 && sidebar.classList.contains('active')) {
+                sidebar.classList.remove('active');
+                if (mobileToggle) mobileToggle.classList.remove('active');
+                document.body.style.overflow = '';
+            }
+        });
+    }
+}
+
+/* ===========================================
+   Fancy Effects & Animations
+   =========================================== */
+function initFancyEffects() {
+    // Fade in sections on scroll
+    const fadeInSections = document.querySelectorAll('.fade-in-section');
+    
+    const sectionObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('is-visible');
+            }
+        });
+    }, {
+        threshold: 0.1,
+        rootMargin: '0px 0px -50px 0px'
+    });
+    
+    fadeInSections.forEach(section => {
+        sectionObserver.observe(section);
+    });
+    
+    // Parallax effect on mouse move
+    if (window.innerWidth > 1024) {
+        document.addEventListener('mousemove', (e) => {
+            const mouseX = e.clientX / window.innerWidth;
+            const mouseY = e.clientY / window.innerHeight;
+            
+            const parallaxElements = document.querySelectorAll('.parallax-slow');
+            parallaxElements.forEach((el, index) => {
+                const speed = (index + 1) * 0.5;
+                const x = (mouseX - 0.5) * speed * 20;
+                const y = (mouseY - 0.5) * speed * 20;
+                el.style.transform = `translate(${x}px, ${y}px)`;
+            });
+        });
+    }
+    
+    // Add hover lift to cards
+    const cards = document.querySelectorAll('.card, .service-card, .stat-card');
+    cards.forEach(card => {
+        if (!card.classList.contains('hover-lift')) {
+            card.classList.add('hover-lift');
+        }
+    });
+    
+    // Add fade-in-section to all main sections
+    const allSections = document.querySelectorAll('section');
+    allSections.forEach(section => {
+        if (!section.classList.contains('fade-in-section')) {
+            section.classList.add('fade-in-section');
+        }
+    });
+}
+
 document.addEventListener('DOMContentLoaded', function() {
     
     // Initialize all functions
     initHeroSlider();
+    initSidebarNav();
     initThemeToggle();
-    initNavigation();
     initParticles();
     initScrollAnimations();
-    initMobileMenu();
     initSmoothScroll();
     initCounters();
     initFormValidation();
+    initFancyEffects();
     
 });
 
@@ -103,8 +224,12 @@ document.addEventListener('DOMContentLoaded', function() {
    Theme Toggle - Dark/Light Mode
    =========================================== */
 function initThemeToggle() {
-    const toggleBtn = document.getElementById('themeToggle');
-    if (!toggleBtn) return;
+    const toggleBtns = [
+        document.getElementById('themeToggle'),
+        document.getElementById('themeToggleSidebar')
+    ].filter(btn => btn !== null);
+    
+    if (toggleBtns.length === 0) return;
     
     // Check for saved theme preference or default to dark
     const currentTheme = localStorage.getItem('theme') || 'dark';
@@ -115,52 +240,26 @@ function initThemeToggle() {
     }
     
     // Toggle theme on button click
-    toggleBtn.addEventListener('click', () => {
-        document.body.classList.toggle('light-theme');
-        
-        // Save preference
-        const theme = document.body.classList.contains('light-theme') ? 'light' : 'dark';
-        localStorage.setItem('theme', theme);
-        
-        // Add animation feedback
-        toggleBtn.style.transform = 'scale(0.8) rotate(360deg)';
-        setTimeout(() => {
-            toggleBtn.style.transform = '';
-        }, 400);
+    toggleBtns.forEach(toggleBtn => {
+        toggleBtn.addEventListener('click', () => {
+            document.body.classList.toggle('light-theme');
+            
+            // Save preference
+            const theme = document.body.classList.contains('light-theme') ? 'light' : 'dark';
+            localStorage.setItem('theme', theme);
+            
+            // Add animation feedback to clicked button
+            toggleBtn.style.transform = 'scale(0.8) rotate(360deg)';
+            setTimeout(() => {
+                toggleBtn.style.transform = '';
+            }, 400);
+        });
     });
 }
 
 /* ===========================================
    Navigation
    =========================================== */
-function initNavigation() {
-    const header = document.querySelector('.nav-header');
-    
-    if (!header) return;
-    
-    let lastScroll = 0;
-    
-    window.addEventListener('scroll', () => {
-        const currentScroll = window.pageYOffset;
-        
-        // Add scrolled class
-        if (currentScroll > 50) {
-            header.classList.add('scrolled');
-        } else {
-            header.classList.remove('scrolled');
-        }
-        
-        // Hide/show on scroll direction
-        if (currentScroll > lastScroll && currentScroll > 200) {
-            header.style.transform = 'translateY(-100%)';
-        } else {
-            header.style.transform = 'translateY(0)';
-        }
-        
-        lastScroll = currentScroll;
-    });
-}
-
 /* ===========================================
    Floating Particles
    =========================================== */
@@ -228,39 +327,6 @@ function initScrollAnimations() {
 /* ===========================================
    Mobile Menu
    =========================================== */
-function initMobileMenu() {
-    const menuToggle = document.querySelector('.nav-toggle');
-    const navMenu = document.querySelector('.nav-menu');
-    const navLinks = document.querySelectorAll('.nav-link');
-    
-    if (!menuToggle || !navMenu) return;
-    
-    // Toggle menu
-    menuToggle.addEventListener('click', () => {
-        navMenu.classList.toggle('active');
-        menuToggle.classList.toggle('active');
-        document.body.style.overflow = navMenu.classList.contains('active') ? 'hidden' : '';
-    });
-    
-    // Close menu on link click
-    navLinks.forEach(link => {
-        link.addEventListener('click', () => {
-            navMenu.classList.remove('active');
-            menuToggle.classList.remove('active');
-            document.body.style.overflow = '';
-        });
-    });
-    
-    // Close on outside click
-    document.addEventListener('click', (e) => {
-        if (!navMenu.contains(e.target) && !menuToggle.contains(e.target)) {
-            navMenu.classList.remove('active');
-            menuToggle.classList.remove('active');
-            document.body.style.overflow = '';
-        }
-    });
-}
-
 /* ===========================================
    Smooth Scroll
    =========================================== */
