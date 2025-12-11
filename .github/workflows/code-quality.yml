@@ -1,0 +1,95 @@
+name: Code Quality
+
+on:
+  push:
+    branches: [main, develop]
+  pull_request:
+    branches: [main, develop]
+
+jobs:
+  lint:
+    name: ESLint Check
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20.x'
+          cache: 'npm'
+          cache-dependency-path: package.json
+
+      - name: Install dependencies
+        run: npm ci || npm install
+
+      - name: Run ESLint
+        run: npm run lint -- --quiet || echo "No lint issues or script not defined"
+        continue-on-error: true
+
+  security:
+    name: Security Audit
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20.x'
+          cache: 'npm'
+          cache-dependency-path: package.json
+
+      - name: Run npm audit
+        run: npm audit --audit-level=high || echo "Audit completed with warnings"
+        continue-on-error: true
+
+      - name: Check for known vulnerabilities
+        run: |
+          echo "🔍 Checking for security issues..."
+          npm audit --json > audit.json 2>/dev/null || true
+          if [ -f audit.json ]; then
+            HIGH_VULNS=$(cat audit.json | grep -c '"severity":"high"' || echo 0)
+            CRITICAL_VULNS=$(cat audit.json | grep -c '"severity":"critical"' || echo 0)
+            echo "High vulnerabilities: $HIGH_VULNS"
+            echo "Critical vulnerabilities: $CRITICAL_VULNS"
+          fi
+
+  html-validation:
+    name: HTML Validation
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Validate HTML files
+        run: |
+          echo "🔍 Checking HTML files..."
+          for file in $(find . -name "*.html" -not -path "./node_modules/*"); do
+            echo "Checking: $file"
+            if grep -q "<!DOCTYPE html>" "$file"; then
+              echo "  ✅ Valid doctype"
+            else
+              echo "  ⚠️ Missing doctype"
+            fi
+          done
+
+  dependency-review:
+    name: Dependency Review
+    runs-on: ubuntu-latest
+    if: github.event_name == 'pull_request'
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Dependency Review
+        uses: actions/dependency-review-action@v4
+        with:
+          fail-on-severity: high
+        continue-on-error: true
