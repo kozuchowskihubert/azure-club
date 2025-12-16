@@ -303,11 +303,81 @@ def reject_booking(booking_id):
         return jsonify({'error': str(e)}), 500
 
 # Email functions
+def generate_calendar_urls(booking):
+    """Generate calendar URLs for booking"""
+    from urllib.parse import quote
+    from datetime import datetime, timedelta
+    
+    # Parse date and time
+    try:
+        event_date_parts = booking.event_date.split('-')
+        time_parts = booking.start_time.split(':')
+        start_dt = datetime(
+            int(event_date_parts[0]), 
+            int(event_date_parts[1]), 
+            int(event_date_parts[2]),
+            int(time_parts[0]), 
+            int(time_parts[1])
+        )
+        
+        # Calculate end time (duration in minutes, default 4 hours)
+        duration_minutes = booking.duration or 240
+        end_dt = start_dt + timedelta(minutes=duration_minutes)
+        
+        # Format for Google Calendar
+        start_str = start_dt.strftime('%Y%m%dT%H%M%S')
+        end_str = end_dt.strftime('%Y%m%dT%H%M%S')
+        
+        title = booking.event_title or f"ARCH1TECT @ {booking.venue}"
+        location = booking.event_location or f"{booking.venue}, {booking.city}"
+        description = f"Wydarzenie: {booking.event_type}\\nOsoby: {booking.guests or 1}\\n\\nKontakt: arch1tect@haos.fm"
+        
+        # Google Calendar URL
+        google_url = (
+            f"https://calendar.google.com/calendar/render?action=TEMPLATE"
+            f"&text={quote(title)}"
+            f"&dates={start_str}/{end_str}"
+            f"&details={quote(description)}"
+            f"&location={quote(location)}"
+        )
+        
+        # Outlook URL
+        outlook_url = (
+            f"https://outlook.live.com/calendar/0/deeplink/compose?"
+            f"subject={quote(title)}"
+            f"&startdt={start_dt.isoformat()}"
+            f"&enddt={end_dt.isoformat()}"
+            f"&body={quote(description)}"
+            f"&location={quote(location)}"
+        )
+        
+        # Office 365 URL
+        office365_url = (
+            f"https://outlook.office.com/calendar/0/deeplink/compose?"
+            f"subject={quote(title)}"
+            f"&startdt={start_dt.isoformat()}"
+            f"&enddt={end_dt.isoformat()}"
+            f"&body={quote(description)}"
+            f"&location={quote(location)}"
+        )
+        
+        return {
+            'google': google_url,
+            'outlook': outlook_url,
+            'office365': office365_url
+        }
+    except Exception as e:
+        print(f"Error generating calendar URLs: {e}")
+        return None
+
 def send_booking_confirmation(booking_id):
-    """Send booking confirmation email"""
+    """Send booking confirmation email with calendar integration"""
     booking = Booking.query.get(booking_id)
     if not booking:
         return
+    
+    # Generate calendar URLs
+    calendar_urls = generate_calendar_urls(booking)
     
     html_template = '''
     <!DOCTYPE html>
@@ -365,10 +435,50 @@ def send_booking_confirmation(booking_id):
                     Skontaktujemy się z Tobą wkrótce, aby potwierdzić szczegóły.
                 </p>
                 
+                {% if calendar_urls %}
+                <div style="background: rgba(0,255,255,0.05); border: 2px solid rgba(0,255,255,0.3); border-radius: 10px; padding: 25px; margin: 30px 0;">
+                    <h3 style="color: #00ffff; margin-top: 0; text-align: center;">📅 Dodaj do kalendarza</h3>
+                    <p style="color: #ccc; text-align: center; font-size: 14px; margin-bottom: 20px;">
+                        Kliknij, aby dodać wydarzenie do swojego kalendarza:
+                    </p>
+                    
+                    <table style="width: 100%; border-collapse: collapse;">
+                        <tr>
+                            <td style="padding: 8px; text-align: center;">
+                                <a href="{{ calendar_urls.google }}" 
+                                   style="display: inline-block; background: linear-gradient(135deg, #4285f4, #34a853); color: white; padding: 12px 20px; text-decoration: none; border-radius: 8px; font-weight: bold; min-width: 150px;">
+                                    📱 Google Calendar
+                                </a>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="padding: 8px; text-align: center;">
+                                <a href="{{ calendar_urls.outlook }}" 
+                                   style="display: inline-block; background: linear-gradient(135deg, #0078d4, #106ebe); color: white; padding: 12px 20px; text-decoration: none; border-radius: 8px; font-weight: bold; min-width: 150px;">
+                                    📧 Outlook
+                                </a>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="padding: 8px; text-align: center;">
+                                <a href="{{ calendar_urls.office365 }}" 
+                                   style="display: inline-block; background: linear-gradient(135deg, #d83b01, #c239b3); color: white; padding: 12px 20px; text-decoration: none; border-radius: 8px; font-weight: bold; min-width: 150px;">
+                                    💼 Office 365
+                                </a>
+                            </td>
+                        </tr>
+                    </table>
+                    
+                    <p style="color: #888; text-align: center; font-size: 12px; margin-top: 15px; margin-bottom: 0;">
+                        🍎 <strong>iPhone/Mac?</strong> Otwórz link w Safari, a następnie wybierz "Dodaj do Kalendarza"
+                    </p>
+                </div>
+                {% endif %}
+                
                 <div style="margin-top: 40px; padding-top: 30px; border-top: 1px solid rgba(255,0,128,0.3); text-align: center;">
                     <p style="color: #888; font-size: 14px;">
-                        ARCH1TECT<br>
-                        Email: booking@arch1tect.pl
+                        ARCH1TECT | HAOS.fm<br>
+                        Email: arch1tect@haos.fm
                     </p>
                 </div>
             </div>
@@ -385,7 +495,8 @@ def send_booking_confirmation(booking_id):
         venue=booking.venue,
         city=booking.city,
         event_type=booking.event_type,
-        duration=booking.duration
+        duration=booking.duration,
+        calendar_urls=calendar_urls
     )
     
     msg = Message(
