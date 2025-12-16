@@ -97,18 +97,22 @@ class Booking(db.Model):
             'event_title': self.event_title, 'event_location': self.event_location
         }
 
-# Create tables
-with app.app_context():
-    db.create_all()
-
 # Health check endpoint
 @app.route('/api/health', methods=['GET'])
 def health_check():
-    return jsonify({
-        'status': 'ok',
-        'message': 'ARCH1TECT API is running',
-        'database': 'PostgreSQL' if 'postgresql' in database_url else 'SQLite'
-    })
+    try:
+        # Create tables if they don't exist
+        db.create_all()
+        return jsonify({
+            'status': 'ok',
+            'message': 'ARCH1TECT API is running',
+            'database': 'PostgreSQL' if 'postgresql' in database_url else 'SQLite'
+        })
+    except Exception as e:
+        return jsonify({
+            'status': 'error',
+            'message': str(e)
+        }), 500
 
 # Vercel handler
 handler = app
