@@ -17,7 +17,7 @@ fi
 
 echo "📋 Before continuing, make sure you have:"
 echo "   1. Created account at https://resend.com"
-echo "   2. Added and verified domain 'arch1tect.pl' in Resend Dashboard"
+echo "   2. Added and verified domain 'haos.fm' in Resend Dashboard"
 echo "   3. Created API Key in Resend Dashboard → API Keys"
 echo ""
 
@@ -27,7 +27,7 @@ if [[ ! $REPLY =~ ^[Yy]$ ]]; then
     echo ""
     echo "⚠️  Please complete the setup first:"
     echo "   1. Go to https://resend.com/signup"
-    echo "   2. Dashboard → Domains → Add Domain → arch1tect.pl"
+    echo "   2. Dashboard → Domains → Add Domain → haos.fm"
     echo "   3. Add DNS records shown in Resend (TXT and MX)"
     echo "   4. Wait for verification (~5 minutes)"
     echo "   5. Dashboard → API Keys → Create API Key"
@@ -65,6 +65,9 @@ echo "resend" | vercel env add MAIL_USERNAME production --force
 
 # Add MAIL_PASSWORD (API Key)
 echo "$RESEND_API_KEY" | vercel env add MAIL_PASSWORD production --force
+
+# Add MAIL_SENDER (sender email address)
+echo "arch1tect@haos.fm" | vercel env add MAIL_SENDER production --force
 
 echo ""
 echo "✅ Environment variables added successfully!"
@@ -104,4 +107,4 @@ echo ""
 echo "📊 Monitor emails in Resend Dashboard:"
 echo "   https://resend.com/emails"
 echo ""
-echo "✨ Done! Emails will be sent from admin@arch1tect.pl"
+echo "✨ Done! Emails will be sent from arch1tect@haos.fm"

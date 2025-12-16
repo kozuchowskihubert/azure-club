@@ -1,8 +1,22 @@
-# 📧 Konfiguracja Email dla admin@arch1tect.pl
+# 📧 Konfiguracja Email dla domeny HAOS
 
 ## Przegląd
 
-System ARCH1TECT używa SMTP do wysyłania emaili powitalnych, potwierdzeń rezerwacji i zatwierdzenia bookingów. Ten przewodnik pokazuje jak skonfigurować `admin@arch1tect.pl` jako adres wysyłkowy.
+System ARCH1TECT używa SMTP do wysyłania emaili powitalnych, potwierdzeń rezerwacji i zatwierdzenia bookingów. Ten przewodnik pokazuje jak skonfigurować email z własnej domeny HAOS.
+
+## 🎯 Zalecane adresy email:
+- **Główny (ZALECANY):** `arch1tect@haos.fm` - łączy artystę z radiem HAOS.fm
+- **Alternatywne:** `booking@haos.fm`, `admin@haos.fm`
+- **Backup:** `admin@haos.club`, `booking@haos.club`, `admin@arch1tect.pl`
+
+## 🌐 Konfiguracja wielu domen w Resend
+
+Możesz dodać wszystkie domeny HAOS w jednym koncie Resend:
+- `haos.fm` - **główna domena** (radio + artysta)
+- `haos.club` - domena klubu
+- `arch1tect.pl` - domena artysty (backup)
+
+Każda domena może mieć własne adresy: admin@, booking@, info@, noreply@
 
 ## Opcje Konfiguracji
 
@@ -11,10 +25,14 @@ System ARCH1TECT używa SMTP do wysyłania emaili powitalnych, potwierdzeń reze
 **Najlepsze dla:** Nowoczesne API, świetna dokumentacja, łatwa integracja, React Email support
 
 1. **Załóż konto:** https://resend.com/signup
-2. **Dodaj i zweryfikuj domenę:**
+2. **Dodaj i zweryfikuj domeny HAOS:**
    - Dashboard → Domains → Add Domain
-   - Wpisz: `arch1tect.pl`
-   - Dodaj rekordy DNS w panelu domeny:
+   - Dodaj każdą domenę osobno (priorytet):
+     1. `haos.fm` ⭐ **GŁÓWNA** - radio + artysta
+     2. `haos.club` - klub/eventy
+     3. `arch1tect.pl` - backup
+   
+   - Dla każdej domeny dodaj rekordy DNS:
      ```
      Type: TXT
      Name: @
@@ -68,6 +86,60 @@ System ARCH1TECT używa SMTP do wysyłania emaili powitalnych, potwierdzeń reze
 - React Email templates support
 - Webhook support dla tracking
 - Bardzo prosta konfiguracja
+
+#### 📝 Przykład konfiguracji DNS dla haos.fm:
+
+Po dodaniu domeny `haos.fm` w Resend Dashboard, zobaczysz unikalne rekordy DNS:
+
+```
+# SPF Record - autoryzacja serwera do wysyłki
+Type: TXT
+Name: @
+Value: v=spf1 include:_spf.resend.com ~all
+
+# DKIM Record - podpis cyfrowy emaili
+Type: TXT  
+Name: resend._domainkey
+Value: p=MIGfMA0GCSqGSIb3DQEBAQUAA4GNA... (unikalny klucz z Resend)
+
+# DMARC Record - polityka autoryzacji
+Type: TXT
+Name: _dmarc
+Value: v=DMARC1; p=none; rua=mailto:arch1tect@haos.fm
+
+# MX Record - opcjonalny, do odbierania emaili
+Type: MX
+Priority: 10
+Name: @
+Value: feedback-smtp.resend.com
+```
+
+**Gdzie dodać rekordy DNS:**
+- Jeśli domena w **Vercel**: Vercel Dashboard → Domains → haos.fm → DNS Records
+- Jeśli domena w **Cloudflare**: Dashboard → DNS → Add Record
+- Jeśli domena u **innego providera**: Panel domeny → DNS Management
+
+**⏱️ Czas propagacji:** 5-60 minut (sprawdzaj status w Resend Dashboard)
+
+#### 📧 Wybór adresu wysyłkowego:
+
+Po weryfikacji domeny możesz używać dowolnego adresu w tej domenie:
+- `arch1tect@haos.fm` ⭐ **ZALECANY** - łączy artystę z radiem
+- `booking@haos.fm` - rezerwacje i potwierdzenia
+- `admin@haos.fm` - oficjalne powiadomienia
+- `events@haos.fm` - informacje o eventach
+- `noreply@haos.fm` - automatyczne emaile
+
+**Konfiguracja w Vercel:**
+```bash
+# Ustaw adres wysyłkowy (dla Resend to wartość MAIL_SENDER, nie MAIL_USERNAME)
+vercel env add MAIL_SENDER production
+# Wartość: arch1tect@haos.fm
+
+# MAIL_USERNAME dla Resend jest zawsze "resend"
+vercel env add MAIL_USERNAME production
+# Wartość: resend
+```
 
 ---
 
@@ -274,8 +346,8 @@ Sprawdzaj logi wysyłki emaili:
 # 1. Załóż konto Resend
 open https://resend.com/signup
 
-# 2. Dodaj domenę arch1tect.pl i zweryfikuj DNS
-# Dashboard → Domains → Add Domain → Follow DNS setup
+# 2. Dodaj domenę haos.fm i zweryfikuj DNS
+# Dashboard → Domains → Add Domain → Follow DNS setup (TXT + MX records)
 
 # 3. Stwórz API Key (Dashboard → API Keys → Create)
 # Skopiuj klucz zaczynający się od "re_"
@@ -286,6 +358,7 @@ vercel env add MAIL_PORT production     # 587
 vercel env add MAIL_USE_TLS production  # True
 vercel env add MAIL_USERNAME production # resend
 vercel env add MAIL_PASSWORD production # <twój-resend-api-key>
+vercel env add MAIL_SENDER production   # arch1tect@haos.fm
 
 # 5. Redeploy
 vercel --prod
@@ -309,7 +382,7 @@ curl -X POST https://azure-club.vercel.app/api/bookings \
 # 7. Sprawdź status w Resend Dashboard → Emails
 ```
 
-✨ Gotowe! System będzie wysyłać emaile z `admin@arch1tect.pl` przez Resend.
+✨ Gotowe! System będzie wysyłać emaile z `arch1tect@haos.fm` przez Resend.
 
 **Sprawdź email:**
 - Potwierdzenie powinno przyjść na adres podany w `email` field
