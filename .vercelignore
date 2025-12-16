@@ -13,6 +13,24 @@ build/
 api/.env
 bookings.db
 
+# Ignore old/test API files - keep only index.py (which imports events_api_postgres)
+api/__init__.py
+api/events_api.py
+api/init_db.py
+api/test_local.py
+api/arch1tect.db
+
+# Ignore subdirectories with Python files
+api/bookings/
+api/config/
+api/models/
+api/routes/
+
+# Test and run scripts
+run_*.py
+test_*.py
+*_test.py
+
 # Node
 node_modules/
 .next/
