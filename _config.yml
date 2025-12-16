@@ -1,0 +1,27 @@
+# Exclude backend files and directories from Jekyll build
+exclude:
+  - backend/
+  - api/
+  - terraform/
+  - docker/
+  - railway-backend/
+  - venv/
+  - node_modules/
+  - "*.py"
+  - "*.db"
+  - "*.log"
+  - requirements.txt
+  - Procfile
+  - package.json
+  - package-lock.json
+  - railway.json
+  - nixpacks.toml
+  - "*.sh"
+  - "*.md"
+  - LICENSE
+  - .git/
+  - .github/
+  - .vercel/
+  - instance/
+  - scripts/
+  - monitoring/
