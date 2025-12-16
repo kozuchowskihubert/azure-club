@@ -263,11 +263,17 @@ def create_booking():
         db.session.add(booking)
         db.session.commit()
         
+        print(f"🚀 [BOOKING] Booking created with ID: {booking.id}")
+        print(f"🚀 [BOOKING] About to call send_booking_confirmation({booking.id})")
+        
         # Send confirmation email
         try:
             send_booking_confirmation(booking.id)
+            print(f"✅ [BOOKING] send_booking_confirmation completed without exception")
         except Exception as email_error:
-            print(f"Email error: {email_error}")
+            print(f"❌ [BOOKING] Email error: {email_error}")
+            import traceback
+            traceback.print_exc()
         
         return jsonify(booking.to_dict()), 201
     except Exception as e:
@@ -376,12 +382,19 @@ def generate_calendar_urls(booking):
 
 def send_booking_confirmation(booking_id):
     """Send booking confirmation email with calendar integration"""
+    print(f"🔍 [EMAIL] Starting send_booking_confirmation for booking_id: {booking_id}")
+    
     booking = Booking.query.get(booking_id)
     if not booking:
+        print(f"❌ [EMAIL] Booking {booking_id} not found!")
         return
     
+    print(f"✅ [EMAIL] Booking found: {booking.name} <{booking.email}>")
+    
     # Generate calendar URLs
+    print(f"📅 [EMAIL] Generating calendar URLs...")
     calendar_urls = generate_calendar_urls(booking)
+    print(f"✅ [EMAIL] Calendar URLs generated: {list(calendar_urls.keys()) if calendar_urls else 'None'}")
     
     html_template = '''
     <!DOCTYPE html>
@@ -503,13 +516,30 @@ def send_booking_confirmation(booking_id):
         calendar_urls=calendar_urls
     )
     
+    print(f"📧 [EMAIL] Creating email message...")
+    print(f"📧 [EMAIL] Mail server: {app.config.get('MAIL_SERVER')}")
+    print(f"📧 [EMAIL] Mail port: {app.config.get('MAIL_PORT')}")
+    print(f"📧 [EMAIL] Mail TLS: {app.config.get('MAIL_USE_TLS')}")
+    print(f"📧 [EMAIL] Mail username: {app.config.get('MAIL_USERNAME')}")
+    print(f"📧 [EMAIL] Mail password set: {bool(app.config.get('MAIL_PASSWORD'))}")
+    print(f"📧 [EMAIL] Mail sender: {app.config.get('MAIL_DEFAULT_SENDER')}")
+    
     msg = Message(
         subject='🎉 Potwierdzenie rezerwacji - ARCH1TECT',
         recipients=[booking.email],
         html=html_content
     )
     
-    mail.send(msg)
+    print(f"✅ [EMAIL] Message created, sending to: {booking.email}")
+    
+    try:
+        mail.send(msg)
+        print(f"✅ [EMAIL] Email sent successfully to {booking.email}!")
+    except Exception as e:
+        print(f"❌ [EMAIL] Failed to send email: {str(e)}")
+        print(f"❌ [EMAIL] Exception type: {type(e).__name__}")
+        import traceback
+        traceback.print_exc()
 
 def send_booking_approval(booking_id):
     """Send booking approval email"""
