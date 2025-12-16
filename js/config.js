@@ -1,12 +1,12 @@
 // Frontend Configuration
-// Using Railway backend (stable) while debugging Vercel serverless
+// Production setup with Netlify frontend + Railway backend
 
 const CONFIG = {
-    // Backend API URL - Using Railway (fallback while fixing Vercel)
-    API_URL: 'https://azure-club-production.up.railway.app/api', // Railway backend with Neon PostgreSQL
+    // Backend API URL - Using Railway backend with Neon PostgreSQL
+    API_URL: 'https://azure-club-production.up.railway.app/api',
     
-    // Frontend URLs (Vercel)
-    FRONTEND_URL: 'https://azure-club.vercel.app',
+    // Frontend URLs (Netlify)
+    FRONTEND_URL: 'https://arch1tect.netlify.app',
     
     // Email
     CONTACT_EMAIL: 'arch1tect@haos.fm',
