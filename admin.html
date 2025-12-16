@@ -423,7 +423,19 @@
 
             <!-- Events Section -->
             <div class="events-section">
-                <h2 class="section-title">📅 Zarządzanie Eventami</h2>
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem;">
+                    <h2 class="section-title">📅 Zarządzanie Eventami</h2>
+                    <div style="display: flex; gap: 1rem; align-items: center;">
+                        <label style="color: var(--primary); font-weight: 600;">Filtruj:</label>
+                        <select id="eventStatusFilter" onchange="loadEvents()" style="padding: 0.5rem 1rem; background: #0a0a0a; border: 1px solid var(--primary); border-radius: 8px; color: var(--light);">
+                            <option value="all">Wszystkie</option>
+                            <option value="upcoming">Nadchodzące</option>
+                            <option value="completed">Ukończone</option>
+                            <option value="cancelled">Anulowane</option>
+                            <option value="sold_out">Wyprzedane</option>
+                        </select>
+                    </div>
+                </div>
                 <div id="eventsTableContainer">
                     <div class="loading">
                         <div class="spinner"></div>
@@ -587,7 +599,13 @@
         async function loadEvents() {
             try {
                 const response = await fetch(`${API_URL}/events`);
-                const events = await response.json();
+                let events = await response.json();
+                
+                // Apply status filter
+                const statusFilter = document.getElementById('eventStatusFilter');
+                if (statusFilter && statusFilter.value !== 'all') {
+                    events = events.filter(event => event.status === statusFilter.value);
+                }
                 
                 const tableHTML = `
                     <table class="events-table">
@@ -608,6 +626,10 @@
                                     <td>${event.venue}, ${event.city || ''}</td>
                                     <td><span class="badge badge-${event.status}">${formatStatus(event.status)}</span></td>
                                     <td class="event-actions">
+                                        ${event.status === 'completed' || event.status === 'cancelled' ? 
+                                            `<button class="btn btn-success btn-small" onclick="approveEvent(${event.id})">✅ Aktywuj</button>` : 
+                                            event.status !== 'upcoming' ? 
+                                            `<button class="btn btn-success btn-small" onclick="approveEvent(${event.id})">✅ Zatwierdź</button>` : ''}
                                         <button class="btn btn-primary btn-small" onclick="editEvent(${event.id})">✏️ Edytuj</button>
                                         <button class="btn btn-danger btn-small" onclick="deleteEvent(${event.id})">🗑️ Usuń</button>
                                     </td>
@@ -774,6 +796,36 @@
             } catch (error) {
                 console.error('Error deleting event:', error);
                 showError('Błąd usuwania eventu');
+            }
+        }
+
+        async function approveEvent(id) {
+            try {
+                // Fetch current event data
+                const eventResponse = await fetch(`${API_URL}/events/${id}`);
+                const event = await eventResponse.json();
+                
+                // Update status to 'upcoming'
+                const response = await fetch(`${API_URL}/events/${id}`, {
+                    method: 'PUT',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        ...event,
+                        status: 'upcoming'
+                    })
+                });
+
+                if (response.ok) {
+                    showSuccess('✅ Event zatwierdzony i aktywny!');
+                    loadEvents();
+                } else {
+                    showError('Błąd zatwierdzania eventu');
+                }
+            } catch (error) {
+                console.error('Error approving event:', error);
+                showError('Błąd zatwierdzania eventu');
             }
         }
 
