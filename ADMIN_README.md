@@ -40,6 +40,12 @@ MAIL_PASSWORD=re_HbXMqMHv_FpFfbuUHr44J5kCpFUu9a4a8
 MAIL_SENDER=arch1tect@haos.fm
 MAIL_FROM=arch1tect@haos.fm
 
+# SMS Configuration - Twilio (Optional)
+# Get credentials from: https://console.twilio.com/
+TWILIO_ACCOUNT_SID=your_account_sid_here
+TWILIO_AUTH_TOKEN=your_auth_token_here
+TWILIO_PHONE_NUMBER=+1234567890
+
 # Server
 PORT=5001
 FLASK_ENV=development
@@ -156,6 +162,51 @@ Backend loguje każdy krok wysyłania emaila:
 📧 [EMAIL] Mail config verified
 ✅ [EMAIL] Email sent successfully!
 ```
+
+## 📱 SMS Notifications (Twilio)
+
+System automatycznie wysyła SMS-y przy rezerwacjach (jeśli Twilio jest skonfigurowane):
+
+### Konfiguracja Twilio:
+1. Załóż konto: https://console.twilio.com/
+2. Kup numer telefonu Twilio
+3. Dodaj credentials do `.env`:
+   ```env
+   TWILIO_ACCOUNT_SID=ACxxxxxxxxxxxxxxxxxxxxx
+   TWILIO_AUTH_TOKEN=your_auth_token
+   TWILIO_PHONE_NUMBER=+48123456789
+   ```
+
+### Funkcje SMS:
+- ✅ **Potwierdzenie rezerwacji** - wysyłane automatycznie po złożeniu rezerwacji
+- 📱 Krótka wiadomość z najważniejszymi informacjami
+- 🔔 Natychmiastowa notyfikacja na telefon klienta
+
+### Format SMS:
+```
+🎉 ARCH1TECT - Potwierdzenie rezerwacji
+
+Dzień dobry [Imię]!
+
+Potwierdzamy Twoją rezerwację:
+📅 Data: [data]
+🕐 Godzina: [godzina]
+📍 Miejsce: [venue, miasto]
+👥 Gości: [liczba]
+
+Szczegóły otrzymasz na email: [email]
+
+🎧 ARCH1TECT | HAOS.fm
+📞 +48 503 691 808
+```
+
+### SMS Debug Logging:
+```
+📱 [SMS] Sending SMS to +48123456789...
+✅ [SMS] SMS sent successfully! SID: SMxxx...
+```
+
+**Uwaga**: SMS jest opcjonalny - jeśli Twilio nie jest skonfigurowane, system działa normalnie tylko z emailem.
 
 ## 🎛️ Panel Administracyjny - Funkcje
 

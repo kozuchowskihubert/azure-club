@@ -10,6 +10,7 @@ from datetime import datetime
 import os
 from jinja2 import Template
 from dotenv import load_dotenv
+from twilio.rest import Client
 
 # Load environment variables from .env file
 load_dotenv()
@@ -47,6 +48,22 @@ app.config['MAIL_DEFAULT_SENDER'] = ('ARCH1TECT | HAOS.fm', sender_email)
 
 db = SQLAlchemy(app)
 mail = Mail(app)
+
+# Twilio SMS Configuration
+TWILIO_ACCOUNT_SID = os.environ.get('TWILIO_ACCOUNT_SID')
+TWILIO_AUTH_TOKEN = os.environ.get('TWILIO_AUTH_TOKEN')
+TWILIO_PHONE_NUMBER = os.environ.get('TWILIO_PHONE_NUMBER')
+
+# Initialize Twilio client if credentials are provided
+twilio_client = None
+if TWILIO_ACCOUNT_SID and TWILIO_AUTH_TOKEN and TWILIO_PHONE_NUMBER:
+    try:
+        twilio_client = Client(TWILIO_ACCOUNT_SID, TWILIO_AUTH_TOKEN)
+        print("✅ [SMS] Twilio client initialized successfully")
+    except Exception as e:
+        print(f"⚠️ [SMS] Twilio initialization failed: {e}")
+else:
+    print("⚠️ [SMS] Twilio credentials not configured - SMS notifications disabled")
 
 # Models
 class Event(db.Model):
@@ -541,11 +558,59 @@ def send_booking_confirmation(booking_id):
     try:
         mail.send(msg)
         print(f"✅ [EMAIL] Email sent successfully to {booking.email}!")
+        
+        # Send SMS notification if Twilio is configured
+        send_sms_confirmation(booking)
+        
     except Exception as e:
         print(f"❌ [EMAIL] Failed to send email: {str(e)}")
         print(f"❌ [EMAIL] Exception type: {type(e).__name__}")
         import traceback
         traceback.print_exc()
+
+def send_sms_confirmation(booking):
+    """Send SMS confirmation using Twilio"""
+    if not twilio_client:
+        print("⚠️ [SMS] Twilio not configured, skipping SMS notification")
+        return
+    
+    if not booking.phone:
+        print("⚠️ [SMS] No phone number provided, skipping SMS")
+        return
+    
+    try:
+        print(f"📱 [SMS] Sending SMS to {booking.phone}...")
+        
+        # Format SMS message
+        sms_body = f"""🎉 ARCH1TECT - Potwierdzenie rezerwacji
+
+Dzień dobry {booking.name}!
+
+Potwierdzamy Twoją rezerwację:
+📅 Data: {booking.event_date}
+🕐 Godzina: {booking.start_time}
+📍 Miejsce: {booking.venue}, {booking.city}
+👥 Gości: {booking.guests}
+
+Szczegóły otrzymasz na email: {booking.email}
+
+🎧 ARCH1TECT | HAOS.fm
+📞 +48 503 691 808"""
+        
+        message = twilio_client.messages.create(
+            body=sms_body,
+            from_=TWILIO_PHONE_NUMBER,
+            to=booking.phone
+        )
+        
+        print(f"✅ [SMS] SMS sent successfully! SID: {message.sid}")
+        return message.sid
+        
+    except Exception as e:
+        print(f"❌ [SMS] Failed to send SMS: {str(e)}")
+        import traceback
+        traceback.print_exc()
+        return None
 
 def send_booking_approval(booking_id):
     """Send booking approval email"""
