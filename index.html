@@ -3,834 +3,1468 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CLUBBASSE & ARCH1TECT - DJ & Producer</title>
-    <link rel="icon" type="image/svg+xml" href="favicon.svg">
-    <link rel="stylesheet" href="css/styles.css">
-    <!-- Professional Typography -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800;900&family=Space+Grotesk:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <title>ARCH1TECT - DJ & Producer</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #ff0080;
+            --dark: #0a0a0a;
+            --light: #ffffff;
+            --gray: #333;
+            --accent: #00ffff;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: var(--dark);
+            color: var(--light);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* Sidebar Navigation */
+        .sidebar {
+            position: fixed;
+            left: 0;
+            top: 0;
+            width: 250px;
+            height: 100vh;
+            background: linear-gradient(180deg, #1a1a1a 0%, #0a0a0a 100%);
+            padding: 2rem 1rem;
+            z-index: 1000;
+            border-right: 2px solid var(--primary);
+            overflow-y: auto;
+        }
+
+        .sidebar-logo {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .sidebar-logo img {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            border: 3px solid var(--primary);
+            margin-bottom: 1rem;
+        }
+
+        .sidebar-title {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .title-main {
+            display: block;
+            font-size: 1.5rem;
+            font-weight: 800;
+            background: linear-gradient(45deg, var(--primary), var(--accent));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 0.25rem;
+        }
+
+        .title-sub {
+            display: block;
+            font-size: 0.75rem;
+            color: #888;
+            letter-spacing: 2px;
+        }
+
+        .sidebar-menu {
+            list-style: none;
+        }
+
+        .sidebar-link {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 1rem;
+            color: var(--light);
+            text-decoration: none;
+            border-radius: 10px;
+            margin-bottom: 0.5rem;
+            transition: all 0.3s ease;
+            font-weight: 500;
+        }
+
+        .sidebar-link:hover,
+        .sidebar-link.active {
+            background: linear-gradient(90deg, var(--primary), transparent);
+            transform: translateX(5px);
+        }
+
+        .link-icon {
+            font-size: 1.5rem;
+        }
+
+        .sidebar-footer {
+            position: absolute;
+            bottom: 2rem;
+            left: 1rem;
+            right: 1rem;
+        }
+
+        .sidebar-social {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .sidebar-social a {
+            font-size: 1.5rem;
+            transition: transform 0.3s;
+        }
+
+        .sidebar-social a:hover {
+            transform: scale(1.2);
+        }
+
+        /* Main Content */
+        .main-content {
+            margin-left: 250px;
+            min-height: 100vh;
+        }
+
+        .section {
+            min-height: 100vh;
+            padding: 4rem 2rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .container {
+            max-width: 1200px;
+            width: 100%;
+            margin: 0 auto;
+        }
+
+        /* Hero Section with Slider */
+        #hero {
+            position: relative;
+            overflow: hidden;
+            background: #0a0a0a;
+        }
+
+        .hero-slider {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+        }
+
+        .hero-slide {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0;
+            transition: opacity 1.5s ease-in-out;
+            background-size: cover;
+            background-position: center;
+        }
+
+        .hero-slide.active {
+            opacity: 1;
+        }
+
+        .hero-slide::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(0,0,0,0.85) 0%, rgba(10,10,10,0.7) 50%, rgba(0,0,0,0.85) 100%);
+        }
+
+        /* HAOS Glitch Effect */
+        .hero-slide::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, 
+                transparent 30%, 
+                rgba(255, 0, 128, 0.1) 50%, 
+                transparent 70%);
+            animation: glitch-scan 8s linear infinite;
+            z-index: 1;
+        }
+
+        @keyframes glitch-scan {
+            0%, 100% { transform: translateY(-100%); }
+            50% { transform: translateY(100%); }
+        }
+
+        /* HAOS Particles Background */
+        #hero::before {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                radial-gradient(2px 2px at 20% 30%, var(--primary), transparent),
+                radial-gradient(2px 2px at 60% 70%, var(--accent), transparent),
+                radial-gradient(1px 1px at 50% 50%, white, transparent),
+                radial-gradient(2px 2px at 80% 10%, var(--primary), transparent);
+            background-size: 200% 200%;
+            animation: particles-float 20s ease-in-out infinite;
+            opacity: 0.3;
+            z-index: 1;
+        }
+
+        @keyframes particles-float {
+            0%, 100% { transform: translate(0, 0); }
+            25% { transform: translate(5%, -5%); }
+            50% { transform: translate(-5%, 5%); }
+            75% { transform: translate(5%, 5%); }
+        }
+
+        /* Hero Content with HAOS Style */
+        .hero-content {
+            text-align: center;
+            position: relative;
+            z-index: 2;
+        }
+
+        .hero-title {
+            font-size: 6rem;
+            font-weight: 900;
+            background: linear-gradient(45deg, var(--primary), var(--accent), var(--primary));
+            background-size: 200% auto;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 1rem;
+            animation: fadeInUp 1s ease, gradient-shift 3s ease-in-out infinite;
+            text-shadow: 0 0 30px rgba(255, 0, 128, 0.5);
+            letter-spacing: 0.1em;
+        }
+
+        @keyframes gradient-shift {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+        }
+
+        .hero-subtitle {
+            font-size: 1.5rem;
+            color: #888;
+            letter-spacing: 6px;
+            margin-bottom: 3rem;
+            animation: fadeInUp 1s ease 0.2s backwards;
+            text-transform: uppercase;
+            font-weight: 300;
+        }
+
+        /* HAOS Glitch Text Effect */
+        .hero-title::before,
+        .hero-title::after {
+            content: 'ARCH1TECT';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
+
+        .hero-title::before {
+            animation: glitch-1 2s infinite;
+            clip-path: polygon(0 0, 100% 0, 100% 45%, 0 45%);
+            transform: translate(-2px, -2px);
+            opacity: 0.8;
+        }
+
+        .hero-title::after {
+            animation: glitch-2 2s infinite;
+            clip-path: polygon(0 55%, 100% 55%, 100% 100%, 0 100%);
+            transform: translate(2px, 2px);
+            opacity: 0.8;
+        }
+
+        @keyframes glitch-1 {
+            0%, 100% { transform: translate(0, 0); opacity: 0; }
+            10% { transform: translate(-2px, -2px); opacity: 0.8; }
+            20% { transform: translate(0, 0); opacity: 0; }
+        }
+
+        @keyframes glitch-2 {
+            0%, 100% { transform: translate(0, 0); opacity: 0; }
+            15% { transform: translate(2px, 2px); opacity: 0.8; }
+            25% { transform: translate(0, 0); opacity: 0; }
+        }
+
+        .hero-cta {
+            display: flex;
+            gap: 1.5rem;
+            justify-content: center;
+            animation: fadeInUp 1s ease 0.4s backwards;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Slider Navigation */
+        .slider-nav {
+            position: absolute;
+            bottom: 3rem;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 1rem;
+            z-index: 3;
+        }
+
+        .slider-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.3);
+            border: 2px solid rgba(255, 0, 128, 0.5);
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .slider-dot.active {
+            background: var(--primary);
+            box-shadow: 0 0 20px var(--primary);
+            transform: scale(1.3);
+        }
+
+        .slider-dot:hover {
+            background: rgba(255, 0, 128, 0.7);
+            transform: scale(1.2);
+        }
+
+        /* HAOS Audio Visualizer */
+        .audio-visualizer {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 100px;
+            display: flex;
+            align-items: flex-end;
+            justify-content: center;
+            gap: 4px;
+            padding: 0 2rem;
+            z-index: 2;
+            opacity: 0.3;
+        }
+
+        .audio-bar {
+            width: 4px;
+            background: linear-gradient(to top, var(--primary), var(--accent));
+            border-radius: 2px;
+            animation: audio-pulse 1s ease-in-out infinite;
+        }
+
+        .audio-bar:nth-child(1) { animation-delay: 0s; height: 20%; }
+        .audio-bar:nth-child(2) { animation-delay: 0.1s; height: 40%; }
+        .audio-bar:nth-child(3) { animation-delay: 0.2s; height: 60%; }
+        .audio-bar:nth-child(4) { animation-delay: 0.3s; height: 80%; }
+        .audio-bar:nth-child(5) { animation-delay: 0.4s; height: 100%; }
+        .audio-bar:nth-child(6) { animation-delay: 0.5s; height: 80%; }
+        .audio-bar:nth-child(7) { animation-delay: 0.6s; height: 60%; }
+        .audio-bar:nth-child(8) { animation-delay: 0.7s; height: 40%; }
+        .audio-bar:nth-child(9) { animation-delay: 0.8s; height: 20%; }
+
+        @keyframes audio-pulse {
+            0%, 100% { transform: scaleY(0.5); }
+            50% { transform: scaleY(1); }
+        }
+
+        /* HAOS Style Buttons */
+        .btn {
+            padding: 1rem 2.5rem;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 700;
+            transition: all 0.3s ease;
+            display: inline-block;
+            cursor: pointer;
+            border: 2px solid transparent;
+            position: relative;
+            overflow: hidden;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            font-size: 0.9rem;
+        }
+
+        .btn::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.2);
+            transform: translate(-50%, -50%);
+            transition: width 0.6s, height 0.6s;
+        }
+
+        .btn:hover::before {
+            width: 300px;
+            height: 300px;
+        }
+
+        .btn-primary {
+            background: linear-gradient(45deg, var(--primary), #ff3399);
+            color: var(--light);
+            box-shadow: 0 0 20px rgba(255, 0, 128, 0.3);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 40px rgba(255, 0, 128, 0.6);
+            animation: btn-pulse 0.5s ease;
+        }
+
+        @keyframes btn-pulse {
+            0%, 100% { transform: translateY(-3px) scale(1); }
+            50% { transform: translateY(-3px) scale(1.05); }
+        }
+
+        .btn-outline {
+            background: transparent;
+            border-color: var(--primary);
+            color: var(--primary);
+            backdrop-filter: blur(10px);
+        }
+
+        .btn-outline:hover {
+            background: var(--primary);
+            color: var(--light);
+            box-shadow: 0 0 30px rgba(255, 0, 128, 0.5);
+        }
+
+        /* HAOS Section Header */
+        .section-header {
+            text-align: center;
+            margin-bottom: 4rem;
+            position: relative;
+        }
+
+        .section-label {
+            display: inline-block;
+            padding: 0.5rem 1.5rem;
+            background: rgba(255, 0, 128, 0.1);
+            border: 1px solid var(--primary);
+            border-radius: 50px;
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+            animation: label-glow 2s ease-in-out infinite;
+            backdrop-filter: blur(10px);
+        }
+
+        @keyframes label-glow {
+            0%, 100% { box-shadow: 0 0 10px rgba(255, 0, 128, 0.3); }
+            50% { box-shadow: 0 0 20px rgba(255, 0, 128, 0.6); }
+        }
+
+        .section-title {
+            font-size: 3.5rem;
+            font-weight: 800;
+            margin-bottom: 1rem;
+            background: linear-gradient(45deg, var(--primary), var(--accent), var(--primary));
+            background-size: 200% auto;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: gradient-shift 3s ease-in-out infinite;
+            position: relative;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 3px;
+            background: linear-gradient(90deg, transparent, var(--primary), transparent);
+            border-radius: 2px;
+        }
+
+        .section-subtitle {
+            font-size: 1.2rem;
+            color: #888;
+            letter-spacing: 2px;
+        }
+
+        /* About Section */
+        #about {
+            background: #0f0f0f;
+        }
+
+        .about-content {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 3rem;
+        }
+
+        .about-text h3 {
+            color: var(--primary);
+            margin: 2rem 0 1rem 0;
+            font-size: 1.5rem;
+        }
+
+        .about-text p {
+            color: #ccc;
+            margin-bottom: 1rem;
+            line-height: 1.8;
+        }
+
+        .about-list {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .about-list li {
+            padding: 0.5rem 0;
+            color: #ccc;
+        }
+
+        .about-stats {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.5rem;
+        }
+
+        .stat-card {
+            background: linear-gradient(135deg, #1a1a1a, #0a0a0a);
+            padding: 2rem;
+            border-radius: 15px;
+            border: 1px solid var(--primary);
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .stat-card::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(45deg, transparent, rgba(255, 0, 128, 0.1), transparent);
+            transform: rotate(45deg);
+            transition: all 0.6s ease;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(255, 0, 128, 0.3);
+            border-color: var(--accent);
+        }
+
+        .stat-card:hover::before {
+            left: 100%;
+        }
+
+        .stat-number {
+            font-size: 3.5rem;
+            font-weight: 800;
+            background: linear-gradient(45deg, var(--primary), var(--accent));
+            background-size: 200% auto;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: gradient-shift 3s ease-in-out infinite;
+            position: relative;
+            z-index: 1;
+        }
+
+        .stat-label {
+            color: #888;
+            margin-top: 0.5rem;
+            font-size: 1rem;
+            letter-spacing: 1px;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Schedule Section */
+        #schedule {
+            background: #0a0a0a;
+        }
+
+        .timeline-item {
+            display: grid;
+            grid-template-columns: 150px 1fr;
+            gap: 2rem;
+            margin-bottom: 3rem;
+            position: relative;
+        }
+
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: 75px;
+            top: 80px;
+            width: 2px;
+            height: calc(100% + 3rem);
+            background: linear-gradient(180deg, var(--primary), transparent);
+        }
+
+        .timeline-item:last-child::before {
+            display: none;
+        }
+
+        .timeline-date {
+            background: linear-gradient(135deg, var(--primary), #ff3399);
+            padding: 1.5rem;
+            border-radius: 15px;
+            text-align: center;
+            height: fit-content;
+        }
+
+        .date-day {
+            font-size: 2.5rem;
+            font-weight: 800;
+        }
+
+        .date-month {
+            font-size: 1.2rem;
+            font-weight: 600;
+        }
+
+        .date-year {
+            font-size: 0.9rem;
+            opacity: 0.8;
+        }
+
+        .timeline-content {
+            background: linear-gradient(135deg, #1a1a1a, #0f0f0f);
+            padding: 2rem;
+            border-radius: 15px;
+            border: 1px solid var(--primary);
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .timeline-content::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 4px;
+            height: 100%;
+            background: linear-gradient(180deg, var(--primary), var(--accent));
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .timeline-content:hover {
+            transform: translateX(10px);
+            box-shadow: 0 10px 40px rgba(255, 0, 128, 0.2);
+        }
+
+        .timeline-content:hover::before {
+            opacity: 1;
+        }
+
+        .timeline-content h3 {
+            color: var(--primary);
+            font-size: 1.8rem;
+            margin-bottom: 1rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .event-location {
+            color: #888;
+            margin-bottom: 1rem;
+        }
+
+        .event-description {
+            color: #ccc;
+            line-height: 1.8;
+            margin-bottom: 1rem;
+        }
+
+        .event-badge-small {
+            display: inline-block;
+            padding: 0.25rem 1rem;
+            background: rgba(255, 0, 128, 0.2);
+            border: 1px solid var(--primary);
+            border-radius: 20px;
+            font-size: 0.8rem;
+            margin-bottom: 1rem;
+        }
+
+        .event-artists {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+            margin: 1rem 0;
+        }
+
+        .event-artists span {
+            background: rgba(0, 255, 255, 0.1);
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 0.9rem;
+        }
+
+        /* Booking Section */
+        #booking {
+            background: #0f0f0f;
+        }
+
+        .booking-wrapper {
+            display: grid;
+            grid-template-columns: 1fr 1.5fr;
+            gap: 3rem;
+        }
+
+        .booking-info h3 {
+            color: var(--primary);
+            font-size: 1.8rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .services-list {
+            list-style: none;
+            margin-bottom: 2rem;
+        }
+
+        .services-list li {
+            display: flex;
+            gap: 1rem;
+            padding: 1rem;
+            background: #1a1a1a;
+            border-radius: 10px;
+            margin-bottom: 1rem;
+        }
+
+        .service-icon {
+            font-size: 2rem;
+        }
+
+        .services-list strong {
+            color: var(--primary);
+            display: block;
+            margin-bottom: 0.25rem;
+        }
+
+        .services-list p {
+            color: #888;
+            font-size: 0.9rem;
+        }
+
+        .booking-form {
+            background: #1a1a1a;
+            padding: 2rem;
+            border-radius: 15px;
+            border: 1px solid var(--primary);
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            color: var(--primary);
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+        }
+
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 1rem;
+            background: #0a0a0a;
+            border: 1px solid #333;
+            border-radius: 10px;
+            color: var(--light);
+            font-family: inherit;
+            transition: border-color 0.3s;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: var(--primary);
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+        }
+
+        .btn-full {
+            width: 100%;
+        }
+
+        /* Contact Section */
+        #contact {
+            background: #0a0a0a;
+        }
+
+        .contact-grid {
+            display: grid;
+            grid-template-columns: 1fr 1.5fr;
+            gap: 3rem;
+        }
+
+        .contact-item {
+            display: flex;
+            gap: 1rem;
+            padding: 1.5rem;
+            background: #1a1a1a;
+            border-radius: 10px;
+            margin-bottom: 1rem;
+        }
+
+        .contact-icon {
+            font-size: 2rem;
+        }
+
+        .contact-item h4 {
+            color: var(--primary);
+            margin-bottom: 0.5rem;
+        }
+
+        .contact-item a {
+            color: #888;
+            text-decoration: none;
+        }
+
+        .contact-item a:hover {
+            color: var(--primary);
+        }
+
+        .contact-item p {
+            color: #888;
+        }
+
+        .social-links {
+            margin-top: 2rem;
+        }
+
+        .social-links h4 {
+            color: var(--primary);
+            margin-bottom: 1rem;
+        }
+
+        .social-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 0.5rem;
+        }
+
+        .social-link {
+            padding: 0.75rem;
+            background: #1a1a1a;
+            border: 1px solid #333;
+            border-radius: 10px;
+            text-decoration: none;
+            color: #888;
+            transition: all 0.3s;
+            text-align: center;
+        }
+
+        .social-link:hover {
+            border-color: var(--primary);
+            color: var(--primary);
+            transform: translateY(-2px);
+        }
+
+        /* Mobile */
+        @media (max-width: 768px) {
+            .sidebar {
+                transform: translateX(-100%);
+                transition: transform 0.3s;
+            }
+
+            .sidebar.active {
+                transform: translateX(0);
+            }
+
+            .main-content {
+                margin-left: 0;
+            }
+
+            .hero-title {
+                font-size: 3rem;
+            }
+
+            .about-content,
+            .booking-wrapper,
+            .contact-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .about-stats {
+                grid-template-columns: 1fr 1fr;
+            }
+
+            .timeline-item {
+                grid-template-columns: 1fr;
+            }
+
+            .timeline-item::before {
+                display: none;
+            }
+
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Mobile Menu Toggle */
+        .mobile-menu-toggle {
+            display: none;
+            position: fixed;
+            top: 1rem;
+            left: 1rem;
+            z-index: 1001;
+            background: var(--primary);
+            border: none;
+            width: 50px;
+            height: 50px;
+            border-radius: 10px;
+            cursor: pointer;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .mobile-menu-toggle span {
+            width: 25px;
+            height: 3px;
+            background: white;
+            border-radius: 2px;
+            transition: 0.3s;
+        }
+
+        @media (max-width: 768px) {
+            .mobile-menu-toggle {
+                display: flex;
+            }
+        }
+    </style>
 </head>
 <body>
-    <canvas id="particles"></canvas>
-
-    <!-- Fixed Sidebar Navigation -->
-    <aside class="sidebar-nav">
-        <div class="sidebar-header">
-            <a href="#hero" class="sidebar-logo">
-                <img src="images/clubbasse.png" alt="ARCH1TECT">
-            </a>
-            <div class="sidebar-title">
-                <span class="title-main">ARCH1TECT</span>
-                <span class="title-sub">DJ • PRODUCER</span>
-            </div>
+    <!-- Sidebar Navigation -->
+    <aside class="sidebar" id="sidebar">
+        <div class="sidebar-logo">
+            <img src="images/clubbasse.png" alt="ARCH1TECT" onerror="this.style.display='none'">
+        </div>
+        <div class="sidebar-title">
+            <span class="title-main">ARCH1TECT</span>
+            <span class="title-sub">DJ • PRODUCER</span>
         </div>
 
         <nav class="sidebar-menu">
-            <a href="#hero" class="sidebar-link active" data-section="a">
-                <span class="link-letter">A</span>
-                <span class="link-label">Home</span>
+            <a href="#hero" class="sidebar-link active">
                 <span class="link-icon">🏠</span>
+                <span class="link-label">Home</span>
             </a>
-            <a href="#about" class="sidebar-link" data-section="b">
-                <span class="link-letter">B</span>
-                <span class="link-label">About</span>
+            <a href="#about" class="sidebar-link">
                 <span class="link-icon">👤</span>
+                <span class="link-label">O mnie</span>
             </a>
-            <a href="#stats" class="sidebar-link" data-section="c">
-                <span class="link-letter">C</span>
-                <span class="link-label">Stats</span>
-                <span class="link-icon">📊</span>
-            </a>
-            <a href="#portfolio" class="sidebar-link" data-section="d">
-                <span class="link-letter">D</span>
-                <span class="link-label">Gallery</span>
-                <span class="link-icon">📸</span>
-            </a>
-            <a href="#services" class="sidebar-link" data-section="e">
-                <span class="link-letter">E</span>
-                <span class="link-label">Services</span>
-                <span class="link-icon">🎵</span>
-            </a>
-            <a href="#calendar" class="sidebar-link" data-section="f">
-                <span class="link-letter">F</span>
-                <span class="link-label">Calendar</span>
+            <a href="#schedule" class="sidebar-link">
                 <span class="link-icon">📅</span>
+                <span class="link-label">Rozkład Jazdy</span>
             </a>
-            <a href="#contact" class="sidebar-link" data-section="g">
-                <span class="link-letter">G</span>
-                <span class="link-label">Contact</span>
+            <a href="#booking" class="sidebar-link">
+                <span class="link-icon">📝</span>
+                <span class="link-label">Rezerwuj</span>
+            </a>
+            <a href="#contact" class="sidebar-link">
                 <span class="link-icon">📧</span>
+                <span class="link-label">Kontakt</span>
             </a>
         </nav>
 
         <div class="sidebar-footer">
-            <button class="theme-toggle-sidebar" id="themeToggleSidebar" aria-label="Toggle theme">
-                <span class="theme-icon light-icon">☀</span>
-                <span class="theme-icon dark-icon">🌙</span>
-            </button>
             <div class="sidebar-social">
-                <a href="#" class="social-icon" aria-label="Spotify">🎵</a>
-                <a href="#" class="social-icon" aria-label="YouTube">📺</a>
-                <a href="#" class="social-icon" aria-label="Instagram">📷</a>
+                <a href="https://www.instagram.com/arch1tect_dj/" target="_blank">📷</a>
+                <a href="https://www.facebook.com/arch1tect.official" target="_blank">📘</a>
+                <a href="https://soundcloud.com/arch1tect" target="_blank">🎵</a>
             </div>
         </div>
     </aside>
 
     <!-- Mobile Menu Toggle -->
-    <button class="mobile-menu-toggle" id="mobileMenuToggle" aria-label="Toggle menu">
+    <button class="mobile-menu-toggle" id="mobileMenuToggle">
         <span></span>
         <span></span>
         <span></span>
     </button>
 
-    <!-- Theme Toggle (top right for desktop) -->
-    <button class="theme-toggle-floating" id="themeToggle" aria-label="Toggle theme">
-        <span class="theme-icon light-icon">☀</span>
-        <span class="theme-icon dark-icon">🌙</span>
-    </button>
-
-    <!-- Main Content Wrapper -->
+    <!-- Main Content -->
     <div class="main-content">
+        <!-- Hero Section with Slider -->
+        <section id="hero" class="section">
+            <!-- Background Slider -->
+            <div class="hero-slider">
+                <div class="hero-slide active" style="background-image: url('images/494048835_122116924232818967_4857791186410835517_n.jpg');"></div>
+                <div class="hero-slide" style="background-image: url('images/525343018_122134127126818967_1288604212562039113_n.png.jpeg');"></div>
+                <div class="hero-slide" style="background-image: url('images/595616301_10223886487189930_286573762732649363_n.jpg');"></div>
+                <div class="hero-slide" style="background-image: url('images/597105929_122152486832818967_5328531191516479357_n.jpg');"></div>
+            </div>
 
-    <section id="hero" class="hero fade-in-section">
-        <!-- Hero Image Slider -->
-        <div class="hero-slider">
-            <div class="hero-slide active">
-                <img src="images/40A58B76-032B-40D0-AFB4-CDAE17F0C6D0.png" alt="ARCH1TECT Performance 1">
+            <!-- Audio Visualizer -->
+            <div class="audio-visualizer">
+                <div class="audio-bar"></div>
+                <div class="audio-bar"></div>
+                <div class="audio-bar"></div>
+                <div class="audio-bar"></div>
+                <div class="audio-bar"></div>
+                <div class="audio-bar"></div>
+                <div class="audio-bar"></div>
+                <div class="audio-bar"></div>
+                <div class="audio-bar"></div>
             </div>
-            <div class="hero-slide">
-                <img src="images/916BB6A3-CDAD-4C91-B470-55EE58388FB2.png" alt="ARCH1TECT Performance 2">
+
+            <div class="container">
+                <div class="hero-content">
+                    <h1 class="hero-title">ARCH1TECT</h1>
+                    <p class="hero-subtitle">DARKNESS • POWER • TECHNO</p>
+                    <div class="hero-cta">
+                        <a href="#booking" class="btn btn-primary">🎧 REZERWUJ TERAZ</a>
+                        <a href="#about" class="btn btn-outline">👤 POZNAJ MNIE</a>
+                    </div>
+                </div>
             </div>
-            <div class="hero-slide">
-                <img src="images/9CEA418F-F26C-4DD4-BD51-6485388D80A7.png" alt="ARCH1TECT Performance 3">
-            </div>
-            
+
             <!-- Slider Navigation -->
-            <button class="slider-nav prev" id="sliderPrev">‹</button>
-            <button class="slider-nav next" id="sliderNext">›</button>
-            
-            <!-- Slider Dots -->
-            <div class="slider-dots">
-                <span class="dot active" data-slide="0"></span>
-                <span class="dot" data-slide="1"></span>
-                <span class="dot" data-slide="2"></span>
+            <div class="slider-nav">
+                <div class="slider-dot active" data-slide="0"></div>
+                <div class="slider-dot" data-slide="1"></div>
+                <div class="slider-dot" data-slide="2"></div>
+                <div class="slider-dot" data-slide="3"></div>
             </div>
-        </div>
-        
-        <div class="hero-overlay"></div>
-        <div class="hero-content">
-            <h1 class="hero-title">ARCH1TECT</h1>
-            <p class="hero-subtitle">DARKNESS • POWER • TECHNO</p>
-            <div class="hero-cta">
-                <a href="#booking" class="btn btn-primary">BOOK NOW</a>
-                <a href="#portfolio" class="btn btn-outline">EXPLORE</a>
-            </div>
-        </div>
-        <div class="hero-scroll">
-            <span>Scroll Down</span>
-            <div class="scroll-arrow"></div>
-        </div>
-    </section>
+        </section>
 
-    <!-- Featured Event: Lady Scorpio Baltic House -->
-    <section id="featured-event" class="section section-dark">
-        <div class="container">
-            <!-- Event Banner -->
-            <div class="event-banner">
-                <div class="event-badges">
-                    <span class="event-badge">
-                        🔥 NADCHODZĄCY EVENT
-                    </span>
-                    <span class="event-badge dark">
-                        📅 20-22 LUTEGO 2025
-                    </span>
-                </div>
-                
-                <h2 class="event-title">
-                    Lady Scorpio Presents
-                </h2>
-                <h3 class="event-subtitle">
-                    ZIMOWY ZLOT BALTIC HOUSE
-                </h3>
-                
-                <div class="event-details">
-                    <div class="event-detail-item">
-                        <span class="icon">📍</span>
-                        <span class="text">ul. Pińska 1, Kołobrzeg (Podczele)</span>
-                    </div>
-                    <div class="event-detail-item">
-                        <span class="icon">🎵</span>
-                        <span class="text">Za Sterem: ARCH1TECT</span>
-                    </div>
+        <!-- About Section -->
+        <section id="about" class="section">
+            <div class="container">
+                <div class="section-header">
+                    <span class="section-label">👤 O MNIE</span>
+                    <h2 class="section-title">ARCH1TECT</h2>
+                    <p class="section-subtitle">DJ • Producer • Sound Engineer</p>
                 </div>
 
-                <!-- DJ Lineup -->
-                <div class="dj-lineup">
-                    <div class="dj-card">
-                        <div class="icon">🎧</div>
-                        <div class="name">ARCH1TECT</div>
-                        <div class="role">Main DJ</div>
+                <div class="about-content">
+                    <div class="about-text">
+                        <h3>Historia i Pasja</h3>
+                        <p>ARCH1TECT to nie tylko pseudonim artystyczny - to filozofia dźwięku. Specjalizuję się w ciemnych, potężnych brzmieniach techno, które budują niepowtarzalną atmosferę na parkiecie.</p>
+                        
+                        <h3>Styl Muzyczny</h3>
+                        <p>Moja muzyka to połączenie surowego techno z elementami industrial i dark ambient. Każdy set to starannie zaplanowana podróż przez mroczne zakamarki elektronicznej muzyki.</p>
+                        
+                        <h3>Doświadczenie</h3>
+                        <ul class="about-list">
+                            <li>🎵 Ponad 200 występów w całej Polsce</li>
+                            <li>🎧 Rezydent klubu Baltic House</li>
+                            <li>🏆 Zwycięzca Baltic DJ Competition 2024</li>
+                            <li>🎚️ Producent muzyki elektronicznej od 2018</li>
+                            <li>📻 Gość w Radio HAOS.fm</li>
+                        </ul>
                     </div>
-                    <div class="dj-card">
-                        <div class="icon">🎤</div>
-                        <div class="name">DJ Gregory</div>
-                        <div class="role">Special Guest</div>
-                    </div>
-                    <div class="dj-card">
-                        <div class="icon">🎵</div>
-                        <div class="name">Angelo Davilla</div>
-                        <div class="role">Live Set</div>
-                    </div>
-                    <div class="dj-card">
-                        <div class="icon">🔊</div>
-                        <div class="name">DJ Bear</div>
-                        <div class="role">Support</div>
-                    </div>
-                </div>
-
-                <!-- CTA Buttons -->
-                <div class="event-cta-buttons">
-                    <a href="#booking" class="btn btn-primary">
-                        Zarezerwuj swoje miejsce
-                    </a>
-                    <a href="https://www.ladyscorpiomusic.com" target="_blank" class="btn btn-outline">
-                        Więcej informacji
-                    </a>
-                </div>
-            </div>
-
-            <!-- Event Details -->
-            <div class="event-info-grid">
-                <div class="event-info-card">
-                    <div class="icon">📅</div>
-                    <h4>3-dniowy Event</h4>
-                    <p>
-                        20-22 Lutego 2025<br />
-                        Czwartek - Sobota<br />
-                        Rozpoczęcie: 20:00
-                    </p>
-                </div>
-
-                <div class="event-info-card">
-                    <div class="icon">🎶</div>
-                    <h4>Muzyka</h4>
-                    <p>
-                        House • Techno • Electro<br />
-                        Baltic House Climate<br />
-                        Non-stop DJ Sets
-                    </p>
-                </div>
-
-                <div class="event-info-card">
-                    <div class="icon">🏠</div>
-                    <h4>Lokalizacja</h4>
-                    <p>
-                        Rare Rotation<br />
-                        ul. Pińska 1<br />
-                        Kołobrzeg (Podczele)
-                    </p>
-                </div>
-            </div>
-
-            <!-- Ticket Info -->
-            <div class="ticket-info-wrapper">
-                <div class="ticket-info">
-                    <h3>Bilety i Rezerwacje</h3>
-                    <p>
-                        Zarezerwuj swoje miejsce na największym zimowym evencie Baltic House!
-                    </p>
-                    <div class="ticket-features">
-                        <div class="ticket-feature">
-                            <div class="icon">🎫</div>
-                            <div class="text">
-                                <div>Wejściówka 3-dniowa</div>
-                                <div>Zapytaj o cenę</div>
-                            </div>
-                        </div>
-                        <div class="ticket-feature">
-                            <div class="icon">🎟️</div>
-                            <div class="text">
-                                <div>Wejściówka 1-dniowa</div>
-                                <div>Zapytaj o cenę</div>
-                            </div>
-                        </div>
-                    </div>
-                    <a href="#booking" class="btn btn-primary">
-                        Zarezerwuj teraz →
-                    </a>
-                    <p style="font-size: 0.9rem; color: #666; margin-top: 1rem;">
-                        Kontakt: booking@arch1tect.pl • +48 503 691 808
-                    </p>
-                </div>
-            </div>
-        </div>
-        
-        <!-- Decorative Background Elements -->
-        <div class="event-bg-glow"></div>
-        <div class="event-bg-glow"></div>
-    </section>
-
-    <section id="tracks" class="section section-light">
-        <div class="container">
-            <h2 class="section-title">Najnowsze Utwory</h2>
-            <p class="section-subtitle">Odkryj dźwięki CLUBBASSE i Arch1tect</p>
-            <div class="tracks-grid">
-                <div class="track-card animate-on-scroll">
-                    <div class="track-cover" style="background-image: url('images/464443225_10220494714557734_8482962689256333843_n.jpg');"></div>
-                    <div class="track-info">
-                        <h3 class="track-title">Pumping Energy</h3>
-                        <p class="track-artist">CLUBBASSE</p>
-                        <button class="track-play">▶</button>
-                    </div>
-                </div>
-                <div class="track-card animate-on-scroll">
-                    <div class="track-cover" style="background-image: url('images/464621273_10220514012560172_6345855206631388049_n.jpg');"></div>
-                    <div class="track-info">
-                        <h3 class="track-title">Deep Vibes</h3>
-                        <p class="track-artist">Arch1tect</p>
-                        <button class="track-play">▶</button>
-                    </div>
-                </div>
-                <div class="track-card animate-on-scroll">
-                    <div class="track-cover" style="background-image: url('images/464839101_10220540564463953_6671588997021038565_n.jpg');"></div>
-                    <div class="track-info">
-                        <h3 class="track-title">Night Drive</h3>
-                        <p class="track-artist">CLUBBASSE</p>
-                        <button class="track-play">▶</button>
-                    </div>
-                </div>
-                <div class="track-card animate-on-scroll">
-                    <div class="track-cover" style="background-image: url('images/465397893_10220640823610369_2634950720329519865_n.jpg');"></div>
-                    <div class="track-info">
-                        <h3 class="track-title">Techno Flow</h3>
-                        <p class="track-artist">Arch1tect</p>
-                        <button class="track-play">▶</button>
-                    </div>
-                </div>
-                <div class="track-card animate-on-scroll">
-                    <div class="track-cover" style="background-image: url('images/465441632_10220639728582994_3459818439755776654_n.jpg');"></div>
-                    <div class="track-info">
-                        <h3 class="track-title">Sunrise Sessions</h3>
-                        <p class="track-artist">CLUBBASSE</p>
-                        <button class="track-play">▶</button>
-                    </div>
-                </div>
-                <div class="track-card animate-on-scroll">
-                    <div class="track-cover" style="background-image: url('images/466152903_10220764641585741_5235279180243239869_n.jpg');"></div>
-                    <div class="track-info">
-                        <h3 class="track-title">Dark Matter</h3>
-                        <p class="track-artist">Arch1tect</p>
-                        <button class="track-play">▶</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <section id="stats" class="section section-dark">
-        <div class="container">
-            <h2 class="section-title">Metryki Kariery</h2>
-            <div class="stats-grid">
-                <div class="stat-card animate-on-scroll">
-                    <div class="stat-icon">🎧</div>
-                    <div class="stat-number" data-target="500">0</div>
-                    <div class="stat-label">Eventów</div>
-                </div>
-                <div class="stat-card animate-on-scroll">
-                    <div class="stat-icon">🌍</div>
-                    <div class="stat-number" data-target="25">0</div>
-                    <div class="stat-label">Krajów</div>
-                </div>
-                <div class="stat-card animate-on-scroll">
-                    <div class="stat-icon">⭐</div>
-                    <div class="stat-number" data-target="15">0</div>
-                    <div class="stat-label">Lat Doświadczenia</div>
-                </div>
-                <div class="stat-card animate-on-scroll">
-                    <div class="stat-icon">🎵</div>
-                    <div class="stat-number" data-target="100">0</div>
-                    <div class="stat-label">Produkcji</div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <section id="about" class="section section-light">
-        <div class="container">
-            <h2 class="section-title">Historia</h2>
-            <div class="about-content">
-                <div class="about-text animate-on-scroll">
-                    <h3>Od Pasji do Profesji</h3>
-                    <p>Jestem DJ-em i producentem z ponad 15-letnim doświadczeniem w kreowaniu niezapomnianych wieczorów. Moja muzyczna podróż rozpoczęła się od miłości do energetycznego house'u jako CLUBBASSE, a następnie ewoluowała w głębsze, mroczne brzmienia techno jako Arch1tect.</p>
-                    <p>Występowałem w najlepszych klubach i na festiwalach w Polsce i za granicą, dzieląc scenę z najważniejszymi nazwiskami elektronicznej sceny muzycznej. Każdy set to dla mnie opowieść - od pierwwszego uderzenia basu po ostatni akord.</p>
-                    <div class="timeline">
-                        <div class="timeline-item">
-                            <div class="timeline-year">2010</div>
-                            <div class="timeline-content">
-                                <h4>Pierwszy Set</h4>
-                                <p>Debiut w lokalnym klubie - początek wielkiej przygody</p>
-                            </div>
-                        </div>
-                        <div class="timeline-item">
-                            <div class="timeline-year">2015</div>
-                            <div class="timeline-content">
-                                <h4>Międzynarodowy Przełom</h4>
-                                <p>Pierwsze występy za granicą, współpraca z zagranicznymi labelami</p>
-                            </div>
-                        </div>
-                        <div class="timeline-item">
-                            <div class="timeline-year">2020</div>
-                            <div class="timeline-content">
-                                <h4>Studio & Produkcja</h4>
-                                <p>Otwarcie własnego studia nagraniowego, start produkcji pod Arch1tect</p>
-                            </div>
-                        </div>
-                        <div class="timeline-item">
-                            <div class="timeline-year">2025</div>
-                            <div class="timeline-content">
-                                <h4>Teraźniejszość</h4>
-                                <p>Łączenie dwóch stylów, nowe wydawnictwa, międzynarodowe trasy</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="about-skills animate-on-scroll">
-                    <h3>Specjalizacje</h3>
-                    <div class="skill">
-                        <div class="skill-name">DJ Sets (House)</div>
-                        <div class="skill-bar">
-                            <div class="skill-progress" data-progress="95"></div>
-                        </div>
-                    </div>
-                    <div class="skill">
-                        <div class="skill-name">DJ Sets (Techno)</div>
-                        <div class="skill-bar">
-                            <div class="skill-progress" data-progress="90"></div>
-                        </div>
-                    </div>
-                    <div class="skill">
-                        <div class="skill-name">Produkcja Muzyczna</div>
-                        <div class="skill-bar">
-                            <div class="skill-progress" data-progress="85"></div>
-                        </div>
-                    </div>
-                    <div class="skill">
-                        <div class="skill-name">Sound Design</div>
-                        <div class="skill-bar">
-                            <div class="skill-progress" data-progress="80"></div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <section id="portfolio" class="section section-dark">
-        <div class="container">
-            <h2 class="section-title">Galeria</h2>
-            <p class="section-subtitle">Odkryj momenty z moich występów</p>
-            <div class="portfolio-filters">
-                <button class="filter-btn active" data-filter="all">Wszystkie</button>
-                <button class="filter-btn" data-filter="events">Kluby</button>
-                <button class="filter-btn" data-filter="festivals">Festiwale</button>
-                <button class="filter-btn" data-filter="studio">Za kulisami</button>
-            </div>
-            <div class="gallery-grid">
-                <div class="gallery-item animate-on-scroll" data-category="events">
-                    <div class="gallery-image" style="background-image: url('images/494048835_122116924232818967_4857791186410835517_n.jpg'); background-size: cover; background-position: center;"></div>
-                    <div class="gallery-overlay"><h3>Club Night</h3><p>CLUBBASSE Energy</p></div>
-                </div>
-                <div class="gallery-item animate-on-scroll" data-category="festivals">
-                    <div class="gallery-image" style="background-image: url('images/525343018_122134127126818967_1288604212562039113_n.png.jpeg'); background-size: cover; background-position: center;"></div>
-                    <div class="gallery-overlay"><h3>Festival Stage</h3><p>Pumping Vibes 2024</p></div>
-                </div>
-                <div class="gallery-item animate-on-scroll" data-category="studio">
-                    <div class="gallery-image" style="background-image: url('images/494048835_122116924232818967_4857791186410835517_n.jpg'); background-size: cover; background-position: center;"></div>
-                    <div class="gallery-overlay"><h3>Za kulisami</h3><p>Studio Sessions</p></div>
-                </div>
-                <div class="gallery-item animate-on-scroll" data-category="events">
-                    <div class="gallery-image" style="background-image: url('images/595616301_10223886487189930_286573762732649363_n.jpg'); background-size: cover; background-position: center;"></div>
-                    <div class="gallery-overlay"><h3>Live Set</h3><p>Arch1tect Techno</p></div>
-                </div>
-                <div class="gallery-item animate-on-scroll" data-category="festivals">
-                    <div class="gallery-image" style="background-image: url('images/597105929_122152486832818967_5328531191516479357_n.jpg'); background-size: cover; background-position: center;"></div>
-                    <div class="gallery-overlay"><h3>Open Air</h3><p>Summer Vibes</p></div>
-                </div>
-                <div class="gallery-item animate-on-scroll" data-category="studio">
-                    <div class="gallery-image" style="background-image: url('images/club.png'); background-size: cover; background-position: center;"></div>
-                    <div class="gallery-overlay"><h3>Club Logo</h3><p>CLUBBASSE Brand</p></div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <section id="services" class="section section-light">
-        <div class="container">
-            <h2 class="section-title">Oferta</h2>
-            <p class="section-subtitle">Profesjonalne usługi DJ i produkcji muzycznej</p>
-            <div class="services-grid">
-                <div class="service-card animate-on-scroll">
-                    <div class="service-icon">🎧</div>
-                    <h3>DJ Sets - Kluby</h3>
-                    <p>Profesjonalne występy w klubach - od intymnych setów po wielkie imprezy. Energia, technika, niezapomniane przeżycia.</p>
-                    <ul class="service-features">
-                        <li>Sprzęt najwyższej jakości</li>
-                        <li>Dostosowanie repertuaru do miejsca</li>
-                        <li>2-6 godzin setu</li>
-                        <li>Interakcja z publicznością</li>
-                    </ul>
-                    <div class="service-price">Cena do uzgodnienia</div>
-                    <a href="#booking" class="btn btn-primary">Zapytaj o termin</a>
-                </div>
-                <div class="service-card animate-on-scroll">
-                    <div class="service-icon">🎪</div>
-                    <h3>DJ Sets - Festiwale</h3>
-                    <p>Występy na dużych eventach i festiwalach. Doświadczenie w graniu dla tysięcy ludzi na open air i indoor.</p>
-                    <ul class="service-features">
-                        <li>Przygotowanie specjalnego setu</li>
-                        <li>Współpraca z techniką sceny</li>
-                        <li>Promocja wydarzenia</li>
-                        <li>Elastyczne godziny</li>
-                    </ul>
-                    <div class="service-price">Cena do uzgodnienia</div>
-                    <a href="#booking" class="btn btn-primary">Zapytaj o termin</a>
-                </div>
-                <div class="service-card animate-on-scroll">
-                    <div class="service-icon">🎵</div>
-                    <h3>Produkcja Muzyczna</h3>
-                    <p>Tworzenie autorskich utworów, remiksów i sound designu. Od pomysłu po mastering - kompleksowa produkcja.</p>
-                    <ul class="service-features">
-                        <li>Oryginalne produkcje</li>
-                        <li>Remixy i edity</li>
-                        <li>Ghost production</li>
-                        <li>Mastering i mixing</li>
-                    </ul>
-                    <div class="service-price">Cena do uzgodnienia</div>
-                    <a href="#contact" class="btn btn-primary">Skontaktuj się</a>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <section id="booking" class="section section-dark">
-        <div class="container">
-            <h2 class="section-title">Rozkład Jazdy</h2>
-            <p class="section-subtitle">Sprawdź dostępne terminy i zarezerwuj występ</p>
-            <div class="booking-content">
-                <div class="booking-calendar">
-                    <div class="calendar-header">
-                        <button class="calendar-nav" id="prevMonth">←</button>
-                        <h3 class="calendar-title" id="calendarTitle">Styczeń 2025</h3>
-                        <button class="calendar-nav" id="nextMonth">→</button>
-                    </div>
-                    <div class="calendar-grid" id="calendarGrid"></div>
-                    <div class="calendar-legend">
-                        <div class="legend-item">
-                            <span class="legend-color available"></span>
-                            <span>Dostępny</span>
-                        </div>
-                        <div class="legend-item">
-                            <span class="legend-color booked"></span>
-                            <span>Zarezerwowany</span>
-                        </div>
-                        <div class="legend-item">
-                            <span class="legend-color selected"></span>
-                            <span>Wybrany</span>
-                        </div>
-                    </div>
-                </div>
-                <div class="booking-form-container">
-                    <form class="booking-form" id="bookingForm">
-                        <h3>Formularz rezerwacji</h3>
-                        <div class="form-group">
-                            <label for="eventType">Typ eventu</label>
-                            <select id="eventType" required>
-                                <option value="">Wybierz typ...</option>
-                                <option value="club">Klub</option>
-                                <option value="festival">Festiwal</option>
-                                <option value="private">Event prywatny</option>
-                                <option value="corporate">Event firmowy</option>
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <label for="venueName">Nazwa miejsca</label>
-                            <input type="text" id="venueName" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="contactPerson">Osoba kontaktowa</label>
-                            <input type="text" id="contactPerson" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="email">Email</label>
-                            <input type="email" id="email" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="phone">Telefon</label>
-                            <input type="tel" id="phone" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="selectedDate">Wybrany termin</label>
-                            <input type="text" id="selectedDate" readonly required>
-                        </div>
-                        <div class="form-group">
-                            <label for="eventTime">Godzina rozpoczęcia</label>
-                            <input type="time" id="eventTime" value="20:00" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="duration">Czas trwania (godziny)</label>
-                            <input type="number" id="duration" min="2" max="8" value="4" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="additionalInfo">Dodatkowe informacje</label>
-                            <textarea id="additionalInfo" rows="4" placeholder="Opisz event, oczekiwania, specjalne wymagania..."></textarea>
-                        </div>
-                        <button type="submit" class="btn btn-primary">Wyślij zapytanie</button>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <section id="contact" class="section section-light">
-        <div class="container">
-            <h2 class="section-title">Kontakt</h2>
-            <p class="section-subtitle">Skontaktuj się ze mną</p>
-            <div class="contact-content">
-                <div class="contact-info">
-                    <div class="contact-item animate-on-scroll">
-                        <div class="contact-icon">📧</div>
-                        <h3>Email</h3>
-                        <p>booking@clubbasse.pl</p>
-                    </div>
-                    <div class="contact-item animate-on-scroll">
-                        <div class="contact-icon">📱</div>
-                        <h3>Telefon</h3>
-                        <p>+48 XXX XXX XXX</p>
-                    </div>
-                    <div class="contact-item animate-on-scroll">
-                        <div class="contact-icon">🌐</div>
-                        <h3>Social Media</h3>
-                        <div class="social-links">
-                            <a href="#" target="_blank">Facebook</a>
-                            <a href="#" target="_blank">Instagram</a>
-                            <a href="#" target="_blank">SoundCloud</a>
-                            <a href="#" target="_blank">YouTube</a>
-                        </div>
-                    </div>
-                </div>
-                <form class="contact-form animate-on-scroll" id="contactForm">
-                    <div class="form-group">
-                        <label for="name">Imię i nazwisko</label>
-                        <input type="text" id="name" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="contactEmail">Email</label>
-                        <input type="email" id="contactEmail" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="subject">Temat</label>
-                        <input type="text" id="subject" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="message">Wiadomość</label>
-                        <textarea id="message" rows="5" required></textarea>
-                    </div>
-                    <button type="submit" class="btn btn-primary">Wyślij wiadomość</button>
-                </form>
-            </div>
-        </div>
-    </section>
-
-    <section id="calendar" class="section section-dark calendar-section">
-        <div class="container">
-            <h2 class="section-title">Booking & Media</h2>
-            <p class="section-subtitle">Zarezerwuj date i posłuchaj moich setów</p>
-            
-            <div class="booking-media-grid">
-                <!-- Calendar Column -->
-                <div class="booking-calendar-column">
-                    <h3 class="column-title">Kalendarz Eventów</h3>
-            
-            <div class="calendar-controls">
-                <button class="calendar-nav-btn" id="prevMonth">
-                    <span>‹</span>
-                </button>
-                <h3 class="calendar-month-title" id="calendarMonthTitle">Grudzień 2025</h3>
-                <button class="calendar-nav-btn" id="nextMonth">
-                    <span>›</span>
-                </button>
-            </div>
-
-            <div class="calendar-wrapper">
-                <div class="calendar-weekdays">
-                    <div class="weekday">PON</div>
-                    <div class="weekday">WTO</div>
-                    <div class="weekday">ŚRO</div>
-                    <div class="weekday">CZW</div>
-                    <div class="weekday">PIĄ</div>
-                    <div class="weekday weekend">SOB</div>
-                    <div class="weekday weekend">NIE</div>
-                </div>
-                <div class="calendar-days" id="calendarDays">
-                    <!-- Generated by JavaScript -->
-                </div>
-            </div>
-
-            <div class="calendar-legend">
-                <div class="legend-item">
-                    <span class="legend-dot available"></span>
-                    <span>Dzień roboczy - dostępny</span>
-                </div>
-                <div class="legend-item">
-                    <span class="legend-dot weekend"></span>
-                    <span>Weekend - prime time</span>
-                </div>
-                <div class="legend-item">
-                    <span class="legend-dot booked"></span>
-                    <span>Zarezerwowany</span>
-                </div>
-            </div>
-                </div>
-
-                <!-- Media Column -->
-                <div class="booking-media-column">
-                    <h3 class="column-title">Posłuchaj Moich Setów</h3>
                     
-                    <!-- Spotify Embed -->
-                    <div class="media-embed spotify-embed">
-                        <iframe style="border-radius:12px" 
-                                src="https://open.spotify.com/embed/artist/YOUR_SPOTIFY_ARTIST_ID?utm_source=generator&theme=0" 
-                                width="100%" 
-                                height="352" 
-                                frameBorder="0" 
-                                allowfullscreen="" 
-                                allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" 
-                                loading="lazy">
-                        </iframe>
-                    </div>
-
-                    <!-- YouTube Embed -->
-                    <div class="media-embed youtube-embed">
-                        <iframe width="100%" 
-                                height="315" 
-                                src="https://www.youtube.com/embed/YOUR_VIDEO_ID" 
-                                title="YouTube video player" 
-                                frameborder="0" 
-                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
-                                allowfullscreen>
-                        </iframe>
-                    </div>
-
-                    <div class="social-media-links">
-                        <a href="https://open.spotify.com/artist/YOUR_ID" target="_blank" class="social-link spotify">
-                            <span>🎵</span> Spotify
-                        </a>
-                        <a href="https://www.youtube.com/@YOUR_CHANNEL" target="_blank" class="social-link youtube">
-                            <span>📺</span> YouTube
-                        </a>
-                        <a href="https://www.beatport.com/artist/YOUR_ID" target="_blank" class="social-link beatport">
-                            <span>🎧</span> Beatport
-                        </a>
+                    <div class="about-stats">
+                        <div class="stat-card">
+                            <div class="stat-number">200+</div>
+                            <div class="stat-label">🎪 Występy</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-number">50+</div>
+                            <div class="stat-label">🎵 Utwory</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-number">15+</div>
+                            <div class="stat-label">🎤 Festiwale</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-number">7</div>
+                            <div class="stat-label">🏆 Nagrody</div>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
-    </section>
+        </section>
 
-    <!-- Booking Modal -->
-    <div id="bookingModal" class="booking-modal">
-        <div class="booking-modal-content">
-            <button class="booking-modal-close" id="closeBookingModal">&times;</button>
-            <h3 class="booking-modal-title">Zarezerwuj Date</h3>
-            <p class="booking-modal-date" id="bookingModalDate">Data: 15 Grudzień 2025</p>
-            
-            <form id="bookingForm" class="booking-form">
-                <div class="form-group">
-                    <label for="bookingName">Imię i Nazwisko *</label>
-                    <input type="text" id="bookingName" name="name" required>
+        <!-- Schedule Section -->
+        <section id="schedule" class="section">
+            <div class="container">
+                <div class="section-header">
+                    <span class="section-label">📅 ROZKŁAD JAZDY</span>
+                    <h2 class="section-title">Nadchodzące Wydarzenia</h2>
+                    <p class="section-subtitle">Zobacz, gdzie możesz mnie spotkać</p>
                 </div>
-                
-                <div class="form-group">
-                    <label for="bookingEmail">Email *</label>
-                    <input type="email" id="bookingEmail" name="email" required>
+
+                <div class="timeline">
+                    <div class="timeline-item">
+                        <div class="timeline-date">
+                            <div class="date-day">20-22</div>
+                            <div class="date-month">LUT</div>
+                            <div class="date-year">2025</div>
+                        </div>
+                        <div class="timeline-content">
+                            <div class="event-badge-small">🔥 FEATURED</div>
+                            <h3>Zimowy Zlot Baltic House</h3>
+                            <p class="event-location">📍 Rare Rotation, Kołobrzeg</p>
+                            <p class="event-description">3-dniowy event z najlepszymi DJ-ami z całej Polski. Muzyka: Techno, House, Electro.</p>
+                            <div class="event-artists">
+                                <span>🎧 ARCH1TECT</span>
+                                <span>🎤 DJ Gregory</span>
+                                <span>🎵 Angelo Davilla</span>
+                                <span>🔊 DJ Bear</span>
+                            </div>
+                            <a href="#booking" class="btn btn-primary">Rezerwuj →</a>
+                        </div>
+                    </div>
+
+                    <div class="timeline-item">
+                        <div class="timeline-date">
+                            <div class="date-day">07</div>
+                            <div class="date-month">MAR</div>
+                            <div class="date-year">2025</div>
+                        </div>
+                        <div class="timeline-content">
+                            <h3>Techno Friday</h3>
+                            <p class="event-location">📍 Club Underground, Gdańsk</p>
+                            <p class="event-description">Comiesięczna seria techno w sercu Trójmiasta.</p>
+                        </div>
+                    </div>
+
+                    <div class="timeline-item">
+                        <div class="timeline-date">
+                            <div class="date-day">15</div>
+                            <div class="date-month">MAR</div>
+                            <div class="date-year">2025</div>
+                        </div>
+                        <div class="timeline-content">
+                            <h3>Dark Minimal Night</h3>
+                            <p class="event-location">📍 Techno Bunker, Poznań</p>
+                            <p class="event-description">Specjalny set z dark minimal i industrial techno.</p>
+                        </div>
+                    </div>
                 </div>
-                
-                <div class="form-group">
-                    <label for="bookingPhone">Telefon</label>
-                    <input type="tel" id="bookingPhone" name="phone">
-                </div>
-                
-                <div class="form-group">
-                    <label for="bookingEventType">Typ Eventu *</label>
-                    <select id="bookingEventType" name="eventType" required>
-                        <option value="">Wybierz...</option>
-                        <option value="club">Klub / Event</option>
-                        <option value="festival">Festiwal</option>
-                        <option value="private">Impreza Prywatna</option>
-                        <option value="corporate">Event Firmowy</option>
-                        <option value="other">Inne</option>
-                    </select>
-                </div>
-                
-                <div class="form-group">
-                    <label for="bookingVenue">Miejsce Eventu *</label>
-                    <input type="text" id="bookingVenue" name="venue" required placeholder="Nazwa klubu / miejsca">
-                </div>
-                
-                <div class="form-group">
-                    <label for="bookingMessage">Dodatkowe informacje</label>
-                    <textarea id="bookingMessage" name="message" rows="4" placeholder="Godziny, budżet, szczegóły..."></textarea>
-                </div>
-                
-                <div class="booking-form-actions">
-                    <button type="button" class="btn btn-outline" id="cancelBooking">Anuluj</button>
-                    <button type="submit" class="btn btn-primary">Wyślij Zapytanie</button>
-                </div>
-            </form>
-            
-            <div id="bookingSuccess" class="booking-success" style="display: none;">
-                <div class="success-icon">✓</div>
-                <h4>Zapytanie wysłane!</h4>
-                <p>Odezwę się do Ciebie w ciągu 24h.</p>
             </div>
-        </div>
+        </section>
+
+        <!-- Booking Section -->
+        <section id="booking" class="section">
+            <div class="container">
+                <div class="section-header">
+                    <span class="section-label">📝 REZERWACJA</span>
+                    <h2 class="section-title">Zarezerwuj ARCH1TECT</h2>
+                    <p class="section-subtitle">Profesjonalna obsługa DJ na Twoje wydarzenie</p>
+                </div>
+
+                <div class="booking-wrapper">
+                    <div class="booking-info">
+                        <h3>Co oferuję?</h3>
+                        <ul class="services-list">
+                            <li>
+                                <span class="service-icon">🎧</span>
+                                <div>
+                                    <strong>DJ Set - Techno/House</strong>
+                                    <p>Profesjonalny set dostosowany do Twojego wydarzenia</p>
+                                </div>
+                            </li>
+                            <li>
+                                <span class="service-icon">🎚️</span>
+                                <div>
+                                    <strong>Sprzęt Profesjonalny</strong>
+                                    <p>Pioneer CDJ + DJM, nagłośnienie, oświetlenie</p>
+                                </div>
+                            </li>
+                            <li>
+                                <span class="service-icon">🎵</span>
+                                <div>
+                                    <strong>Własna Muzyka</strong>
+                                    <p>Autorskie produkcje i ekskluzywne remixy</p>
+                                </div>
+                            </li>
+                            <li>
+                                <span class="service-icon">⏰</span>
+                                <div>
+                                    <strong>Elastyczne Godziny</strong>
+                                    <p>Dostosowuję długość setu do Twoich potrzeb</p>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <div class="booking-form-container">
+                        <form class="booking-form" id="bookingForm">
+                            <h3>📅 Formularz Rezerwacji</h3>
+                            
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="name">Imię i Nazwisko *</label>
+                                    <input type="text" id="name" name="name" required placeholder="Jan Kowalski">
+                                </div>
+                                <div class="form-group">
+                                    <label for="email">Email *</label>
+                                    <input type="email" id="email" name="email" required placeholder="jan@example.com">
+                                </div>
+                            </div>
+
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="phone">Telefon *</label>
+                                    <input type="tel" id="phone" name="phone" required placeholder="+48 123 456 789">
+                                </div>
+                                <div class="form-group">
+                                    <label for="event_date">Data Wydarzenia *</label>
+                                    <input type="date" id="event_date" name="event_date" required>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="event_type">Typ Wydarzenia *</label>
+                                <select id="event_type" name="event_type" required>
+                                    <option value="">Wybierz typ...</option>
+                                    <option value="club">Impreza klubowa</option>
+                                    <option value="private">Impreza prywatna</option>
+                                    <option value="festival">Festiwal</option>
+                                    <option value="other">Inne</option>
+                                </select>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="message">Dodatkowe informacje</label>
+                                <textarea id="message" name="message" rows="4" placeholder="Opisz swoje wymagania..."></textarea>
+                            </div>
+
+                            <button type="submit" class="btn btn-primary btn-full">
+                                Wyślij zapytanie →
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Contact Section -->
+        <section id="contact" class="section">
+            <div class="container">
+                <div class="section-header">
+                    <span class="section-label">📧 KONTAKT</span>
+                    <h2 class="section-title">Skontaktuj się</h2>
+                    <p class="section-subtitle">Jestem dostępny dla Ciebie</p>
+                </div>
+
+                <div class="contact-grid">
+                    <div class="contact-info">
+                        <div class="contact-item">
+                            <span class="contact-icon">📧</span>
+                            <div>
+                                <h4>Email</h4>
+                                <a href="mailto:booking@arch1tect.pl">booking@arch1tect.pl</a>
+                            </div>
+                        </div>
+                        <div class="contact-item">
+                            <span class="contact-icon">📱</span>
+                            <div>
+                                <h4>Telefon</h4>
+                                <a href="tel:+48503691808">+48 503 691 808</a>
+                            </div>
+                        </div>
+                        <div class="contact-item">
+                            <span class="contact-icon">📍</span>
+                            <div>
+                                <h4>Lokalizacja</h4>
+                                <p>Kołobrzeg, Polska</p>
+                            </div>
+                        </div>
+
+                        <div class="social-links">
+                            <h4>Social Media</h4>
+                            <div class="social-grid">
+                                <a href="https://www.instagram.com/arch1tect_dj/" target="_blank" class="social-link">
+                                    <span>📷</span> Instagram
+                                </a>
+                                <a href="https://www.facebook.com/arch1tect.official" target="_blank" class="social-link">
+                                    <span>📘</span> Facebook
+                                </a>
+                                <a href="https://soundcloud.com/arch1tect" target="_blank" class="social-link">
+                                    <span>🎵</span> SoundCloud
+                                </a>
+                                <a href="https://www.mixcloud.com/arch1tect/" target="_blank" class="social-link">
+                                    <span>🎧</span> Mixcloud
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="contact-form-wrapper">
+                        <form class="booking-form" id="contactForm">
+                            <h3>Szybki Kontakt</h3>
+                            
+                            <div class="form-group">
+                                <label for="contact_name">Imię *</label>
+                                <input type="text" id="contact_name" required placeholder="Jan Kowalski">
+                            </div>
+
+                            <div class="form-group">
+                                <label for="contact_email">Email *</label>
+                                <input type="email" id="contact_email" required placeholder="jan@example.com">
+                            </div>
+
+                            <div class="form-group">
+                                <label for="contact_message">Wiadomość *</label>
+                                <textarea id="contact_message" rows="6" required placeholder="Cześć! Chciałbym zapytać o..."></textarea>
+                            </div>
+
+                            <button type="submit" class="btn btn-primary btn-full">
+                                Wyślij wiadomość →
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </section>
     </div>
 
-    <footer class="footer">
-        <div class="container">
-            <div class="footer-content">
-                <div class="footer-section">
-                    <h3>CLUBBASSE & ARCH1TECT</h3>
-                    <p>Profesjonalny DJ i producent muzyczny</p>
-                </div>
-                <div class="footer-section">
-                    <h4>Linki</h4>
-                    <ul>
-                        <li><a href="#stats">Metryki</a></li>
-                        <li><a href="#about">Historia</a></li>
-                        <li><a href="#portfolio">Galeria</a></li>
-                        <li><a href="#services">Oferta</a></li>
-                    </ul>
-                </div>
-                <div class="footer-section">
-                    <h4>Kontakt</h4>
-                    <ul>
-                        <li><a href="#booking">Rozkład Jazdy</a></li>
-                        <li><a href="#contact">Formularz kontaktowy</a></li>
-                        <li><a href="mailto:booking@clubbasse.pl">booking@clubbasse.pl</a></li>
-                    </ul>
-                </div>
-            </div>
-            <div class="footer-bottom">
-                <p>&copy; 2025 CLUBBASSE & ARCH1TECT. Wszelkie prawa zastrzeżone.</p>
-            </div>
-        </div>
-    </footer>
+    <script>
+        // Hero Slider
+        let currentSlide = 0;
+        const slides = document.querySelectorAll('.hero-slide');
+        const dots = document.querySelectorAll('.slider-dot');
+        const totalSlides = slides.length;
 
-    </div><!-- .main-content -->
+        function showSlide(index) {
+            slides.forEach(slide => slide.classList.remove('active'));
+            dots.forEach(dot => dot.classList.remove('active'));
+            
+            slides[index].classList.add('active');
+            dots[index].classList.add('active');
+        }
 
-    <script src="js/script.js"></script>
-    <script src="js/booking.js"></script>
+        function nextSlide() {
+            currentSlide = (currentSlide + 1) % totalSlides;
+            showSlide(currentSlide);
+        }
+
+        // Auto advance slider every 5 seconds
+        setInterval(nextSlide, 5000);
+
+        // Dot navigation
+        dots.forEach((dot, index) => {
+            dot.addEventListener('click', () => {
+                currentSlide = index;
+                showSlide(currentSlide);
+            });
+        });
+
+        // Smooth scrolling
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                    
+                    // Update active state
+                    document.querySelectorAll('.sidebar-link').forEach(link => {
+                        link.classList.remove('active');
+                    });
+                    this.classList.add('active');
+                    
+                    // Close mobile menu
+                    document.getElementById('sidebar').classList.remove('active');
+                }
+            });
+        });
+
+        // Mobile menu toggle
+        document.getElementById('mobileMenuToggle').addEventListener('click', function() {
+            document.getElementById('sidebar').classList.toggle('active');
+        });
+
+        // Form submissions
+        document.getElementById('bookingForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            alert('Dziękuję za zapytanie! Skontaktuję się z Tobą wkrótce. 🎧');
+            this.reset();
+        });
+
+        document.getElementById('contactForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            alert('Wiadomość wysłana! Odpowiem najszybciej jak to możliwe. ⚡');
+            this.reset();
+        });
+
+        // Active section on scroll
+        const sections = document.querySelectorAll('.section');
+        const navLinks = document.querySelectorAll('.sidebar-link');
+
+        window.addEventListener('scroll', () => {
+            let current = '';
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop;
+                const sectionHeight = section.clientHeight;
+                if (scrollY >= sectionTop - 200) {
+                    current = section.getAttribute('id');
+                }
+            });
+
+            navLinks.forEach(link => {
+                link.classList.remove('active');
+                if (link.getAttribute('href') === '#' + current) {
+                    link.classList.add('active');
+                }
+            });
+        });
+
+        // HAOS Audio Visualizer Animation Enhancement
+        const audioBars = document.querySelectorAll('.audio-bar');
+        setInterval(() => {
+            audioBars.forEach(bar => {
+                const randomHeight = Math.random() * 80 + 20;
+                bar.style.height = randomHeight + '%';
+            });
+        }, 200);
+
+        // Parallax effect on hero
+        window.addEventListener('scroll', () => {
+            const scrolled = window.pageYOffset;
+            const heroSlider = document.querySelector('.hero-slider');
+            if (heroSlider) {
+                heroSlider.style.transform = `translateY(${scrolled * 0.5}px)`;
+            }
+        });
+    </script>
 </body>
 </html>
