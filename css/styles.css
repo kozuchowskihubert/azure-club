@@ -3809,19 +3809,10 @@ html {
     flex-wrap: wrap;
 }
 
-.event-cta-buttons .btn-primary {
-    background: white;
-    color: #DC143C;
-    border: none;
-    font-weight: bold;
-    padding: 1rem 2rem;
-    font-size: 1.1rem;
-}
-
-.event-cta-buttons .btn-outline {
-    background: rgba(0,0,0,0.6);
-    border: 2px solid rgba(255,255,255,0.3);
-    backdrop-filter: blur(10px);
+.event-cta-buttons {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
 }
 
 /* Responsive Design */
@@ -3947,6 +3938,42 @@ html {
 .ticket-feature .text {
     text-align: left;
     color: #fff;
+}
+
+.ticket-feature .text div:first-child {
+    font-size: 0.9rem;
+    color: #999;
+    margin-bottom: 0.5rem;
+}
+
+.ticket-feature .text div:last-child {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #DC143C;
+}
+
+.event-bg-glow {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(100px);
+    z-index: 0;
+    pointer-events: none;
+}
+
+.event-bg-glow:first-of-type {
+    top: 0;
+    right: 0;
+    width: 400px;
+    height: 400px;
+    background: rgba(255, 215, 0, 0.1);
+}
+
+.event-bg-glow:last-of-type {
+    bottom: 0;
+    left: 0;
+    width: 600px;
+    height: 600px;
+    background: rgba(139, 42, 158, 0.1);
 }
 
 @media (max-width: 768px) {
