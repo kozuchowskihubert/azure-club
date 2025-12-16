@@ -614,7 +614,7 @@
             background: #0a0a0a;
         }
 
-        /* Calendar Styles */
+        /* Enhanced Calendar Styles */
         .calendar-container {
             background: rgba(20, 20, 20, 0.6);
             border: 1px solid rgba(255, 0, 255, 0.3);
@@ -623,6 +623,7 @@
             margin-bottom: 4rem;
             backdrop-filter: blur(10px);
             position: relative;
+            overflow: hidden;
         }
 
         .calendar-container::before {
@@ -636,6 +637,83 @@
             -webkit-mask-composite: xor;
             mask-composite: exclude;
             opacity: 0.5;
+            animation: borderRotate 3s linear infinite;
+        }
+
+        @keyframes borderRotate {
+            0% { filter: hue-rotate(0deg); }
+            100% { filter: hue-rotate(360deg); }
+        }
+
+        .calendar-info {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+            padding: 1rem;
+            background: rgba(255, 0, 255, 0.05);
+            border-radius: 10px;
+            border: 1px solid rgba(255, 0, 255, 0.2);
+        }
+
+        .calendar-stats {
+            display: flex;
+            gap: 2rem;
+            align-items: center;
+        }
+
+        .calendar-stat {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .calendar-stat-icon {
+            font-size: 1.5rem;
+        }
+
+        .calendar-stat-value {
+            font-size: 1.5rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .calendar-stat-label {
+            font-size: 0.9rem;
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        .calendar-legend {
+            display: flex;
+            gap: 1.5rem;
+            flex-wrap: wrap;
+        }
+
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.85rem;
+            color: rgba(255, 255, 255, 0.8);
+        }
+
+        .legend-box {
+            width: 20px;
+            height: 20px;
+            border-radius: 5px;
+            border: 1px solid;
+        }
+
+        .legend-box.today {
+            background: linear-gradient(135deg, rgba(255, 0, 255, 0.2), rgba(0, 255, 255, 0.2));
+            border-color: var(--primary);
+        }
+
+        .legend-box.event {
+            background: linear-gradient(135deg, rgba(255, 0, 255, 0.3), rgba(0, 255, 255, 0.3));
+            border-color: var(--primary);
         }
 
         .calendar-header {
@@ -744,6 +822,23 @@
             background: var(--primary);
             border-radius: 50%;
             box-shadow: 0 0 10px var(--primary);
+        }
+
+        .calendar-day.has-event .event-count {
+            position: absolute;
+            top: 3px;
+            right: 3px;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: #fff;
+            border-radius: 50%;
+            width: 18px;
+            height: 18px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.7rem;
+            font-weight: 700;
+            box-shadow: 0 0 10px rgba(255, 0, 255, 0.5);
         }
 
         @keyframes pulse {
@@ -1769,8 +1864,38 @@
                     <p class="section-subtitle">Zobacz, gdzie możesz mnie spotkać</p>
                 </div>
 
-                <!-- Calendar View -->
+                <!-- Enhanced Calendar View -->
                 <div class="calendar-container">
+                    <!-- Calendar Info Bar -->
+                    <div class="calendar-info">
+                        <div class="calendar-stats">
+                            <div class="calendar-stat">
+                                <span class="calendar-stat-icon">📅</span>
+                                <div>
+                                    <div class="calendar-stat-value" id="totalEvents">0</div>
+                                    <div class="calendar-stat-label">Eventów</div>
+                                </div>
+                            </div>
+                            <div class="calendar-stat">
+                                <span class="calendar-stat-icon">🎵</span>
+                                <div>
+                                    <div class="calendar-stat-value" id="monthEvents">0</div>
+                                    <div class="calendar-stat-label">W tym miesiącu</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="calendar-legend">
+                            <div class="legend-item">
+                                <div class="legend-box today"></div>
+                                <span>Dziś</span>
+                            </div>
+                            <div class="legend-item">
+                                <div class="legend-box event"></div>
+                                <span>Event</span>
+                            </div>
+                        </div>
+                    </div>
+
                     <div class="calendar-header">
                         <button id="prevMonth" class="calendar-nav">←</button>
                         <h3 id="currentMonth" class="calendar-month">Grudzień 2025</h3>
@@ -1846,6 +1971,86 @@
                             <p class="event-location">📍 Techno Bunker, Poznań</p>
                             <p class="event-description">Specjalny set z dark minimal i industrial techno.</p>
                         </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Contact Section -->
+        <section id="contact" class="section">
+            <div class="container">
+                <div class="section-header">
+                    <span class="section-label">📧 KONTAKT</span>
+                    <h2 class="section-title">Skontaktuj się</h2>
+                    <p class="section-subtitle">Jestem dostępny dla Ciebie</p>
+                </div>
+
+                <div class="contact-grid">
+                    <div class="contact-info">
+                        <div class="contact-item">
+                            <span class="contact-icon">📧</span>
+                            <div>
+                                <h4>Email</h4>
+                                <a href="mailto:booking@arch1tect.pl">booking@arch1tect.pl</a>
+                            </div>
+                        </div>
+                        <div class="contact-item">
+                            <span class="contact-icon">📱</span>
+                            <div>
+                                <h4>Telefon</h4>
+                                <a href="tel:+48503691808">+48 503 691 808</a>
+                            </div>
+                        </div>
+                        <div class="contact-item">
+                            <span class="contact-icon">📍</span>
+                            <div>
+                                <h4>Lokalizacja</h4>
+                                <p>Kołobrzeg, Polska</p>
+                            </div>
+                        </div>
+
+                        <div class="social-links">
+                            <h4>Social Media</h4>
+                            <div class="social-grid">
+                                <a href="https://www.instagram.com/arch1tect_dj/" target="_blank" class="social-link">
+                                    <span>📷</span> Instagram
+                                </a>
+                                <a href="https://www.facebook.com/arch1tect.official" target="_blank" class="social-link">
+                                    <span>📘</span> Facebook
+                                </a>
+                                <a href="https://soundcloud.com/arch1tect" target="_blank" class="social-link">
+                                    <span>🎵</span> SoundCloud
+                                </a>
+                                <a href="https://www.mixcloud.com/arch1tect/" target="_blank" class="social-link">
+                                    <span>🎧</span> Mixcloud
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="contact-form-wrapper">
+                        <form class="booking-form" id="contactForm">
+                            <h3>Szybki Kontakt</h3>
+                            
+                            <div class="form-group">
+                                <label for="contact_name">Imię *</label>
+                                <input type="text" id="contact_name" required placeholder="Jan Kowalski">
+                            </div>
+
+                            <div class="form-group">
+                                <label for="contact_email">Email *</label>
+                                <input type="email" id="contact_email" required placeholder="jan@example.com">
+                            </div>
+
+                            <div class="form-group">
+                                <label for="contact_message">Wiadomość *</label>
+                                <textarea id="contact_message" rows="6" required placeholder="Cześć! Chciałbym zapytać o..."></textarea>
+                            </div>
+
+                            <button type="submit" class="btn btn-primary btn-full">
+                                Wyślij wiadomość →
+                            </button>
+                        </form>
                     </div>
                 </div>
             </div>
@@ -1939,86 +2144,6 @@
 
                             <button type="submit" class="btn btn-primary btn-full">
                                 Wyślij zapytanie →
-                            </button>
-                        </form>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- Contact Section -->
-        <section id="contact" class="section">
-            <div class="container">
-                <div class="section-header">
-                    <span class="section-label">📧 KONTAKT</span>
-                    <h2 class="section-title">Skontaktuj się</h2>
-                    <p class="section-subtitle">Jestem dostępny dla Ciebie</p>
-                </div>
-
-                <div class="contact-grid">
-                    <div class="contact-info">
-                        <div class="contact-item">
-                            <span class="contact-icon">📧</span>
-                            <div>
-                                <h4>Email</h4>
-                                <a href="mailto:booking@arch1tect.pl">booking@arch1tect.pl</a>
-                            </div>
-                        </div>
-                        <div class="contact-item">
-                            <span class="contact-icon">📱</span>
-                            <div>
-                                <h4>Telefon</h4>
-                                <a href="tel:+48503691808">+48 503 691 808</a>
-                            </div>
-                        </div>
-                        <div class="contact-item">
-                            <span class="contact-icon">📍</span>
-                            <div>
-                                <h4>Lokalizacja</h4>
-                                <p>Kołobrzeg, Polska</p>
-                            </div>
-                        </div>
-
-                        <div class="social-links">
-                            <h4>Social Media</h4>
-                            <div class="social-grid">
-                                <a href="https://www.instagram.com/arch1tect_dj/" target="_blank" class="social-link">
-                                    <span>📷</span> Instagram
-                                </a>
-                                <a href="https://www.facebook.com/arch1tect.official" target="_blank" class="social-link">
-                                    <span>📘</span> Facebook
-                                </a>
-                                <a href="https://soundcloud.com/arch1tect" target="_blank" class="social-link">
-                                    <span>🎵</span> SoundCloud
-                                </a>
-                                <a href="https://www.mixcloud.com/arch1tect/" target="_blank" class="social-link">
-                                    <span>🎧</span> Mixcloud
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="contact-form-wrapper">
-                        <form class="booking-form" id="contactForm">
-                            <h3>Szybki Kontakt</h3>
-                            
-                            <div class="form-group">
-                                <label for="contact_name">Imię *</label>
-                                <input type="text" id="contact_name" required placeholder="Jan Kowalski">
-                            </div>
-
-                            <div class="form-group">
-                                <label for="contact_email">Email *</label>
-                                <input type="email" id="contact_email" required placeholder="jan@example.com">
-                            </div>
-
-                            <div class="form-group">
-                                <label for="contact_message">Wiadomość *</label>
-                                <textarea id="contact_message" rows="6" required placeholder="Cześć! Chciałbym zapytać o..."></textarea>
-                            </div>
-
-                            <button type="submit" class="btn btn-primary btn-full">
-                                Wyślij wiadomość →
                             </button>
                         </form>
                     </div>
@@ -2187,6 +2312,17 @@
             // Update header
             document.getElementById('currentMonth').textContent = `${monthNames[month]} ${year}`;
             
+            // Calculate statistics
+            const totalEvents = events.length;
+            const monthEventsCount = events.filter(event => {
+                const eventDate = new Date(event.date);
+                return eventDate.getMonth() === month && eventDate.getFullYear() === year;
+            }).length;
+            
+            // Update statistics display
+            document.getElementById('totalEvents').textContent = totalEvents;
+            document.getElementById('monthEvents').textContent = monthEventsCount;
+            
             // Get first day of month and number of days
             const firstDay = new Date(year, month, 1);
             const lastDay = new Date(year, month + 1, 0);
@@ -2225,7 +2361,10 @@
         function createDayElement(day, isOtherMonth, year, month, isToday = false) {
             const dayElement = document.createElement('div');
             dayElement.classList.add('calendar-day');
-            dayElement.textContent = day;
+            
+            // Add day number as text node
+            const dayText = document.createTextNode(day);
+            dayElement.appendChild(dayText);
             
             if (isOtherMonth) {
                 dayElement.classList.add('other-month');
@@ -2242,6 +2381,14 @@
             if (dayEvents.length > 0 && !isOtherMonth) {
                 dayElement.classList.add('has-event');
                 dayElement.addEventListener('click', () => showEventModal(dayEvents));
+                
+                // Add event count badge if more than 1 event
+                if (dayEvents.length > 1) {
+                    const countBadge = document.createElement('span');
+                    countBadge.classList.add('event-count');
+                    countBadge.textContent = dayEvents.length;
+                    dayElement.appendChild(countBadge);
+                }
             }
             
             return dayElement;
