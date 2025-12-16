@@ -1,0 +1,860 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ARCH1TECT - Panel Admina</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #ff0080;
+            --dark: #0a0a0a;
+            --light: #ffffff;
+            --gray: #333;
+            --accent: #00ffff;
+            --success: #00ff88;
+            --danger: #ff0044;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 100%);
+            color: var(--light);
+            min-height: 100vh;
+            padding: 2rem;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        /* Header */
+        .admin-header {
+            background: linear-gradient(135deg, #1a1a1a, #0f0f0f);
+            padding: 2rem;
+            border-radius: 15px;
+            border: 2px solid var(--primary);
+            margin-bottom: 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .admin-title {
+            font-size: 2rem;
+            background: linear-gradient(45deg, var(--primary), var(--accent));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .admin-actions {
+            display: flex;
+            gap: 1rem;
+        }
+
+        /* Login Form */
+        .login-container {
+            max-width: 500px;
+            margin: 5rem auto;
+            background: linear-gradient(135deg, #1a1a1a, #0f0f0f);
+            padding: 3rem;
+            border-radius: 15px;
+            border: 2px solid var(--primary);
+        }
+
+        .login-title {
+            text-align: center;
+            font-size: 2rem;
+            margin-bottom: 2rem;
+            background: linear-gradient(45deg, var(--primary), var(--accent));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        /* Forms */
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            color: var(--primary);
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+        }
+
+        .form-group input,
+        .form-group textarea,
+        .form-group select {
+            width: 100%;
+            padding: 1rem;
+            background: #0a0a0a;
+            border: 1px solid #333;
+            border-radius: 10px;
+            color: var(--light);
+            font-family: inherit;
+            transition: border-color 0.3s;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus,
+        .form-group select:focus {
+            outline: none;
+            border-color: var(--primary);
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+        }
+
+        /* Buttons */
+        .btn {
+            padding: 1rem 2rem;
+            border: none;
+            border-radius: 10px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-size: 0.9rem;
+        }
+
+        .btn-primary {
+            background: linear-gradient(45deg, var(--primary), #ff3399);
+            color: var(--light);
+        }
+
+        .btn-primary:hover {
+            box-shadow: 0 5px 20px rgba(255, 0, 128, 0.5);
+            transform: translateY(-2px);
+        }
+
+        .btn-success {
+            background: var(--success);
+            color: var(--dark);
+        }
+
+        .btn-success:hover {
+            box-shadow: 0 5px 20px rgba(0, 255, 136, 0.5);
+        }
+
+        .btn-danger {
+            background: var(--danger);
+            color: var(--light);
+        }
+
+        .btn-danger:hover {
+            box-shadow: 0 5px 20px rgba(255, 0, 68, 0.5);
+        }
+
+        .btn-full {
+            width: 100%;
+        }
+
+        /* Dashboard Grid */
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .stat-card {
+            background: linear-gradient(135deg, #1a1a1a, #0f0f0f);
+            padding: 2rem;
+            border-radius: 15px;
+            border: 1px solid var(--primary);
+            text-align: center;
+        }
+
+        .stat-number {
+            font-size: 3rem;
+            font-weight: 800;
+            background: linear-gradient(45deg, var(--primary), var(--accent));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .stat-label {
+            color: #888;
+            margin-top: 0.5rem;
+        }
+
+        /* Events Table */
+        .events-section {
+            background: linear-gradient(135deg, #1a1a1a, #0f0f0f);
+            padding: 2rem;
+            border-radius: 15px;
+            border: 1px solid var(--primary);
+            margin-bottom: 2rem;
+        }
+
+        .section-title {
+            font-size: 1.5rem;
+            margin-bottom: 1.5rem;
+            color: var(--primary);
+        }
+
+        .events-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .events-table th,
+        .events-table td {
+            padding: 1rem;
+            text-align: left;
+            border-bottom: 1px solid #333;
+        }
+
+        .events-table th {
+            background: #0a0a0a;
+            color: var(--primary);
+            font-weight: 600;
+        }
+
+        .events-table tr:hover {
+            background: rgba(255, 0, 128, 0.05);
+        }
+
+        .event-actions {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .btn-small {
+            padding: 0.5rem 1rem;
+            font-size: 0.8rem;
+        }
+
+        /* Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.9);
+            z-index: 1000;
+            overflow-y: auto;
+        }
+
+        .modal.active {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+        }
+
+        .modal-content {
+            background: linear-gradient(135deg, #1a1a1a, #0f0f0f);
+            padding: 2rem;
+            border-radius: 15px;
+            border: 2px solid var(--primary);
+            max-width: 800px;
+            width: 100%;
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+        }
+
+        .modal-title {
+            font-size: 1.8rem;
+            color: var(--primary);
+        }
+
+        .modal-close {
+            background: none;
+            border: none;
+            color: var(--light);
+            font-size: 2rem;
+            cursor: pointer;
+            padding: 0;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            transition: background 0.3s;
+        }
+
+        .modal-close:hover {
+            background: rgba(255, 0, 128, 0.2);
+        }
+
+        /* Alerts */
+        .alert {
+            padding: 1rem;
+            border-radius: 10px;
+            margin-bottom: 1rem;
+            display: none;
+        }
+
+        .alert.active {
+            display: block;
+            animation: slideIn 0.3s ease;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .alert-success {
+            background: rgba(0, 255, 136, 0.2);
+            border: 1px solid var(--success);
+            color: var(--success);
+        }
+
+        .alert-danger {
+            background: rgba(255, 0, 68, 0.2);
+            border: 1px solid var(--danger);
+            color: var(--danger);
+        }
+
+        /* Loading */
+        .loading {
+            text-align: center;
+            padding: 2rem;
+            color: var(--primary);
+        }
+
+        .spinner {
+            border: 3px solid rgba(255, 0, 128, 0.2);
+            border-top: 3px solid var(--primary);
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .hidden {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <!-- Login Screen -->
+    <div id="loginScreen">
+        <div class="login-container">
+            <h1 class="login-title">🔐 ARCH1TECT Admin Panel</h1>
+            <form id="loginForm">
+                <div class="form-group">
+                    <label for="username">Username</label>
+                    <input type="text" id="username" required placeholder="admin">
+                </div>
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <input type="password" id="password" required placeholder="••••••••">
+                </div>
+                <div class="alert alert-danger" id="loginError"></div>
+                <button type="submit" class="btn btn-primary btn-full">Zaloguj się →</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Admin Dashboard -->
+    <div id="adminDashboard" class="hidden">
+        <div class="container">
+            <!-- Header -->
+            <div class="admin-header">
+                <h1 class="admin-title">🎧 ARCH1TECT - Panel Zarządzania</h1>
+                <div class="admin-actions">
+                    <button class="btn btn-success" onclick="openAddEventModal()">➕ Dodaj Event</button>
+                    <button class="btn btn-danger" onclick="logout()">Wyloguj</button>
+                </div>
+            </div>
+
+            <!-- Alerts -->
+            <div class="alert alert-success" id="successAlert"></div>
+            <div class="alert alert-danger" id="errorAlert"></div>
+
+            <!-- Stats Dashboard -->
+            <div class="dashboard-grid">
+                <div class="stat-card">
+                    <div class="stat-number" id="totalEvents">0</div>
+                    <div class="stat-label">📅 Wszystkie eventy</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number" id="upcomingEvents">0</div>
+                    <div class="stat-label">🔥 Nadchodzące</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number" id="totalBookings">0</div>
+                    <div class="stat-label">📝 Rezerwacje</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number" id="pendingBookings">0</div>
+                    <div class="stat-label">⏳ Oczekujące</div>
+                </div>
+            </div>
+
+            <!-- Events Section -->
+            <div class="events-section">
+                <h2 class="section-title">📅 Zarządzanie Eventami</h2>
+                <div id="eventsTableContainer">
+                    <div class="loading">
+                        <div class="spinner"></div>
+                        <p>Ładowanie eventów...</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Bookings Section -->
+            <div class="events-section">
+                <h2 class="section-title">📝 Rezerwacje</h2>
+                <div id="bookingsTableContainer">
+                    <div class="loading">
+                        <div class="spinner"></div>
+                        <p>Ładowanie rezerwacji...</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Add/Edit Event Modal -->
+    <div id="eventModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title" id="modalTitle">➕ Dodaj Nowy Event</h2>
+                <button class="modal-close" onclick="closeEventModal()">×</button>
+            </div>
+            <form id="eventForm">
+                <input type="hidden" id="eventId">
+                
+                <div class="form-group">
+                    <label for="eventName">Nazwa Eventu *</label>
+                    <input type="text" id="eventName" required placeholder="Zimowy Zlot Baltic House">
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="eventDate">Data *</label>
+                        <input type="date" id="eventDate" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="eventTime">Godzina</label>
+                        <input type="time" id="eventTime" placeholder="20:00">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="eventVenue">Miejsce *</label>
+                    <input type="text" id="eventVenue" required placeholder="Rare Rotation, Kołobrzeg">
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="eventCity">Miasto</label>
+                        <input type="text" id="eventCity" placeholder="Kołobrzeg">
+                    </div>
+                    <div class="form-group">
+                        <label for="eventType">Typ Eventu</label>
+                        <select id="eventType">
+                            <option value="club">Impreza klubowa</option>
+                            <option value="festival">Festiwal</option>
+                            <option value="private">Prywatne</option>
+                            <option value="other">Inne</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="eventDescription">Opis</label>
+                    <textarea id="eventDescription" rows="4" placeholder="Opis eventu..."></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label for="eventArtists">Artyści (oddziel przecinkami)</label>
+                    <input type="text" id="eventArtists" placeholder="ARCH1TECT, DJ Gregory, Angelo Davilla">
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="eventPrice">Cena (PLN)</label>
+                        <input type="number" id="eventPrice" placeholder="50">
+                    </div>
+                    <div class="form-group">
+                        <label for="eventCapacity">Liczba miejsc</label>
+                        <input type="number" id="eventCapacity" placeholder="200">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="eventImageUrl">URL zdjęcia</label>
+                    <input type="url" id="eventImageUrl" placeholder="https://...">
+                </div>
+
+                <div class="form-group">
+                    <label for="eventStatus">Status</label>
+                    <select id="eventStatus">
+                        <option value="upcoming">Nadchodzący</option>
+                        <option value="sold_out">Wyprzedany</option>
+                        <option value="cancelled">Odwołany</option>
+                        <option value="completed">Zakończony</option>
+                    </select>
+                </div>
+
+                <div class="form-row">
+                    <button type="button" class="btn btn-danger" onclick="closeEventModal()">Anuluj</button>
+                    <button type="submit" class="btn btn-success">Zapisz Event</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        // Configuration
+        const API_URL = 'https://azure-club.vercel.app/api';
+        
+        // Authentication
+        function login(e) {
+            e.preventDefault();
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+
+            // Simple auth (you should use proper backend authentication)
+            if (username === 'admin' && password === 'HAOS2025!') {
+                localStorage.setItem('adminToken', 'authenticated');
+                document.getElementById('loginScreen').classList.add('hidden');
+                document.getElementById('adminDashboard').classList.remove('hidden');
+                loadDashboard();
+            } else {
+                showLoginError('Nieprawidłowe dane logowania');
+            }
+        }
+
+        function logout() {
+            localStorage.removeItem('adminToken');
+            location.reload();
+        }
+
+        function checkAuth() {
+            const token = localStorage.getItem('adminToken');
+            if (token === 'authenticated') {
+                document.getElementById('loginScreen').classList.add('hidden');
+                document.getElementById('adminDashboard').classList.remove('hidden');
+                loadDashboard();
+            }
+        }
+
+        function showLoginError(message) {
+            const errorEl = document.getElementById('loginError');
+            errorEl.textContent = message;
+            errorEl.classList.add('active');
+        }
+
+        // Dashboard Functions
+        async function loadDashboard() {
+            await loadEvents();
+            await loadBookings();
+            updateStats();
+        }
+
+        async function loadEvents() {
+            try {
+                const response = await fetch(`${API_URL}/events`);
+                const events = await response.json();
+                
+                const tableHTML = `
+                    <table class="events-table">
+                        <thead>
+                            <tr>
+                                <th>Nazwa</th>
+                                <th>Data</th>
+                                <th>Miejsce</th>
+                                <th>Status</th>
+                                <th>Akcje</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            ${events.map(event => `
+                                <tr>
+                                    <td><strong>${event.name}</strong></td>
+                                    <td>${formatDate(event.date)}</td>
+                                    <td>${event.venue}, ${event.city || ''}</td>
+                                    <td><span class="badge badge-${event.status}">${formatStatus(event.status)}</span></td>
+                                    <td class="event-actions">
+                                        <button class="btn btn-primary btn-small" onclick="editEvent(${event.id})">✏️ Edytuj</button>
+                                        <button class="btn btn-danger btn-small" onclick="deleteEvent(${event.id})">🗑️ Usuń</button>
+                                    </td>
+                                </tr>
+                            `).join('')}
+                        </tbody>
+                    </table>
+                `;
+                
+                document.getElementById('eventsTableContainer').innerHTML = tableHTML;
+            } catch (error) {
+                console.error('Error loading events:', error);
+                showError('Błąd ładowania eventów');
+            }
+        }
+
+        async function loadBookings() {
+            try {
+                const response = await fetch(`${API_URL}/bookings`);
+                const bookings = await response.json();
+                
+                const tableHTML = `
+                    <table class="events-table">
+                        <thead>
+                            <tr>
+                                <th>Imię</th>
+                                <th>Email</th>
+                                <th>Event</th>
+                                <th>Data</th>
+                                <th>Status</th>
+                                <th>Akcje</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            ${bookings.map(booking => `
+                                <tr>
+                                    <td>${booking.name}</td>
+                                    <td>${booking.email}</td>
+                                    <td>${booking.event_name || 'N/A'}</td>
+                                    <td>${formatDate(booking.event_date)}</td>
+                                    <td><span class="badge badge-${booking.status}">${formatStatus(booking.status)}</span></td>
+                                    <td class="event-actions">
+                                        <button class="btn btn-success btn-small" onclick="approveBooking(${booking.id})">✅ Zatwierdź</button>
+                                        <button class="btn btn-danger btn-small" onclick="rejectBooking(${booking.id})">❌ Odrzuć</button>
+                                    </td>
+                                </tr>
+                            `).join('')}
+                        </tbody>
+                    </table>
+                `;
+                
+                document.getElementById('bookingsTableContainer').innerHTML = tableHTML;
+            } catch (error) {
+                console.error('Error loading bookings:', error);
+                showError('Błąd ładowania rezerwacji');
+            }
+        }
+
+        function updateStats() {
+            // This will be updated with real data from API
+            document.getElementById('totalEvents').textContent = '12';
+            document.getElementById('upcomingEvents').textContent = '4';
+            document.getElementById('totalBookings').textContent = '47';
+            document.getElementById('pendingBookings').textContent = '8';
+        }
+
+        // Event Modal Functions
+        function openAddEventModal() {
+            document.getElementById('modalTitle').textContent = '➕ Dodaj Nowy Event';
+            document.getElementById('eventForm').reset();
+            document.getElementById('eventId').value = '';
+            document.getElementById('eventModal').classList.add('active');
+        }
+
+        function closeEventModal() {
+            document.getElementById('eventModal').classList.remove('active');
+        }
+
+        async function editEvent(id) {
+            try {
+                const response = await fetch(`${API_URL}/events/${id}`);
+                const event = await response.json();
+                
+                document.getElementById('modalTitle').textContent = '✏️ Edytuj Event';
+                document.getElementById('eventId').value = event.id;
+                document.getElementById('eventName').value = event.name;
+                document.getElementById('eventDate').value = event.date;
+                document.getElementById('eventTime').value = event.time || '';
+                document.getElementById('eventVenue').value = event.venue;
+                document.getElementById('eventCity').value = event.city || '';
+                document.getElementById('eventType').value = event.type || 'club';
+                document.getElementById('eventDescription').value = event.description || '';
+                document.getElementById('eventArtists').value = event.artists || '';
+                document.getElementById('eventPrice').value = event.price || '';
+                document.getElementById('eventCapacity').value = event.capacity || '';
+                document.getElementById('eventImageUrl').value = event.image_url || '';
+                document.getElementById('eventStatus').value = event.status || 'upcoming';
+                
+                document.getElementById('eventModal').classList.add('active');
+            } catch (error) {
+                console.error('Error loading event:', error);
+                showError('Błąd ładowania eventu');
+            }
+        }
+
+        async function saveEvent(e) {
+            e.preventDefault();
+            
+            const eventData = {
+                name: document.getElementById('eventName').value,
+                date: document.getElementById('eventDate').value,
+                time: document.getElementById('eventTime').value,
+                venue: document.getElementById('eventVenue').value,
+                city: document.getElementById('eventCity').value,
+                type: document.getElementById('eventType').value,
+                description: document.getElementById('eventDescription').value,
+                artists: document.getElementById('eventArtists').value,
+                price: document.getElementById('eventPrice').value,
+                capacity: document.getElementById('eventCapacity').value,
+                image_url: document.getElementById('eventImageUrl').value,
+                status: document.getElementById('eventStatus').value
+            };
+
+            const eventId = document.getElementById('eventId').value;
+            const method = eventId ? 'PUT' : 'POST';
+            const url = eventId ? `${API_URL}/events/${eventId}` : `${API_URL}/events`;
+
+            try {
+                const response = await fetch(url, {
+                    method: method,
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(eventData)
+                });
+
+                if (response.ok) {
+                    showSuccess(eventId ? 'Event zaktualizowany!' : 'Event dodany!');
+                    closeEventModal();
+                    loadEvents();
+                } else {
+                    showError('Błąd zapisu eventu');
+                }
+            } catch (error) {
+                console.error('Error saving event:', error);
+                showError('Błąd zapisu eventu');
+            }
+        }
+
+        async function deleteEvent(id) {
+            if (!confirm('Czy na pewno chcesz usunąć ten event?')) return;
+
+            try {
+                const response = await fetch(`${API_URL}/events/${id}`, {
+                    method: 'DELETE'
+                });
+
+                if (response.ok) {
+                    showSuccess('Event usunięty!');
+                    loadEvents();
+                } else {
+                    showError('Błąd usuwania eventu');
+                }
+            } catch (error) {
+                console.error('Error deleting event:', error);
+                showError('Błąd usuwania eventu');
+            }
+        }
+
+        async function approveBooking(id) {
+            try {
+                const response = await fetch(`${API_URL}/bookings/${id}/approve`, {
+                    method: 'POST'
+                });
+
+                if (response.ok) {
+                    showSuccess('Rezerwacja zatwierdzona! Email wysłany.');
+                    loadBookings();
+                } else {
+                    showError('Błąd zatwierdzania rezerwacji');
+                }
+            } catch (error) {
+                console.error('Error approving booking:', error);
+                showError('Błąd zatwierdzania rezerwacji');
+            }
+        }
+
+        async function rejectBooking(id) {
+            if (!confirm('Czy na pewno chcesz odrzucić tę rezerwację?')) return;
+
+            try {
+                const response = await fetch(`${API_URL}/bookings/${id}/reject`, {
+                    method: 'POST'
+                });
+
+                if (response.ok) {
+                    showSuccess('Rezerwacja odrzucona');
+                    loadBookings();
+                } else {
+                    showError('Błąd odrzucania rezerwacji');
+                }
+            } catch (error) {
+                console.error('Error rejecting booking:', error);
+                showError('Błąd odrzucania rezerwacji');
+            }
+        }
+
+        // Utility Functions
+        function formatDate(dateString) {
+            if (!dateString) return 'N/A';
+            const date = new Date(dateString);
+            return date.toLocaleDateString('pl-PL');
+        }
+
+        function formatStatus(status) {
+            const statuses = {
+                'upcoming': 'Nadchodzący',
+                'sold_out': 'Wyprzedany',
+                'cancelled': 'Odwołany',
+                'completed': 'Zakończony',
+                'pending': 'Oczekujące',
+                'approved': 'Zatwierdzony',
+                'rejected': 'Odrzucony'
+            };
+            return statuses[status] || status;
+        }
+
+        function showSuccess(message) {
+            const alert = document.getElementById('successAlert');
+            alert.textContent = message;
+            alert.classList.add('active');
+            setTimeout(() => alert.classList.remove('active'), 3000);
+        }
+
+        function showError(message) {
+            const alert = document.getElementById('errorAlert');
+            alert.textContent = message;
+            alert.classList.add('active');
+            setTimeout(() => alert.classList.remove('active'), 3000);
+        }
+
+        // Event Listeners
+        document.getElementById('loginForm').addEventListener('submit', login);
+        document.getElementById('eventForm').addEventListener('submit', saveEvent);
+
+        // Initialize
+        checkAuth();
+    </script>
+</body>
+</html>
