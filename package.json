@@ -4,7 +4,6 @@
   "description": "CLUBBASSE - DJ Archi & DJ Quasar Official Website",
   "private": true,
   "scripts": {
-    "start": "npx serve .",
     "dev": "npx serve .",
     "build": "echo 'Static site - no build needed'",
     "test": "echo 'HTML validation passed'",
