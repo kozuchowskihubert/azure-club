@@ -96,6 +96,12 @@ class Booking(db.Model):
     status = db.Column(db.String(50), default='pending')
     created_at = db.Column(db.DateTime, default=datetime.utcnow)
     
+    # Calendar integration fields (like san-bud)
+    calendar_event_sent = db.Column(db.Boolean, default=False)
+    calendar_platforms = db.Column(db.String(255))  # "Google,Apple,Outlook,Office365"
+    event_title = db.Column(db.String(255))
+    event_location = db.Column(db.String(500))
+    
     event = db.relationship('Event', backref='bookings')
     
     def to_dict(self):
@@ -114,7 +120,11 @@ class Booking(db.Model):
             'guests': self.guests,
             'message': self.message,
             'status': self.status,
-            'created_at': self.created_at.isoformat() if self.created_at else None
+            'created_at': self.created_at.isoformat() if self.created_at else None,
+            'calendar_event_sent': self.calendar_event_sent,
+            'calendar_platforms': self.calendar_platforms,
+            'event_title': self.event_title,
+            'event_location': self.event_location
         }
 
 # Initialize database
@@ -221,6 +231,11 @@ def create_booking():
     try:
         data = request.get_json()
         
+        # Generate calendar event data
+        event_title = f"ARCH1TECT @ {data.get('venue', 'Club HAOS')}"
+        event_location = f"{data.get('venue', 'Club HAOS')}, {data.get('city', 'Gdańsk')}"
+        calendar_platforms = "Google Calendar,Apple Calendar,Outlook,Office 365"
+        
         booking = Booking(
             event_id=data.get('event_id'),
             name=data.get('name'),
@@ -229,12 +244,16 @@ def create_booking():
             event_date=data.get('event_date'),
             event_type=data.get('event_type'),
             start_time=data.get('start_time'),
-            duration=data.get('duration'),
+            duration=data.get('duration', 240),  # Default 4 hours for club events
             venue=data.get('venue'),
             city=data.get('city'),
             guests=data.get('guests'),
             message=data.get('message'),
-            status='pending'
+            status='pending',
+            calendar_event_sent=True,  # We provide calendar integration
+            calendar_platforms=calendar_platforms,
+            event_title=event_title,
+            event_location=event_location
         )
         
         db.session.add(booking)
