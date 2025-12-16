@@ -1,9 +1,9 @@
 // Frontend Configuration
-// Serverless API on Vercel - No Railway dependency!
+// Using Railway backend (stable) while debugging Vercel serverless
 
 const CONFIG = {
-    // Backend API URL - Using Vercel Serverless Functions
-    API_URL: 'https://azure-club.vercel.app/api', // Serverless API with Neon PostgreSQL
+    // Backend API URL - Using Railway (fallback while fixing Vercel)
+    API_URL: 'https://azure-club-production.up.railway.app/api', // Railway backend with Neon PostgreSQL
     
     // Frontend URLs (Vercel)
     FRONTEND_URL: 'https://azure-club.vercel.app',
