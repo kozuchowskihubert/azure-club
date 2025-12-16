@@ -13,14 +13,29 @@ dist/
 .next/
 out/
 
-# Environment variables
+# Environment variables - ALL SECRETS
 .env
 .env.*
 *.env
 .env.local
+.env.development
 .env.development.local
+.env.test
 .env.test.local
+.env.production
 .env.production.local
+backend/.env
+backend/.env.*
+backend/*.env
+api/.env
+api/.env.*
+api/*.env
+
+# Vercel & Railway secrets
+.vercel
+.vercel.*
+.railway
+.railway.*
 
 # Terraform
 *.tfstate
@@ -57,11 +72,28 @@ docker-compose.override.yml
 *.publishsettings
 .azure/
 
-# Secrets
+# Secrets & Credentials
 secrets/
 *.key
 *.pem
 *.cert
+*.p12
+*.pfx
+*secret*
+*password*
+*credentials*
+.credentials
+config/secrets.*
+config/credentials.*
+
+# API Keys & Tokens
+*api_key*
+*apikey*
+*access_token*
+*refresh_token*
+*auth_token*
+.token
+*.token
 
 # Build artifacts
 *.tgz
