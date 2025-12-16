@@ -1,10 +1,10 @@
 // Frontend Configuration
-// Local development: http://localhost:5001/api
+// Local development: https://azure-club-production.up.railway.app/api
 // Production: Update after Railway deployment
 
 const CONFIG = {
     // Backend API URL - Currently using local backend
-    API_URL: 'http://localhost:5001/api', // Local backend with Neon PostgreSQL
+    API_URL: 'https://azure-club-production.up.railway.app/api', // Local backend with Neon PostgreSQL
     
     // Railway URL will be like:
     // API_URL: 'https://azure-club-production.up.railway.app/api',
