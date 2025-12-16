@@ -56,19 +56,20 @@
       ]
     }
   ],
-  "functions": {
-    "api/events_api.py": {
-      "runtime": "python3.9"
-    }
-  },
-  "rewrites": [
+  "builds": [
     {
-      "source": "/api/:path*",
-      "destination": "/api/events_api.py"
+      "src": "api/events_api.py",
+      "use": "@vercel/python"
+    }
+  ],
+  "routes": [
+    {
+      "src": "/api/(.*)",
+      "dest": "api/events_api.py"
     },
     {
-      "source": "/(.*)",
-      "destination": "/index.html"
+      "src": "/(.*)",
+      "dest": "/index.html"
     }
   ],
   "redirects": [
