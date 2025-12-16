@@ -291,11 +291,15 @@ Commit & push → Vercel auto-deploy
 
 ## 🌐 Deployment Status
 
-### Obecny Stan:
+### 🚀 Produkcja (LIVE):
 - ✅ **Frontend**: https://azure-club.vercel.app (Vercel)
-- ⏸️ **Backend**: localhost:5001 (do deploy na Railway)
-- ✅ **Database**: Neon PostgreSQL (cloud)
+- ✅ **Backend**: https://azure-club-production.up.railway.app (Railway)
+- ✅ **Database**: Neon PostgreSQL (cloud, connection pooling enabled)
 - ✅ **Email**: Resend SMTP (cloud)
+
+**Deployment date:** 16 grudnia 2025
+**Backend:** Railway Railpack (Python 3.11.14, Gunicorn)
+**Database connection:** Pool size 10, max overflow 20, pre-ping enabled
 
 ## 📝 Przykładowe użycie API
 
