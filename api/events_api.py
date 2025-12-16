@@ -461,6 +461,13 @@ def send_booking_approval(booking_id):
 def health():
     return jsonify({'status': 'ok', 'message': 'ARCH1TECT API is running'})
 
+# Initialize database on startup
+init_db()
+
+# Vercel serverless function handler
+def handler(request, context):
+    """Handler for Vercel serverless functions"""
+    return app(request, context)
+
 if __name__ == '__main__':
-    init_db()
     app.run(host='0.0.0.0', port=5000, debug=True)

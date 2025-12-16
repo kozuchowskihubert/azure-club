@@ -56,7 +56,16 @@
       ]
     }
   ],
+  "functions": {
+    "api/events_api.py": {
+      "runtime": "python3.9"
+    }
+  },
   "rewrites": [
+    {
+      "source": "/api/:path*",
+      "destination": "/api/events_api.py"
+    },
     {
       "source": "/(.*)",
       "destination": "/index.html"
