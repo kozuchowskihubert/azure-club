@@ -67,8 +67,36 @@ secrets/
 *.tgz
 .cache/
 
+# Database
+*.db
+*.sqlite
+*.sqlite3
+arch1tect.db
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+venv/
+ENV/
+env/
+
+# Test files
+test_*.py
+*_test.py
+
+# Backup files
+*-old*.html
+*-new.html
+*-backup*.html
+*.backup
+*.bak
+
 # Documentation (private notes)
 *.md
 !README.md
+!ADMIN_README.md
 .vercel
 .env*.local
