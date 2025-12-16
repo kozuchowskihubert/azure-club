@@ -603,5 +603,8 @@ with app.app_context():
 # Vercel serverless function handler
 handler = app
 
+# Vercel serverless handler
+handler = app
+
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=5001, debug=True)
