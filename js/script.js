@@ -218,6 +218,14 @@ document.addEventListener('DOMContentLoaded', function() {
     initFormValidation();
     initFancyEffects();
     
+    // Initialize calendar and booking modal
+    if (typeof initCalendar === 'function') {
+        initCalendar();
+    }
+    if (typeof initBookingModal === 'function') {
+        initBookingModal();
+    }
+    
 });
 
 /* ===========================================
@@ -943,12 +951,6 @@ function openBookingModal(dateStr) {
     modal.classList.add('active');
     document.body.style.overflow = 'hidden';
 }
-
-// Add to DOMContentLoaded
-document.addEventListener('DOMContentLoaded', function() {
-    initCalendar();
-    initBookingModal();
-});
 
 /* ===========================================
    Console Easter Egg
