@@ -9,6 +9,10 @@ from flask_sqlalchemy import SQLAlchemy
 from datetime import datetime
 import os
 from jinja2 import Template
+from dotenv import load_dotenv
+
+# Load environment variables from .env file
+load_dotenv()
 
 app = Flask(__name__)
 CORS(app)
