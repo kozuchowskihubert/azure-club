@@ -1,14 +1,16 @@
 """
-Events API with PostgreSQL/SQLAlchemy
-Supports both local development and Vercel deployment
+Events API with PostgreSQL/SQLAlchemy - Serverless Vercel Deployment
+Complete backend with email, SMS, and calendar integration
 """
 from flask import Flask, request, jsonify
 from flask_cors import CORS
 from flask_mail import Mail, Message
 from flask_sqlalchemy import SQLAlchemy
-from datetime import datetime
+from datetime import datetime, timedelta
 import os
 from jinja2 import Template
+from urllib.parse import quote
+from twilio.rest import Client
 
 app = Flask(__name__)
 CORS(app)
@@ -22,6 +24,14 @@ if DATABASE_URL and DATABASE_URL.startswith('postgres://'):
 
 app.config['SQLALCHEMY_DATABASE_URI'] = DATABASE_URL or 'sqlite:///arch1tect.db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+
+# Connection pool settings for Neon PostgreSQL
+app.config['SQLALCHEMY_ENGINE_OPTIONS'] = {
+    'pool_pre_ping': True,
+    'pool_recycle': 300,
+    'pool_size': 10,
+    'max_overflow': 20
+}
 
 # SMTP Configuration - flexible for different email providers
 # Supports: Resend, Gmail, SendGrid, Mailgun, custom SMTP
@@ -37,6 +47,22 @@ app.config['MAIL_DEFAULT_SENDER'] = ('ARCH1TECT | HAOS.fm', sender_email)
 
 db = SQLAlchemy(app)
 mail = Mail(app)
+
+# Twilio SMS Configuration
+TWILIO_ACCOUNT_SID = os.environ.get('TWILIO_ACCOUNT_SID')
+TWILIO_AUTH_TOKEN = os.environ.get('TWILIO_AUTH_TOKEN')
+TWILIO_PHONE_NUMBER = os.environ.get('TWILIO_PHONE_NUMBER')
+
+# Initialize Twilio client if credentials are provided
+twilio_client = None
+if TWILIO_ACCOUNT_SID and TWILIO_AUTH_TOKEN and TWILIO_PHONE_NUMBER:
+    try:
+        twilio_client = Client(TWILIO_ACCOUNT_SID, TWILIO_AUTH_TOKEN)
+        print("✅ [SMS] Twilio client initialized successfully")
+    except Exception as e:
+        print(f"⚠️ [SMS] Twilio initialization failed: {e}")
+else:
+    print("⚠️ [SMS] Twilio credentials not configured - SMS notifications disabled")
 
 # Models
 class Event(db.Model):
@@ -98,6 +124,9 @@ class Booking(db.Model):
     
     # Calendar integration fields (like san-bud)
     calendar_event_sent = db.Column(db.Boolean, default=False)
+    calendar_platforms = db.Column(db.String(255))
+    event_title = db.Column(db.String(255))
+    event_location = db.Column(db.String(255))
     calendar_platforms = db.Column(db.String(255))  # "Google,Apple,Outlook,Office365"
     event_title = db.Column(db.String(255))
     event_location = db.Column(db.String(500))
@@ -132,6 +161,118 @@ def init_db():
     with app.app_context():
         db.create_all()
         print("✅ Database tables created successfully!")
+
+# Calendar URL Generation (like san-bud)
+def generate_calendar_urls(booking):
+    """Generate calendar URLs for Google, Outlook, and Office365"""
+    try:
+        # Parse date and time
+        date_str = booking.event_date  # Format: "YYYY-MM-DD"
+        time_str = booking.start_time  # Format: "HH:MM"
+        
+        # Create datetime object
+        start_datetime = datetime.strptime(f"{date_str} {time_str}", "%Y-%m-%d %H:%M")
+        
+        # Calculate end time (default 4 hours for club events)
+        duration_hours = booking.duration or 4
+        end_datetime = start_datetime + timedelta(hours=duration_hours)
+        
+        # Format for calendar links
+        start_formatted = start_datetime.strftime("%Y%m%dT%H%M%S")
+        end_formatted = end_datetime.strftime("%Y%m%dT%H%M%S")
+        
+        # Event details
+        title = booking.event_title or f"ARCH1TECT @ {booking.venue}"
+        location = booking.event_location or f"{booking.venue}, {booking.city}"
+        description = f"DJ Set ARCH1TECT\\n\\nRezerwacja: {booking.guests} osób\\n\\nKontakt: arch1tect@haos.fm"
+        
+        # URL encode
+        title_encoded = quote(title)
+        location_encoded = quote(location)
+        description_encoded = quote(description)
+        
+        # Google Calendar URL
+        google_url = (
+            f"https://calendar.google.com/calendar/render?"
+            f"action=TEMPLATE&"
+            f"text={title_encoded}&"
+            f"dates={start_formatted}/{end_formatted}&"
+            f"details={description_encoded}&"
+            f"location={location_encoded}"
+        )
+        
+        # Outlook.com URL
+        outlook_url = (
+            f"https://outlook.live.com/calendar/0/deeplink/compose?"
+            f"subject={title_encoded}&"
+            f"startdt={start_datetime.isoformat()}&"
+            f"enddt={end_datetime.isoformat()}&"
+            f"body={description_encoded}&"
+            f"location={location_encoded}"
+        )
+        
+        # Office 365 URL
+        office365_url = (
+            f"https://outlook.office.com/calendar/0/deeplink/compose?"
+            f"subject={title_encoded}&"
+            f"startdt={start_datetime.isoformat()}&"
+            f"enddt={end_datetime.isoformat()}&"
+            f"body={description_encoded}&"
+            f"location={location_encoded}"
+        )
+        
+        return {
+            'google': google_url,
+            'outlook': outlook_url,
+            'office365': office365_url
+        }
+    except Exception as e:
+        print(f"Error generating calendar URLs: {e}")
+        return None
+
+def send_sms_confirmation(booking):
+    """Send SMS confirmation using Twilio"""
+    if not twilio_client:
+        print("⚠️ [SMS] Twilio not configured, skipping SMS notification")
+        return
+    
+    if not booking.phone:
+        print("⚠️ [SMS] No phone number provided, skipping SMS")
+        return
+    
+    try:
+        print(f"📱 [SMS] Sending SMS to {booking.phone}...")
+        
+        # Format SMS message
+        sms_body = f"""🎉 ARCH1TECT - Potwierdzenie rezerwacji
+
+Dzień dobry {booking.name}!
+
+Potwierdzamy Twoją rezerwację:
+📅 Data: {booking.event_date}
+🕐 Godzina: {booking.start_time}
+📍 Miejsce: {booking.venue}, {booking.city}
+👥 Gości: {booking.guests}
+
+Szczegóły otrzymasz na email: {booking.email}
+
+🎧 ARCH1TECT | HAOS.fm
+📞 +48 503 691 808"""
+        
+        message = twilio_client.messages.create(
+            body=sms_body,
+            from_=TWILIO_PHONE_NUMBER,
+            to=booking.phone
+        )
+        
+        print(f"✅ [SMS] SMS sent successfully! SID: {message.sid}")
+        return message.sid
+        
+    except Exception as e:
+        print(f"❌ [SMS] Failed to send SMS: {str(e)}")
+        import traceback
+        traceback.print_exc()
+        return None
 
 # Routes - Events
 @app.route('/api/events', methods=['GET'])
@@ -303,73 +444,6 @@ def reject_booking(booking_id):
         return jsonify({'error': str(e)}), 500
 
 # Email functions
-def generate_calendar_urls(booking):
-    """Generate calendar URLs for booking"""
-    from urllib.parse import quote
-    from datetime import datetime, timedelta
-    
-    # Parse date and time
-    try:
-        event_date_parts = booking.event_date.split('-')
-        time_parts = booking.start_time.split(':')
-        start_dt = datetime(
-            int(event_date_parts[0]), 
-            int(event_date_parts[1]), 
-            int(event_date_parts[2]),
-            int(time_parts[0]), 
-            int(time_parts[1])
-        )
-        
-        # Calculate end time (duration in minutes, default 4 hours)
-        duration_minutes = booking.duration or 240
-        end_dt = start_dt + timedelta(minutes=duration_minutes)
-        
-        # Format for Google Calendar
-        start_str = start_dt.strftime('%Y%m%dT%H%M%S')
-        end_str = end_dt.strftime('%Y%m%dT%H%M%S')
-        
-        title = booking.event_title or f"ARCH1TECT @ {booking.venue}"
-        location = booking.event_location or f"{booking.venue}, {booking.city}"
-        description = f"Wydarzenie: {booking.event_type}\\nOsoby: {booking.guests or 1}\\n\\nKontakt: arch1tect@haos.fm"
-        
-        # Google Calendar URL
-        google_url = (
-            f"https://calendar.google.com/calendar/render?action=TEMPLATE"
-            f"&text={quote(title)}"
-            f"&dates={start_str}/{end_str}"
-            f"&details={quote(description)}"
-            f"&location={quote(location)}"
-        )
-        
-        # Outlook URL
-        outlook_url = (
-            f"https://outlook.live.com/calendar/0/deeplink/compose?"
-            f"subject={quote(title)}"
-            f"&startdt={start_dt.isoformat()}"
-            f"&enddt={end_dt.isoformat()}"
-            f"&body={quote(description)}"
-            f"&location={quote(location)}"
-        )
-        
-        # Office 365 URL
-        office365_url = (
-            f"https://outlook.office.com/calendar/0/deeplink/compose?"
-            f"subject={quote(title)}"
-            f"&startdt={start_dt.isoformat()}"
-            f"&enddt={end_dt.isoformat()}"
-            f"&body={quote(description)}"
-            f"&location={quote(location)}"
-        )
-        
-        return {
-            'google': google_url,
-            'outlook': outlook_url,
-            'office365': office365_url
-        }
-    except Exception as e:
-        print(f"Error generating calendar URLs: {e}")
-        return None
-
 def send_booking_confirmation(booking_id):
     """Send booking confirmation email with calendar integration"""
     booking = Booking.query.get(booking_id)
@@ -505,7 +579,17 @@ def send_booking_confirmation(booking_id):
         html=html_content
     )
     
-    mail.send(msg)
+    try:
+        mail.send(msg)
+        print(f"✅ [EMAIL] Email sent successfully to {booking.email}!")
+        
+        # Send SMS notification if Twilio is configured
+        send_sms_confirmation(booking)
+        
+    except Exception as e:
+        print(f"❌ [EMAIL] Failed to send email: {str(e)}")
+        import traceback
+        traceback.print_exc()
 
 def send_booking_approval(booking_id):
     """Send booking approval email"""
