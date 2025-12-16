@@ -1,0 +1,7 @@
+[build]
+builder = "NIXPACKS"
+
+[deploy]
+startCommand = "cd api && python events_api_postgres.py"
+restartPolicyType = "ON_FAILURE"
+restartPolicyMaxRetries = 10
