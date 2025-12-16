@@ -6,7 +6,72 @@ System ARCH1TECT używa SMTP do wysyłania emaili powitalnych, potwierdzeń reze
 
 ## Opcje Konfiguracji
 
-### 🎯 Opcja 1: SendGrid (ZALECANE - Darmowe 100 emaili/dzień)
+### ⚡ Opcja 1: Resend (NAJLEPSZE - Darmowe 3000 emaili/miesiąc + 100/dzień)
+
+**Najlepsze dla:** Nowoczesne API, świetna dokumentacja, łatwa integracja, React Email support
+
+1. **Załóż konto:** https://resend.com/signup
+2. **Dodaj i zweryfikuj domenę:**
+   - Dashboard → Domains → Add Domain
+   - Wpisz: `arch1tect.pl`
+   - Dodaj rekordy DNS w panelu domeny:
+     ```
+     Type: TXT
+     Name: @
+     Value: resend._domainkey.<unique-value>
+     
+     Type: MX
+     Priority: 10
+     Name: @
+     Value: feedback-smtp.resend.com
+     ```
+   - Czekaj na weryfikację (~5 min)
+
+3. **Stwórz API Key:**
+   - Dashboard → API Keys → Create API Key
+   - Name: "ARCH1TECT Production"
+   - Permissions: "Sending access"
+   - Copy API key: `re_123abc...`
+
+4. **Konfiguracja SMTP Resend:**
+   ```
+   MAIL_SERVER=smtp.resend.com
+   MAIL_PORT=587
+   MAIL_USE_TLS=True
+   MAIL_USERNAME=resend
+   MAIL_PASSWORD=<twój-resend-api-key>
+   ```
+
+5. **Dodaj do Vercel Environment Variables:**
+   ```bash
+   vercel env add MAIL_SERVER production
+   # Wartość: smtp.resend.com
+   
+   vercel env add MAIL_PORT production
+   # Wartość: 587
+   
+   vercel env add MAIL_USE_TLS production
+   # Wartość: True
+   
+   vercel env add MAIL_USERNAME production
+   # Wartość: resend
+   
+   vercel env add MAIL_PASSWORD production
+   # Wartość: <twój-resend-api-key>
+   ```
+
+**✅ Korzyści Resend:**
+- 3,000 emaili/miesiąc za darmo (vs 100/dzień SendGrid)
+- Limit 100 emaili/dzień (więcej niż wystarczy)
+- Nowoczesny dashboard z analityką
+- Built by Vercel team - świetna integracja
+- React Email templates support
+- Webhook support dla tracking
+- Bardzo prosta konfiguracja
+
+---
+
+### 🎯 Opcja 2: SendGrid (Alternatywa - 100 emaili/dzień)
 
 **Najlepsze dla:** Transakcyjnych emaili, darmowy tier, łatwa konfiguracja
 
@@ -203,24 +268,50 @@ Sprawdzaj logi wysyłki emaili:
 
 ---
 
-## 🎯 Quick Start (Najszybsza opcja - SendGrid)
+## 🎯 Quick Start (Najszybsza opcja - Resend)
 
 ```bash
-# 1. Załóż konto SendGrid
-open https://signup.sendgrid.com/
+# 1. Załóż konto Resend
+open https://resend.com/signup
 
-# 2. Stwórz API Key i dodaj do Vercel
-vercel env add MAIL_SERVER production   # smtp.sendgrid.net
+# 2. Dodaj domenę arch1tect.pl i zweryfikuj DNS
+# Dashboard → Domains → Add Domain → Follow DNS setup
+
+# 3. Stwórz API Key (Dashboard → API Keys → Create)
+# Skopiuj klucz zaczynający się od "re_"
+
+# 4. Dodaj do Vercel Environment Variables
+vercel env add MAIL_SERVER production   # smtp.resend.com
 vercel env add MAIL_PORT production     # 587
 vercel env add MAIL_USE_TLS production  # True
-vercel env add MAIL_USERNAME production # apikey
-vercel env add MAIL_PASSWORD production # <twój-api-key>
+vercel env add MAIL_USERNAME production # resend
+vercel env add MAIL_PASSWORD production # <twój-resend-api-key>
 
-# 3. Redeploy
+# 5. Redeploy
 vercel --prod
 
-# 4. Test
-curl -X POST https://azure-club.vercel.app/api/health
+# 6. Test wysyłki emaila
+curl -X POST https://azure-club.vercel.app/api/bookings \
+  -H "Content-Type: application/json" \
+  -d '{
+    "event_id": 1,
+    "name": "Test Booking",
+    "email": "your-email@example.com",
+    "phone": "+48123456789",
+    "event_date": "2025-12-25",
+    "event_type": "club",
+    "start_time": "22:00",
+    "venue": "Club HAOS",
+    "city": "Gdańsk",
+    "guests": 2
+  }'
+
+# 7. Sprawdź status w Resend Dashboard → Emails
 ```
 
-✨ Gotowe! System będzie wysyłać emaile z `admin@arch1tect.pl` przez SendGrid.
+✨ Gotowe! System będzie wysyłać emaile z `admin@arch1tect.pl` przez Resend.
+
+**Sprawdź email:**
+- Potwierdzenie powinno przyjść na adres podany w `email` field
+- W Resend Dashboard zobaczysz status: Sent / Delivered / Bounced
+- Free tier: 3,000 emaili/miesiąc, 100/dzień
