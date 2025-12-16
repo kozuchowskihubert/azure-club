@@ -70,3 +70,5 @@ secrets/
 # Documentation (private notes)
 *.md
 !README.md
+.vercel
+.env*.local

@@ -17,10 +17,10 @@ class BookingCalendar {
     constructor() {
         this.currentDate = new Date();
         this.selectedDate = null;
-        this.bookedDates = [
-            '2025-01-18', '2025-01-25', '2025-02-01', '2025-02-14',
-            '2025-02-22', '2025-03-08', '2025-03-15', '2025-03-22'
-        ];
+        this.bookedDates = [];
+        this.API_BASE_URL = window.location.hostname === 'localhost' 
+            ? 'http://localhost:5001' 
+            : 'https://your-api.azurewebsites.net'; // Replace with your Azure API URL
         
         this.months = [
             'Styczeń', 'Luty', 'Marzec', 'Kwiecień', 'Maj', 'Czerwiec',
@@ -30,12 +30,21 @@ class BookingCalendar {
         this.init();
     }
     
+    async fetchBookedDates() {
+        // For now, use static dates. In production, fetch from API
+        // TODO: Add API endpoint to get all booked dates
+        this.bookedDates = [
+            '2025-01-18', '2025-01-25', '2025-02-01', '2025-02-14',
+            '2025-02-22', '2025-03-08', '2025-03-15', '2025-03-22'
+        ];
+    }
+    
     init() {
-        this.calendarDays = document.getElementById('calendarDays');
+        this.calendarDays = document.getElementById('calendarGrid') || document.getElementById('calendarDays');
         this.calendarTitle = document.getElementById('calendarTitle');
         this.prevBtn = document.getElementById('prevMonth');
         this.nextBtn = document.getElementById('nextMonth');
-        this.eventDateInput = document.getElementById('eventDate');
+        this.eventDateInput = document.getElementById('selectedDate');
         
         if (!this.calendarDays) return;
         
@@ -176,16 +185,17 @@ function initBookingForm() {
         submitBtn.innerHTML = '<span class="btn-loader"></span> Wysyłanie...';
         submitBtn.disabled = true;
         
-        // Collect form data
+        // Collect form data from actual HTML form fields
         const formData = {
-            eventType: form.eventType.value,
-            eventDate: form.eventDate.value,
-            eventTime: form.eventTime.value,
-            eventLocation: form.eventLocation.value,
-            clientName: form.clientName.value,
-            clientEmail: form.clientEmail.value,
-            clientPhone: form.clientPhone.value,
-            eventDetails: form.eventDetails.value,
+            eventType: document.getElementById('eventType').value,
+            eventDate: document.getElementById('selectedDate').value,
+            eventTime: document.getElementById('eventTime').value,
+            venueName: document.getElementById('venueName').value,
+            clientName: document.getElementById('contactPerson').value,
+            clientEmail: document.getElementById('email').value,
+            clientPhone: document.getElementById('phone').value,
+            duration: document.getElementById('duration').value,
+            additionalInfo: document.getElementById('additionalInfo').value,
             timestamp: new Date().toISOString()
         };
         
@@ -204,35 +214,68 @@ function initBookingForm() {
 }
 
 async function sendBookingRequest(data) {
-    // Simulate API delay
-    await new Promise(resolve => setTimeout(resolve, 1500));
+    // Production API call to Flask backend
+    const API_BASE_URL = window.location.hostname === 'localhost' 
+        ? 'http://localhost:5001' 
+        : 'https://your-api.azurewebsites.net'; // Replace with your Azure API URL
     
-    // In production, replace with real API call:
-    /*
-    const response = await fetch('/api/booking', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(data)
-    });
+    // Map form data to API format
+    const bookingData = {
+        first_name: data.clientName.split(' ')[0] || data.clientName,
+        last_name: data.clientName.split(' ').slice(1).join(' ') || 'N/A',
+        email: data.clientEmail,
+        phone: data.clientPhone,
+        event_date: convertDateToISO(data.eventDate),
+        event_time: data.eventTime,
+        event_duration_hours: parseInt(data.duration) || 4,
+        event_type: data.eventType,
+        venue_name: data.venueName || data.eventLocation,
+        venue_address: '', // Not captured in current form
+        venue_city: '', // Not captured in current form
+        special_requests: data.additionalInfo || data.eventDetails || '',
+        service_id: getServiceIdByType(data.eventType)
+    };
     
-    if (!response.ok) {
-        throw new Error('Błąd wysyłania zapytania');
+    try {
+        const response = await fetch(`${API_BASE_URL}/api/book-event`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(bookingData)
+        });
+        
+        if (!response.ok) {
+            const errorData = await response.json();
+            throw new Error(errorData.error || 'Błąd wysyłania zapytania');
+        }
+        
+        return await response.json();
+    } catch (error) {
+        console.error('Booking error:', error);
+        throw error;
     }
-    
-    return response.json();
-    */
-    
-    // For demo, save to localStorage
-    const bookings = JSON.parse(localStorage.getItem('clubbasse_bookings') || '[]');
-    bookings.push({ ...data, id: Date.now(), status: 'pending' });
-    localStorage.setItem('clubbasse_bookings', JSON.stringify(bookings));
-    
-    // Send email notification (would be done by backend)
-    console.log('Booking request:', data);
-    
-    return { success: true, message: 'Zapytanie zostało wysłane' };
+}
+
+// Helper: Convert Polish date format to ISO
+function convertDateToISO(dateStr) {
+    // Handle formats like "15.03.2024" or "15/03/2024"
+    if (dateStr.includes('.') || dateStr.includes('/')) {
+        const parts = dateStr.split(/[./]/);
+        return `${parts[2]}-${parts[1].padStart(2, '0')}-${parts[0].padStart(2, '0')}`;
+    }
+    return dateStr; // Already in ISO format
+}
+
+// Helper: Map event type to service ID
+function getServiceIdByType(eventType) {
+    const serviceMap = {
+        'club': 1,      // DJ Set - Klub
+        'festival': 2,  // DJ Set - Festiwal
+        'private': 3,   // Event Prywatny
+        'corporate': 4  // Event Firmowy
+    };
+    return serviceMap[eventType] || 1;
 }
 
 function showBookingSuccess(form, btn, originalText) {

@@ -1,0 +1,60 @@
+# Python
+venv/
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+*.so
+*.egg
+*.egg-info/
+dist/
+build/
+api/.env
+bookings.db
+
+# Node
+node_modules/
+.next/
+frontend/node_modules/
+frontend/.next/
+frontend/out/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Testing
+.coverage
+htmlcov/
+.pytest_cache/
+
+# Documentation (keep only user-facing docs)
+DEPLOYMENT_GUIDE.md
+SETUP_COMPLETE.md
+QUICK_START.md
+test_api.py
+test_booking.py
+
+# Terraform and infrastructure
+terraform/
+docker/
+monitoring/
+scripts/
+
+# Git
+.git/
+.gitignore
