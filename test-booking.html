@@ -224,7 +224,8 @@
     </div>
     
     <script>
-        const API_URL = 'https://azure-club.vercel.app/api';
+        // Local backend with Neon PostgreSQL
+        const API_URL = 'http://localhost:5001/api';
         
         document.getElementById('bookingForm').addEventListener('submit', async (e) => {
             e.preventDefault();

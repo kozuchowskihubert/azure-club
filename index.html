@@ -2284,7 +2284,8 @@
         // Calendar functionality
         let currentDate = new Date();
         let events = [];
-        const API_URL = 'https://azure-club.vercel.app/api';
+        // Using local backend with Neon PostgreSQL
+        const API_URL = 'http://localhost:5001/api';
 
         const monthNames = ['Styczeń', 'Luty', 'Marzec', 'Kwiecień', 'Maj', 'Czerwiec', 
                            'Lipiec', 'Sierpień', 'Wrzesień', 'Październik', 'Listopad', 'Grudzień'];
