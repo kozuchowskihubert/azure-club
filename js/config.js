@@ -1,12 +1,12 @@
 // Frontend Configuration
-// Production setup with Netlify frontend + Railway backend
+// Production setup with GitHub Pages frontend + Railway backend
 
 const CONFIG = {
     // Backend API URL - Using Railway backend with Neon PostgreSQL
     API_URL: 'https://azure-club-production.up.railway.app/api',
     
-    // Frontend URLs (Netlify)
-    FRONTEND_URL: 'https://arch1tect.netlify.app',
+    // Frontend URLs (GitHub Pages)
+    FRONTEND_URL: 'https://kozuchowskihubert.github.io/azure-club',
     
     // Email
     CONTACT_EMAIL: 'arch1tect@haos.fm',
