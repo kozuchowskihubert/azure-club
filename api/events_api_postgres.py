@@ -23,13 +23,14 @@ if DATABASE_URL and DATABASE_URL.startswith('postgres://'):
 app.config['SQLALCHEMY_DATABASE_URI'] = DATABASE_URL or 'sqlite:///arch1tect.db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
-# SMTP Configuration
-app.config['MAIL_SERVER'] = 'smtp.gmail.com'
-app.config['MAIL_PORT'] = 587
-app.config['MAIL_USE_TLS'] = True
-app.config['MAIL_USERNAME'] = os.environ.get('MAIL_USERNAME', 'your-email@gmail.com')
-app.config['MAIL_PASSWORD'] = os.environ.get('MAIL_PASSWORD', 'your-app-password')
-app.config['MAIL_DEFAULT_SENDER'] = ('ARCH1TECT', os.environ.get('MAIL_USERNAME', 'booking@arch1tect.pl'))
+# SMTP Configuration - flexible for different email providers
+app.config['MAIL_SERVER'] = os.environ.get('MAIL_SERVER', 'smtp.gmail.com')
+app.config['MAIL_PORT'] = int(os.environ.get('MAIL_PORT', 587))
+app.config['MAIL_USE_TLS'] = os.environ.get('MAIL_USE_TLS', 'True').lower() == 'true'
+app.config['MAIL_USE_SSL'] = os.environ.get('MAIL_USE_SSL', 'False').lower() == 'true'
+app.config['MAIL_USERNAME'] = os.environ.get('MAIL_USERNAME', 'admin@arch1tect.pl')
+app.config['MAIL_PASSWORD'] = os.environ.get('MAIL_PASSWORD', '')
+app.config['MAIL_DEFAULT_SENDER'] = ('ARCH1TECT', os.environ.get('MAIL_USERNAME', 'admin@arch1tect.pl'))
 
 db = SQLAlchemy(app)
 mail = Mail(app)

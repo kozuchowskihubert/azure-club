@@ -98,5 +98,6 @@ test_*.py
 *.md
 !README.md
 !ADMIN_README.md
+!EMAIL_SETUP.md
 .vercel
 .env*.local

@@ -1,0 +1,226 @@
+# 📧 Konfiguracja Email dla admin@arch1tect.pl
+
+## Przegląd
+
+System ARCH1TECT używa SMTP do wysyłania emaili powitalnych, potwierdzeń rezerwacji i zatwierdzenia bookingów. Ten przewodnik pokazuje jak skonfigurować `admin@arch1tect.pl` jako adres wysyłkowy.
+
+## Opcje Konfiguracji
+
+### 🎯 Opcja 1: SendGrid (ZALECANE - Darmowe 100 emaili/dzień)
+
+**Najlepsze dla:** Transakcyjnych emaili, darmowy tier, łatwa konfiguracja
+
+1. **Załóż konto:** https://signup.sendgrid.com/
+2. **Zweryfikuj email:** admin@arch1tect.pl
+3. **Stwórz API Key:** Settings → API Keys → Create API Key
+4. **Skonfiguruj DNS dla domeny:**
+   - Idź do: Settings → Sender Authentication → Verify Single Sender
+   - Dodaj rekordy DNS w panelu domeny:
+     ```
+     Type: CNAME
+     Name: em9876.arch1tect.pl
+     Value: u9876543.wl123.sendgrid.net
+     
+     Type: CNAME
+     Name: s1._domainkey.arch1tect.pl
+     Value: s1.domainkey.u9876543.wl123.sendgrid.net
+     
+     Type: CNAME
+     Name: s2._domainkey.arch1tect.pl
+     Value: s2.domainkey.u9876543.wl123.sendgrid.net
+     ```
+
+5. **Dodaj do Vercel Environment Variables:**
+   ```bash
+   vercel env add MAIL_SERVER production
+   # Wartość: smtp.sendgrid.net
+   
+   vercel env add MAIL_PORT production
+   # Wartość: 587
+   
+   vercel env add MAIL_USE_TLS production
+   # Wartość: True
+   
+   vercel env add MAIL_USERNAME production
+   # Wartość: apikey
+   
+   vercel env add MAIL_PASSWORD production
+   # Wartość: <twój-sendgrid-api-key>
+   ```
+
+---
+
+### 📮 Opcja 2: Mailgun (1000 emaili/miesiąc za darmo)
+
+1. **Załóż konto:** https://signup.mailgun.com/
+2. **Dodaj domenę:** arch1tect.pl
+3. **Skonfiguruj DNS rekordy:**
+   ```
+   Type: TXT
+   Name: arch1tect.pl
+   Value: v=spf1 include:mailgun.org ~all
+   
+   Type: TXT
+   Name: _dmarc.arch1tect.pl
+   Value: v=DMARC1; p=none;
+   
+   Type: CNAME
+   Name: email.arch1tect.pl
+   Value: mailgun.org
+   ```
+
+4. **Credentials:**
+   ```bash
+   MAIL_SERVER=smtp.eu.mailgun.org
+   MAIL_PORT=587
+   MAIL_USE_TLS=True
+   MAIL_USERNAME=postmaster@arch1tect.pl
+   MAIL_PASSWORD=<z-mailgun-dashboard>
+   ```
+
+---
+
+### 💼 Opcja 3: Google Workspace (Profesjonalny, ~$6/miesiąc)
+
+1. **Załóż konto:** https://workspace.google.com/
+2. **Zweryfikuj domenę** arch1tect.pl
+3. **Stwórz użytkownika:** admin@arch1tect.pl
+4. **Włącz 2FA i stwórz App Password:**
+   - Idź do: myaccount.google.com/security
+   - 2-Step Verification → App Passwords
+   - Wybierz "Mail" i "Other device"
+   - Skopiuj 16-znakowe hasło
+
+5. **Credentials:**
+   ```bash
+   MAIL_SERVER=smtp.gmail.com
+   MAIL_PORT=587
+   MAIL_USE_TLS=True
+   MAIL_USERNAME=admin@arch1tect.pl
+   MAIL_PASSWORD=<16-char-app-password>
+   ```
+
+---
+
+### 🏠 Opcja 4: Email hosting od dostawcy domeny
+
+Jeśli kupiłeś domenę arch1tect.pl u dostawcy (OVH, home.pl, nazwa.pl, itp.), często oferują darmowy email hosting.
+
+**Typowa konfiguracja:**
+```bash
+MAIL_SERVER=mail.arch1tect.pl  # lub smtp.arch1tect.pl
+MAIL_PORT=587
+MAIL_USE_TLS=True
+MAIL_USERNAME=admin@arch1tect.pl
+MAIL_PASSWORD=<hasło-z-panelu-hostingu>
+```
+
+**Gdzie znaleźć ustawienia:**
+- **OVH:** Panel klienta → Web Cloud → Email
+- **home.pl:** Panel → E-mail → Konfiguracja
+- **nazwa.pl:** Panel → E-mail → Parametry
+
+---
+
+## 🚀 Dodanie zmiennych do Vercel
+
+Po wyborze opcji, dodaj zmienne środowiskowe do Vercel:
+
+```bash
+# Podstawowa konfiguracja
+vercel env add MAIL_SERVER production
+vercel env add MAIL_PORT production
+vercel env add MAIL_USE_TLS production
+vercel env add MAIL_USERNAME production
+vercel env add MAIL_PASSWORD production
+
+# Opcjonalne (dla SSL zamiast TLS)
+vercel env add MAIL_USE_SSL production
+```
+
+## ✅ Testowanie konfiguracji
+
+Po wdrożeniu, przetestuj wysyłkę emaila:
+
+```bash
+# Test przez API
+curl -X POST https://azure-club.vercel.app/api/bookings \
+  -H "Content-Type: application/json" \
+  -d '{
+    "event_id": 1,
+    "name": "Test User",
+    "email": "your-test-email@gmail.com",
+    "phone": "+48123456789",
+    "event_date": "2025-12-25",
+    "event_type": "club",
+    "start_time": "22:00",
+    "venue": "Club HAOS",
+    "city": "Gdańsk",
+    "guests": 2,
+    "message": "Test booking"
+  }'
+```
+
+Sprawdź:
+1. Status code: `201 Created`
+2. Email potwierdzający w skrzynce odbiorczej
+3. Logi Vercel: https://vercel.com/hubertkozuchowski-3144s-projects/azure-club/logs
+
+## 🔍 Troubleshooting
+
+### Problem: "535 Authentication failed"
+**Rozwiązanie:** Sprawdź username i password. Dla Gmail użyj App Password, nie zwykłego hasła.
+
+### Problem: "Connection timeout"
+**Rozwiązanie:** 
+- Sprawdź czy MAIL_PORT jest poprawny (587 dla TLS, 465 dla SSL)
+- Niektóre providery blokują port 25
+
+### Problem: Email trafia do SPAM
+**Rozwiązanie:**
+- Skonfiguruj SPF record: `v=spf1 include:_spf.mailgun.org ~all`
+- Dodaj DKIM records (dostępne w dashboardzie SendGrid/Mailgun)
+- Dodaj DMARC record: `v=DMARC1; p=none; rua=mailto:admin@arch1tect.pl`
+
+### Problem: "Sender address rejected"
+**Rozwiązanie:** Zweryfikuj domenę w dashboardzie email providera (SendGrid/Mailgun).
+
+## 📊 Monitoring
+
+Sprawdzaj logi wysyłki emaili:
+- **SendGrid:** Dashboard → Activity
+- **Mailgun:** Dashboard → Logs
+- **Vercel:** Project → Logs (filtruj po "MAIL")
+
+## 🔐 Bezpieczeństwo
+
+✅ **Nigdy** nie commituj haseł do Git
+✅ Używaj App Passwords zamiast głównych haseł
+✅ Włącz 2FA na kontach email
+✅ Regularnie rotuj API keys
+✅ Używaj zmiennych środowiskowych w Vercel
+✅ Oznacz zmienne jako "Sensitive" w Vercel
+
+---
+
+## 🎯 Quick Start (Najszybsza opcja - SendGrid)
+
+```bash
+# 1. Załóż konto SendGrid
+open https://signup.sendgrid.com/
+
+# 2. Stwórz API Key i dodaj do Vercel
+vercel env add MAIL_SERVER production   # smtp.sendgrid.net
+vercel env add MAIL_PORT production     # 587
+vercel env add MAIL_USE_TLS production  # True
+vercel env add MAIL_USERNAME production # apikey
+vercel env add MAIL_PASSWORD production # <twój-api-key>
+
+# 3. Redeploy
+vercel --prod
+
+# 4. Test
+curl -X POST https://azure-club.vercel.app/api/health
+```
+
+✨ Gotowe! System będzie wysyłać emaile z `admin@arch1tect.pl` przez SendGrid.
