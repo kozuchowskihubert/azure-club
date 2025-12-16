@@ -1655,19 +1655,8 @@ body.light-theme .section-light::after {
 }
 
 /* ========================================
-   HAOS.fm Radio Section - Colorful Theme
-        grid-template-columns: 1fr;
-    }
-
-    .haos-equalizer {
-        height: 60px;
-    }
-
-    .eq-bar {
-        width: 6px;
-    }
-}
-
+   Gallery Section
+   ======================================== */
 .gallery-grid {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
@@ -3801,12 +3790,6 @@ html {
 .dj-card .role {
     font-size: 0.85rem;
     opacity: 0.8;
-}
-
-.event-cta-buttons {
-    display: flex;
-    gap: 1rem;
-    flex-wrap: wrap;
 }
 
 .event-cta-buttons {
