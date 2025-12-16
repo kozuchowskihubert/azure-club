@@ -4,10 +4,11 @@
 
 Kompletny system zarządzania eventami i rezerwacjami dla ARCH1TECT z:
 - 🎛️ Panel administracyjny (admin.html)
-- 🚀 Flask REST API (events_api.py)
-- 📧 SMTP email notifications z profesjonalnymi templateami
-- 📊 SQLite database dla eventów i rezerwacji
-- 🔐 Bezpieczne logowanie do panelu
+- 🚀 Flask REST API (backend/app.py)
+- 📧 Resend SMTP email notifications z kalendarzem
+- �️ Neon PostgreSQL database (cloud)
+- 📅 Integracja z Google Calendar, Outlook, Office 365
+- 🎉 **Wydarzenia z życia (2002-2022)** już w bazie!
 
 ## 🚀 Uruchomienie Lokalne
 
@@ -15,54 +16,85 @@ Kompletny system zarządzania eventami i rezerwacjami dla ARCH1TECT z:
 
 ```bash
 cd azure-club
+python3 -m venv venv
 source venv/bin/activate
-pip install -r requirements.txt
+pip install Flask==3.0.0 Flask-CORS==4.0.0 Flask-Mail==0.9.1 Flask-SQLAlchemy==3.1.1 python-dotenv==1.0.0 Jinja2==3.1.6 'psycopg[binary]' SQLAlchemy==2.0.23 gunicorn==21.2.0
 ```
 
-### 2. Konfiguracja SMTP
+### 2. Konfiguracja Backend
 
-Skopiuj `.env.example` do `.env` i uzupełnij dane SMTP:
-
-```bash
-cp .env.example .env
-```
-
-Edytuj `.env`:
+Utwórz `backend/.env`:
 
 ```env
-# Gmail SMTP (zalecane)
-MAIL_USERNAME=twoj-email@gmail.com
-MAIL_PASSWORD=twoje-haslo-aplikacji
+# Neon PostgreSQL Database
+DATABASE_URL=postgresql://neondb_owner:npg_CKhpaDNlnE51@ep-quiet-heart-a94ke83k-pooler.gwc.azure.neon.tech/neondb?sslmode=require
+POSTGRES_URL=postgresql://neondb_owner:npg_CKhpaDNlnE51@ep-quiet-heart-a94ke83k-pooler.gwc.azure.neon.tech/neondb?sslmode=require
 
-# Admin credentials
-ADMIN_USERNAME=admin
-ADMIN_PASSWORD=HAOS2025!
+# Resend SMTP Email
+MAIL_SERVER=smtp.resend.com
+MAIL_PORT=587
+MAIL_USE_TLS=True
+MAIL_USE_SSL=False
+MAIL_USERNAME=resend
+MAIL_PASSWORD=re_HbXMqMHv_FpFfbuUHr44J5kCpFUu9a4a8
+MAIL_SENDER=arch1tect@haos.fm
+MAIL_FROM=arch1tect@haos.fm
+
+# Server
+PORT=5001
+FLASK_ENV=development
 ```
 
-#### Jak uzyskać hasło aplikacji Gmail:
-
-1. Wejdź na https://myaccount.google.com/security
-2. Włącz "2-Step Verification" (weryfikacja dwuetapowa)
-3. Wejdź w "App passwords" (hasła aplikacji)
-4. Wybierz "Other" i nazwij "ARCH1TECT"
-5. Skopiuj wygenerowane hasło do `.env`
-
-### 3. Uruchom API
+### 3. Uruchom Backend API
 
 ```bash
-cd api
-python events_api.py
+# Z unbuffered output dla debug logging
+source venv/bin/activate
+python -u backend/app.py
 ```
 
-API będzie działać na: `http://localhost:5000`
+Backend będzie działać na: `http://localhost:5001`
 
 ### 4. Otwórz Panel Admina
 
-Otwórz w przeglądarce: `http://localhost:5000/admin.html`
+```bash
+open admin.html
+```
 
-**Dane logowania:**
-- Username: `admin`
-- Password: `HAOS2025!`
+Panel łączy się automatycznie z `http://localhost:5001/api`
+
+**Brak logowania** - panel otwarty dla developmentu lokalnego
+
+## 🎉 Wydarzenia w Bazie Danych
+
+### Aktualny Stan (16 grudnia 2025)
+
+**5 wydarzeń z życia (2002-2022):**
+
+| Rok | Nazwa | Typ | Miasto | Opis |
+|-----|-------|-----|--------|------|
+| 2022 | **Archidesignstudio** | Praca | Gdańsk | Rozpoczęcie nowej pracy w firmie Archidesignstudio |
+| 2014 | **RTIA Events** | Praca | Gdańsk | Rozpoczęcie nowej pracy w firmie RTIA events |
+| 2013 | **Pumpingland - Rozpoczęcie Pracy** | Praca | Gdańsk | Rozpoczęcie nowej pracy w firmie Pumpingland |
+| 2013 | **Narodziny PUMPINGLAND** | Impreza | Gdańsk | Narodziny legendarnego projektu PUMPINGLAND 🎧 |
+| 2002 | **Clubbasse** | Praca | Gdańsk | Rozpoczęcie pracy w Clubbasse - początek kariery |
+
+**Zarządzanie skryptami:**
+```bash
+# Dodaj wydarzenia
+python backend/add_life_events.py
+
+# Usuń wybrane wydarzenia
+python backend/remove_events.py
+
+# Zaktualizuj adresy
+python backend/update_venues.py
+```
+
+### Testowe Rezerwacje (5 bookingów):
+- 3x arturnonas@gmail.com (z email confirmation + kalendarz)
+- 2x hubertkozuchowski@gmail.com
+- Status: **pending** - oczekują na zatwierdzenie w admin panelu
 
 ## 📡 API Endpoints
 
@@ -91,18 +123,39 @@ POST   /api/bookings/:id/reject  - Odrzuć rezerwację
 GET    /api/health              - Status API
 ```
 
-## 📧 Email Templates
+## 📧 Email Templates + Kalendarz
 
-System automatycznie wysyła profesjonalne emaile HTML:
+System automatycznie wysyła profesjonalne emaile HTML przez **Resend SMTP** (arch1tect@haos.fm):
 
 ### 1. Potwierdzenie rezerwacji (przy submit formularza)
-- Wysyłane automatycznie gdy ktoś wypełni formularz rezerwacji
-- Zawiera wszystkie szczegóły eventu
-- HAOS branding (gradient, neon colors)
+- ✅ Wysyłane automatycznie gdy ktoś wypełni formularz
+- 📅 **Linki do kalendarza**: Google Calendar, Outlook, Office 365
+- 🎨 HAOS branding (gradient pink/cyan, neon colors)
+- 📧 Sender: ARCH1TECT | HAOS.fm
+- 🔗 Calendar integration buttons w emailu
+
+**Template zawiera:**
+- Event title: "ARCH1TECT @ [Venue]"
+- Data, godzina, miejsce
+- Typ eventu, czas trwania
+- 3 przyciski: Google Calendar, Outlook, Office 365
+- Instrukcja dla iPhone/Mac (Safari → Dodaj do Kalendarza)
 
 ### 2. Zatwierdzenie rezerwacji (z panelu admina)
-- Wysyłane gdy admin zatwierdzi rezerwację
-- Potwierdzenie finalnej rezerwacji
+- Wysyłane gdy admin kliknie ✅ "Zatwierdź"
+- Finalny email potwierdzający
+
+### Email Debug Logging
+Backend loguje każdy krok wysyłania emaila:
+```
+🚀 [BOOKING] Booking created with ID: 5
+🔍 [EMAIL] Starting send_booking_confirmation...
+✅ [EMAIL] Booking found: Name <email>
+📅 [EMAIL] Generating calendar URLs...
+✅ [EMAIL] Calendar URLs generated
+📧 [EMAIL] Mail config verified
+✅ [EMAIL] Email sent successfully!
+```
 
 ## 🎛️ Panel Administracyjny - Funkcje
 
@@ -129,60 +182,120 @@ Pola:
 - Akcje: zatwierdź (wysyła email) / odrzuć
 - Pełne dane kontaktowe klienta
 
+## �️ Baza Danych - Neon PostgreSQL
+
+### Architektura
+- **Provider**: Neon (serverless PostgreSQL)
+- **Connection**: Pooler @ ep-quiet-heart-a94ke83k-pooler.gwc.azure.neon.tech
+- **Database**: neondb
+- **ORM**: SQLAlchemy 2.0.23
+- **Driver**: psycopg3 (binary)
+
+### Modele
+
+**Event Model:**
+```python
+- id: Integer (Primary Key)
+- name: String(200)
+- date: Date
+- time: String(10)
+- venue: String(200)
+- city: String(100)
+- type: String(50) - club/festival/private/other/praca/impreza
+- description: Text
+- artists: String(500)
+- price: Float (nullable)
+- capacity: Integer (nullable)
+- image_url: String(500)
+- status: String(50) - upcoming/sold_out/cancelled/completed
+- created_at, updated_at: DateTime
+```
+
+**Booking Model:**
+```python
+- id: Integer (Primary Key)
+- event_id: Integer (Foreign Key, nullable)
+- name, email, phone: String
+- event_date: String(50)
+- event_type, start_time, venue, city: String
+- duration: Integer (godziny)
+- guests: Integer
+- message: Text
+- status: String(50) - pending/approved/rejected
+- calendar_event_sent: Boolean
+- calendar_platforms: String(200)
+- event_title, event_location: String
+- created_at: DateTime
+```
+
 ## 🔐 Bezpieczeństwo
 
 ### Obecnie zaimplementowane:
-- Proste logowanie (admin/password)
-- Przechowywanie stanu w localStorage
+- **Environment variables** (.env) dla secrets
+- **CORS** configured (Flask-CORS)
+- **PostgreSQL** connection pooling
+- **SSL/TLS** dla Neon database i SMTP
 
 ### TODO dla produkcji:
-- [ ] JWT tokens
-- [ ] Backend authentication
-- [ ] Rate limiting
+- [ ] Admin authentication (basic auth lub JWT)
+- [ ] Rate limiting na API endpoints
 - [ ] CSRF protection
 - [ ] Input validation & sanitization
+- [ ] API key authorization
 
-## 🌐 Deployment na Vercel
+## 🚂 Deployment na Railway (Backend)
 
-### 1. Backend API
+### 1. Przygotowanie
 
-Dodaj do `vercel.json`:
+Backend już jest w dedykowanym folderze `/backend`:
+- `app.py` - Flask API
+- `requirements.txt` - dependencies
+- `Procfile` - gunicorn config
+- `runtime.txt` - Python 3.11
 
-```json
-{
-  "functions": {
-    "api/**/*.py": {
-      "runtime": "python3.9"
-    }
-  },
-  "routes": [
-    {
-      "src": "/api/(.*)",
-      "dest": "/api/events_api.py"
-    }
-  ]
-}
+### 2. Deployment Steps
+
+1. **Wejdź na Railway**: https://railway.app
+2. **New Project** → **Deploy from GitHub repo**
+3. **Wybierz**: kozuchowskihubert/azure-club
+4. **Settings → Root Directory**: `backend` ⚠️ WAŻNE!
+5. **Add Environment Variables:**
+
+```env
+DATABASE_URL=postgresql://neondb_owner:npg_CKhpaDNlnE51@ep-quiet-heart-a94ke83k-pooler.gwc.azure.neon.tech/neondb?sslmode=require
+POSTGRES_URL=postgresql://neondb_owner:npg_CKhpaDNlnE51@ep-quiet-heart-a94ke83k-pooler.gwc.azure.neon.tech/neondb?sslmode=require
+MAIL_SERVER=smtp.resend.com
+MAIL_PORT=587
+MAIL_USE_TLS=True
+MAIL_USERNAME=resend
+MAIL_PASSWORD=re_HbXMqMHv_FpFfbuUHr44J5kCpFUu9a4a8
+MAIL_SENDER=arch1tect@haos.fm
+PORT=5001
 ```
 
-### 2. Environment Variables w Vercel
+6. **Generate Domain** - dostaniesz URL typu: `azure-club-production.up.railway.app`
+7. **Deploy!**
 
-W Vercel Dashboard → Settings → Environment Variables dodaj:
+### 3. Frontend na Vercel
 
+Frontend już jest zdeployowany: https://azure-club.vercel.app
+
+**Po Railway deployment - zaktualizuj API_URL:**
+
+```javascript
+// js/config.js, index.html, admin.html, test-booking.html
+const API_URL = 'https://azure-club-production.up.railway.app/api';
 ```
-MAIL_USERNAME = twoj-email@gmail.com
-MAIL_PASSWORD = haslo-aplikacji
-ADMIN_USERNAME = admin
-ADMIN_PASSWORD = HAOS2025!
-```
 
-### 3. Deploy
+Commit & push → Vercel auto-deploy
 
-```bash
-git add .
-git commit -m "Add admin panel and API"
-git push
-vercel --prod
-```
+## 🌐 Deployment Status
+
+### Obecny Stan:
+- ✅ **Frontend**: https://azure-club.vercel.app (Vercel)
+- ⏸️ **Backend**: localhost:5001 (do deploy na Railway)
+- ✅ **Database**: Neon PostgreSQL (cloud)
+- ✅ **Email**: Resend SMTP (cloud)
 
 ## 📝 Przykładowe użycie API
 
