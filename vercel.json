@@ -1,7 +1,22 @@
 {
   "version": 2,
-  "buildCommand": null,
-  "outputDirectory": ".",
-  "cleanUrls": true,
-  "trailingSlash": false
+  "builds": [
+    {
+      "src": "api/events_api_postgres.py",
+      "use": "@vercel/python"
+    }
+  ],
+  "routes": [
+    {
+      "src": "/api/(.*)",
+      "dest": "api/events_api_postgres.py"
+    },
+    {
+      "src": "/(.*)",
+      "dest": "/$1"
+    }
+  ],
+  "env": {
+    "FLASK_ENV": "production"
+  }
 }
