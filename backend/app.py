@@ -26,6 +26,12 @@ if DATABASE_URL and DATABASE_URL.startswith('postgres://'):
 
 app.config['SQLALCHEMY_DATABASE_URI'] = DATABASE_URL or 'sqlite:///arch1tect.db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+app.config['SQLALCHEMY_ENGINE_OPTIONS'] = {
+    'pool_pre_ping': True,
+    'pool_recycle': 300,
+    'pool_size': 10,
+    'max_overflow': 20
+}
 
 # SMTP Configuration - flexible for different email providers
 # Supports: Resend, Gmail, SendGrid, Mailgun, custom SMTP
