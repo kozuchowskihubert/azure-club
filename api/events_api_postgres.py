@@ -687,9 +687,10 @@ with app.app_context():
 # Vercel serverless function handler
 handler = app
 
-# Vercel serverless handler
-handler = app
+# Vercel serverless handler - WSGI application
+app.wsgi_app = app.wsgi_app
 
+# For local development
 if __name__ == '__main__':
     # Railway provides PORT environment variable
     port = int(os.environ.get('PORT', 5001))
