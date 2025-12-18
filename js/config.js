@@ -1,12 +1,12 @@
 // Frontend Configuration
-// Production setup with GitHub Pages frontend + Railway backend
+// Production setup with Vercel frontend + Railway backend
 
 const CONFIG = {
     // Backend API URL - Using Railway backend with Neon PostgreSQL
     API_URL: 'https://azure-club-production.up.railway.app/api',
     
-    // Frontend URLs (GitHub Pages)
-    FRONTEND_URL: 'https://kozuchowskihubert.github.io/azure-club',
+    // Frontend URLs (Vercel)
+    FRONTEND_URL: 'https://azure-club-events.vercel.app',
     
     // Email
     CONTACT_EMAIL: 'arch1tect@haos.fm',
